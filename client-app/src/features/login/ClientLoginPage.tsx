@@ -1,42 +1,14 @@
 import { FormEvent, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-import { login } from "../../slices/authSlice";
-import { AppDispatch } from "../../store";
-import { useDispatch } from "react-redux";
-
 // import styles from "./ClientLoginPage.module.css";
 
-const source = "http://localhost:8100";
-
-export async function postLogin(username: string, password: string) {
-  const res = await fetch(`${source}/auth/userLogin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
-
-  const resp = await res.json();
-
-  // on receive token,save in localStorage
-
-  if (resp.message === "success") {
-    localStorage.setItem("token", resp.token);
-
-    return true;
-  } else return false;
-}
-
 export default function ClientLoginPage() {
-  const dispatch = useDispatch<AppDispatch>();
-
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  const handleLogin = async (
+  const handleLogin = (
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+<<<<<<< HEAD
     let result = await postLogin(usernameInput, passwordInput);
     if (result) {
       let decoded: { user_id: number; username: string } = jwtDecode(
@@ -45,6 +17,8 @@ export default function ClientLoginPage() {
       dispatch(login(decoded.username));
     }
 
+=======
+>>>>>>> parent of dee2fa3 (Merge branch 'main' of github.com:jacky96923/project_coffee)
     console.log("username", usernameInput);
     console.log("password", passwordInput);
   };
