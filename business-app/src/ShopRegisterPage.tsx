@@ -33,22 +33,8 @@ export default function BussinessLoginPage() {
             }}
             value={passwordInput}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => {
-              setPasswordInput(e.target.value);
-            }}
-            value={passwordInput}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(e) => {
-              setPasswordInput(e.target.value);
-            }}
-            value={passwordInput}
-          />
+
+
         </form>
       </div>
     </>
