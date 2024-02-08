@@ -7,14 +7,12 @@ import ShopRegisterPage from "./ShopRegisterPage";
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/business-login" element={<BussinessLoginPage />} />
-          <Route path="/shop-register" element={<ShopRegisterPage />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="App">
+      <Routes>
+        <Route path="/business-login" element={<BussinessLoginPage />} />
+        <Route path="/shop-register" element={<ShopRegisterPage />} />
+      </Routes>
+    </div>
   );
 }
 
