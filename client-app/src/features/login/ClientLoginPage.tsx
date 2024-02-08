@@ -47,9 +47,6 @@ export default function ClientLoginPage() {
       );
       dispatch(login(decoded.username));
     }
-
-    console.log("username", usernameInput);
-    console.log("password", passwordInput);
   };
 
   return (
