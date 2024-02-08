@@ -1,13 +1,17 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import Hi from "./Hero"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BussinessLoginPage from "./BussinessLoginPage";
 import ShopRegisterPage from "./ShopRegisterPage";
 
+
 function App() {
   return (
-    <Router>
+
+
+      <Router>
       <div className="App">
         <Routes>
           <Route path="/business-login" element={<BussinessLoginPage />} />
@@ -15,6 +19,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+
   );
 }
 
