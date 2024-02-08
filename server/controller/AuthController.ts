@@ -21,9 +21,9 @@ export class UserAuthController {
 
   userRegister = async (req: Request, res: Response) => {
     try {
-      const { name, email, password, confirmPassword, contactNo } = req.body;
+      const { username, email, password, confirmPassword, contactNo } = req.body;
       //console.log(email)
-      if (!name) {
+      if (!username) {
         return res
           .status(401)
           .json({ element: "name", error: "Missing Username" });
@@ -58,9 +58,12 @@ export class UserAuthController {
       if (checkContactNo) {
         return res.status(401).json({ element: "contactNo", error: "This contact number has been registered" })
       }
-      const result = await this.userAuthService.userRegister(name, email, password, contactNo)
-      console.log(result)
-      return res.status(200).json({ success: true })
+      const result = await this.userAuthService.userRegister(username, email, confirmPassword, contactNo) as any
+      if (result.flag) {
+        return res.json({ message: result.message, token: result.token });
+      } else {
+        return res.status(400).json(result.message);
+      }
 
     } catch (error) {
       return console.error("error:", error);

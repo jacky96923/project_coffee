@@ -1,19 +1,55 @@
 import { FormEvent, useState } from "react";
-import styles from "./ClientRegisterPage.module.css";
+// import styles from "./ClientRegisterPage.module.css";
+import { jwtDecode } from "jwt-decode";
+import { login } from "../../slices/authSlice";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
 
-export default function ClientLoginPage() {
+
+const source = "http://localhost:8100";
+
+export async function postRegister(username: string, email: string, contactNo: string, password: string, confirmPassword: string) {
+  const res = await fetch(`${source}/auth/userRegister`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, email, contactNo, password, confirmPassword }),
+  });
+
+  const resp = await res.json();
+
+  // on receive token,save in localStorage
+
+  if (resp.message === "success") {
+    localStorage.setItem("token", resp.token);
+
+    return true;
+  } else return false;
+}
+
+export default function ClientRegisterPage() {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [usernameInput, setUsernameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
   const [phoneInput, setPhoneInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  const handleSubmit = (
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
+
+  const handleSubmit = async (
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    console.log("username", usernameInput);
-    console.log("email", emailInput);
-    console.log("phone", phoneInput);
-    console.log("password", passwordInput);
+    const result = await postRegister(usernameInput, emailInput, phoneInput, passwordInput, confirmPasswordInput)
+
+    if (result) {
+      let decoded: { user_id: number; username: string } = jwtDecode(
+        localStorage.getItem("token")!
+      );
+      dispatch(login(decoded.username));
+      window.location.href = "/"
+    }
   };
 
   return (
@@ -47,7 +83,7 @@ export default function ClientLoginPage() {
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div>
               <label
-                htmlFor="first-name"
+                htmlFor="username"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
                 使用者名稱*
@@ -69,7 +105,7 @@ export default function ClientLoginPage() {
 
             <div className="sm:col-span-2">
               <label
-                htmlFor="company"
+                htmlFor="email"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
                 電郵地址*
@@ -97,10 +133,10 @@ export default function ClientLoginPage() {
               </label>
               <div className="mt-2.5">
                 <input
-                  type="number"
-                  name="number"
-                  id="number"
-                  autoComplete="number"
+                  type="text"
+                  name="contactNo"
+                  id="contactNo"
+                  autoComplete="contactNo"
                   className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setPhoneInput(e.target.value);
@@ -111,7 +147,7 @@ export default function ClientLoginPage() {
             </div>
             <div className="sm:col-span-2">
               <label
-                htmlFor="email"
+                htmlFor="password"
                 className="block text-sm font-semibold leading-6 text-gray-900"
               >
                 密碼*
@@ -127,6 +163,27 @@ export default function ClientLoginPage() {
                     setPasswordInput(e.target.value);
                   }}
                   value={passwordInput}
+                />
+              </div>
+            </div>
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                確認密碼*
+              </label>
+              <div className="mt-2.5">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                  autoComplete="confirmPassword"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => {
+                    setConfirmPasswordInput(e.target.value);
+                  }}
+                  value={confirmPasswordInput}
                 />
               </div>
             </div>

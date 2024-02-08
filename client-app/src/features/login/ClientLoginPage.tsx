@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { login } from "../../slices/authSlice";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 // import styles from "./ClientLoginPage.module.css";
 
 const source = "http://localhost:8100";
@@ -32,6 +33,7 @@ export default function ClientLoginPage() {
 
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  
   const handleLogin = async (
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -134,12 +136,12 @@ export default function ClientLoginPage() {
 
           <p className="mt-10 text-center text-sm text-gray-500">
             還未成為會員？{" "}
-            <a
-              href="#"
+            <Link
+              to="/client-register"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
               申請帳號{" "}
-            </a>
+            </Link>
           </p>
         </div>
       </div>

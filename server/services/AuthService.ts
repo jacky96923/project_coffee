@@ -17,7 +17,7 @@ export class UserAuthService {
         password_hash
       );
       if (compareResult) {
-        console.log("success");
+        console.log("login success");
         //login successful, create JWT and send to user's device
         const payload = {
           id: userLoginInfo[0].id,
@@ -39,15 +39,18 @@ export class UserAuthService {
     contactNo: string
   ) {
     try {
-      return await this.knex
+      const result = await this.knex
         .insert({
           login_name: name,
           email: email,
-          password: await hashPassword(confirmPassword),
+          login_password: await hashPassword(confirmPassword),
           contact_no: contactNo,
+          reward_points: 0
         })
         .into("users")
         .returning("*");
+      console.log(result);
+      return this.userLogin(result[0].login_name, confirmPassword)
     } catch (error) {
       console.error("error:", error);
       return error;
@@ -59,7 +62,7 @@ export class UserAuthService {
       const existingEmail = await this.knex
         .select("email")
         .from("users");
-      console.log(existingEmail)
+      //console.log(existingEmail)
       return existingEmail.some((user) => user.email === email);
     } catch (error) {
       console.error("error:", error);
@@ -72,7 +75,7 @@ export class UserAuthService {
       const existingContactNo = await this.knex
         .select("contact_no")
         .from("users");
-      console.log(existingContactNo)
+      //console.log(existingContactNo)
       return existingContactNo.some((user) => user.contact_no === contactNo);
     } catch (error) {
       console.error("error:", error);
