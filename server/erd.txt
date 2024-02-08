@@ -1,0 +1,259 @@
+# Visualize on https://erd.surge.sh
+# or https://quick-erd.surge.sh
+#
+# Relationship Types
+#  -    - one to one
+#  -<   - one to many
+#  >-   - many to one
+#  >-<  - many to many
+#  -0   - one to zero or one
+#  0-   - zero or one to one
+#  0-0  - zero or one to zero or one
+#  -0<  - one to zero or many
+#  >0-  - zero or many to one
+#
+////////////////////////////////////
+set
+---
+id integer PK
+name varchar
+price float
+shop_id integer FK - shops.id
+
+
+set_item_relation
+-----------------
+id integer PK
+item_id integer FK >- item.id
+set_id integer FK >- set.id
+
+
+option_list
+-----------
+id
+name varchar
+custom_option_id FK -< custom_option.id
+shop_id integer FK - shops.id
+
+     
+
+custom_option
+-----------
+id integer PK
+name varchar
+price float
+shop_id integer FK - shops.id
+
+     
+
+type_option_list_relation
+------------------
+id integer PK
+type_id integer FK >- type.id
+option_list_id FK >- option_list.id
+     
+
+item
+----
+id integer PK
+name varchar
+item_photo varchar 255
+size varchar
+price float
+description varchar 255
+is_enabled boolean
+shop_id integer FK - shops.id
+
+
+type
+-------------------------
+id integer PK
+name varchar
+     
+
+item_type_relation
+------------------
+id integer PK
+item_id integer FK >0- item.id
+type_id integer FK >0- type.id
+
+comment
+-------
+id integer PK
+rating integer
+description text
+transaction_id integer FK - transaction.id
+shop_id integer FK - shops.id
+
+     
+
+order
+-----
+id integer PK
+item_id FK - item.id
+set_id FK - set.id 
+transaction_id FK 
+sub_total integer
+created_at
+updated_at
+     
+
+order_detail
+---------------
+id
+order_id FK - order.id
+item_id FK - item.id
+     
+
+order_custom_option_relation
+----------------------------
+id
+order_detail_id FK - order_detail.id
+custom_option_id FK - custom_option.id
+     
+
+
+
+
+
+transaction
+-----------
+id integer PK
+order_time time
+pickup_time time
+pickup_status boolean
+tagged boolean
+total float
+stripe_id integer
+user_id integer FK >- users.id
+shop_id integer FK >- shops.id
+
+
+menu
+----
+id integer PK
+name integer
+last_update timestamp
+photo blob???
+shop_id integer FK - shops.id
+     
+
+menu_category_relation
+----------------------
+id integer PK
+category_id integer FK >- category.id
+menu_id integer FK >- menu.id
+
+category
+--------
+id integer PK
+name varchar
+icon varchar
+category_active_time_id integer FK >- category_active_time.id
+
+
+category_active_time
+----------------
+id integer PK
+day varchar
+start_time time
+close_time time
+
+category_item_relation
+----------------------
+id integer PK
+category_id integer FK >- category.id
+item_id integer FK >- item.id
+     
+
+category_set_relation
+----------------------
+id integer PK
+category_id integer FK >- category.id
+set_id integer FK >- set.id
+
+shops
+-----
+id integer PK
+contact_no varchar not null
+area varchar
+district varchar
+address text
+description text
+login_name varchar not null
+login_password varchar not null
+latitude float
+longitude float
+
+
+opening_days
+------------
+id integer PK
+day varchar
+start_time time
+close_time time
+shop_id integer FK >0- shops.id
+
+shop_photos
+-----------
+id integer PK
+filename varchar
+cover_photo boolean
+logo boolean
+shop_id integer FK >0- shops.id
+
+users
+-----
+id integer PK
+email text
+contact_no varchar
+reward_points integer
+login_name varchar not null
+login_password varchar not null
+
+users_favourite_shops_relation
+----------------------
+id integer PK
+user_id integer FK >- users.id
+shop_id integer FK >- shops.id
+
+kitchen
+-------
+id integer PK
+transaction_done boolean
+transaction_id integer FK >- transaction.id
+
+
+# zoom: 0.673
+# view: (564, 257)
+# text-bg: #6495ed
+# text-color: #000000
+# diagram-bg: #f5f5f5
+# diagram-text: #000000
+# table-bg: #ffffff
+# table-text: #000000
+# set (1142, 307, #009600)
+# set_item_relation (1538, -376, #009600)
+# option_list (1040, 51, #b94fcf)
+# custom_option (1190, -363, #ce3de1)
+# type_option_list_relation (678, -62, #da0b0b)
+# item (1319, -681, #d1c323)
+# type (862, -242)
+# item_type_relation (764, -512, #d11010)
+# comment (-379, -759)
+# order (399, -779, #ebac00)
+# order_detail (883, -829, #c0d651)
+# order_custom_option_relation (768, -625, #f51414)
+# transaction (-32, -684)
+# menu (199, 200)
+# menu_category_relation (147, -121, #d51010)
+# category (314, -335)
+# category_active_time (412, 9)
+# category_item_relation (280, -542)
+# category_set_relation (701, 173)
+# shops (-397, 83)
+# opening_days (-305, -130)
+# shop_photos (-46, -91)
+# users (-314, -480)
+# kitchen (-611, -604)
+# users_favourite_shops_relation (-334, -312, #ec1818)
