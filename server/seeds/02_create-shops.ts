@@ -1,11 +1,11 @@
 import { Knex } from "knex";
+import { hashPassword } from "../utils/hash";
 
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
   await knex("shops").del();
 
-  // Inserts seed entries
-  await knex("shops").insert([
+  let shops = [
     {
       shop_name: "木果咖啡",
       contact_no: "69696969",
@@ -31,5 +31,21 @@ export async function seed(knex: Knex): Promise<void> {
       latitude: 22.31548,
       longitude: 114.20946,
     },
-  ]);
+  ];
+
+  // Inserts seed entries
+  for (let entry of shops) {
+    await knex("shops").insert({
+      shop_name: entry.shop_name,
+      contact_no: entry.contact_no,
+      area: entry.area,
+      district: entry.district,
+      address: entry.address,
+      description: entry.description,
+      login_name: entry.login_name,
+      login_password: await hashPassword(entry.login_password),
+      latitude: entry.latitude,
+      longitude: entry.longitude,
+    });
+  }
 }
