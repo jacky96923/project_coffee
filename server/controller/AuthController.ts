@@ -7,7 +7,7 @@ export class UserAuthController {
     this.router.post("/userLogin", this.userLogin);
   }
 
-  userLogin = async (req: Request, res: Response) => {
+  async userLogin(req: Request, res: Response) {
     let { loginName, loginPassword } = req.body;
     let result = await this.userAuthService.userLogin(loginName, loginPassword);
 
@@ -16,7 +16,34 @@ export class UserAuthController {
     } else {
       res.status(400).json(result.message);
     }
-  };
+  }
+
+  async userRegister(req: Request, res: Response) {
+    try {
+      const { name, email, password, confirmPassword, contactNo } = req.body;
+      if (!name) {
+        return res
+          .status(401)
+          .json({ element: "name", error: "Missing Username" });
+      }
+      if (!email) {
+        return res
+          .status(401)
+          .json({ element: "email", error: "Missing Email" });
+      }
+      if (!password) {
+        return res
+          .status(401)
+          .json({ element: "password", error: "Missing Password" });
+      }
+      if (password != confirmPassword) {
+        return res.status(401).json({
+          element: "confirmPassword",
+          error: "Password is not the same as Confirm Password",
+        });
+      }
+    } catch (error) {}
+  }
 }
 
 export class BusinessAuthController {
@@ -24,7 +51,7 @@ export class BusinessAuthController {
   public constructor(private businessAuthService: BusinessAuthService) {
     this.router.post("/businessLogin", this.businessLogin);
   }
-  businessLogin = async (req: Request, res: Response) => {
+  async businessLogin(req: Request, res: Response) {
     let { loginName, loginPassword } = req.body;
     let result = await this.businessAuthService.businessLogin(
       loginName,
@@ -36,5 +63,5 @@ export class BusinessAuthController {
     } else {
       res.status(400).json(result.message);
     }
-  };
+  }
 }
