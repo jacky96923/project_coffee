@@ -4,7 +4,7 @@ import jwtSimple from "jwt-simple";
 import jwt from "../utils/jwt";
 
 export class UserAuthService {
-  constructor(private knex: Knex) {}
+  constructor(private knex: Knex) { }
   async userLogin(userNameInput: string, userPasswordInput: string) {
     let userLoginInfo = await this.knex
       .select("*")
@@ -54,21 +54,36 @@ export class UserAuthService {
     }
   }
 
-  async hasUser(contactNo: string) {
+  async hasEmail(email: string) {
     try {
-      const existingContact = await this.knex
-        .select("contact_no")
+      const existingEmail = await this.knex
+        .select("email")
         .from("users");
-      return existingContact.some((user) => user.contact_no === contactNo);
+      console.log(existingEmail)
+      return existingEmail.some((user) => user.email === email);
     } catch (error) {
       console.error("error:", error);
       return error;
     }
   }
+
+  async hasContactNo(contactNo: string) {
+    try {
+      const existingContactNo = await this.knex
+        .select("contact_no")
+        .from("users");
+      console.log(existingContactNo)
+      return existingContactNo.some((user) => user.contact_no === contactNo);
+    } catch (error) {
+      console.error("error:", error);
+      return error;
+    }
+  }
+
 }
 
 export class BusinessAuthService {
-  constructor(private knex: Knex) {}
+  constructor(private knex: Knex) { }
   async businessLogin(
     businessNameInput: string,
     businessPasswordInput: string
