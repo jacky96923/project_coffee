@@ -9,8 +9,8 @@ export class UserAuthController {
   }
 
   userLogin = async (req: Request, res: Response) => {
-    let { loginName, loginPassword } = req.body;
-    let result = await this.userAuthService.userLogin(loginName, loginPassword);
+    let { username, password } = req.body;
+    let result = await this.userAuthService.userLogin(username, password);
 
     if (result.flag) {
       res.json({ message: result.message, token: result.token });
@@ -75,10 +75,10 @@ export class BusinessAuthController {
     this.router.post("/businessRegister", this.businessRegister);
   }
   async businessLogin(req: Request, res: Response) {
-    let { loginName, loginPassword } = req.body;
+    let { username, password } = req.body;
     let result = await this.businessAuthService.businessLogin(
-      loginName,
-      loginPassword
+      username,
+      password
     );
 
     if (result.flag) {
