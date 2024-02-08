@@ -18,7 +18,6 @@ body {
     border-radius: 5rem;
 }
 
-.loginDetail {
+.RegisterDetail {
     display: flex;
-    margin: 3rem;
 }
