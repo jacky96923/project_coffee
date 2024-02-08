@@ -33,3 +33,37 @@ export class UserAuthService {
     }
   }
 }
+
+export class BusinessAuthService {
+  constructor(private knex: Knex) {}
+  async businessLogin(
+    businessNameInput: string,
+    businessPasswordInput: string
+  ) {
+    let businessLoginInfo = await this.knex
+      .select("*")
+      .from("shops")
+      .where("login_name", businessNameInput);
+    if (businessLoginInfo.length > 0) {
+      let password_hash = businessLoginInfo[0].login_password;
+      let compareResult = await comparePassword(
+        businessPasswordInput,
+        password_hash
+      );
+      if (compareResult) {
+        console.log("success");
+        //login successful, create JWT and send to user's device
+        const payload = {
+          id: businessLoginInfo[0].id,
+          username: businessLoginInfo[0].login_name,
+        };
+        const token = jwtSimple.encode(payload, jwt.jwtSecret);
+        return { flag: true, message: "success", token: token };
+      } else {
+        return { flag: false, message: "wrong password" };
+      }
+    } else {
+      return { flag: false, message: "no such username" };
+    }
+  }
+}

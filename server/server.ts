@@ -7,8 +7,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 import Knex from "knex";
-import { UserAuthController } from "./controller/AuthController";
-import { UserAuthService } from "./services/AuthService";
+import {
+  BusinessAuthController,
+  UserAuthController,
+} from "./controller/AuthController";
+import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 
 const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
@@ -17,8 +20,11 @@ const PORT = 8100;
 
 const userAuthService = new UserAuthService(knex);
 const userAuthController = new UserAuthController(userAuthService);
+const businessAuthService = new BusinessAuthService(knex);
+const businessAuthController = new BusinessAuthController(businessAuthService);
 
 app.use("/auth", userAuthController.router);
+app.use("/auth", businessAuthController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
