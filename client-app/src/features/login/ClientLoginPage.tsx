@@ -37,6 +37,8 @@ export default function ClientLoginPage() {
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
+    console.log("username", usernameInput);
+    console.log("password", passwordInput);
     let result = await postLogin(usernameInput, passwordInput);
     if (result) {
       let decoded: { user_id: number; username: string } = jwtDecode(
@@ -44,9 +46,6 @@ export default function ClientLoginPage() {
       );
       dispatch(login(decoded.username));
     }
-
-    console.log("username", usernameInput);
-    console.log("password", passwordInput);
   };
 
   return (
