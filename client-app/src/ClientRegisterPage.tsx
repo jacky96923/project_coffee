@@ -1,12 +1,16 @@
 import { FormEvent, useState } from "react";
-import styles from "./ClientLoginPage.module.css";
+import styles from "./ClientRegisterPage.module.css";
 
 export default function ClientLoginPage() {
   const [usernameInput, setUsernameInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [phoneInput, setPhoneInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("username", usernameInput);
+    console.log("email", emailInput);
+    console.log("phone", phoneInput);
     console.log("password", passwordInput);
   };
 
@@ -14,37 +18,48 @@ export default function ClientLoginPage() {
     <>
       <div className={styles.clientForm}>
         <div className={styles.content}>
-          <h1>登入</h1>
-          <h3>Please input your username and password</h3>
-          <div className={styles.loginDetail}>
+          <h1>註冊你的帳號</h1>
+          <h4>請填寫以下資料</h4>
+          <h5>使用者名稱*</h5>
+          <div className={styles.RegisterDetail}>
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 name=""
                 id=""
-                placeholder="帳號"
                 onChange={(e) => {
                   setUsernameInput(e.target.value);
                 }}
                 value={usernameInput}
               />
-              <br />
-              <br />
+              <h5>電郵地址*</h5>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setEmailInput(e.target.value);
+                }}
+                value={emailInput}
+              />
+              <h5>流動電話號碼</h5>
+              <input
+                type="text"
+                onChange={(e) => {
+                  setPhoneInput(e.target.value);
+                }}
+                value={phoneInput}
+              />
+              <h5>密碼*</h5>
               <input
                 type="password"
-                placeholder="密碼"
                 onChange={(e) => {
                   setPasswordInput(e.target.value);
                 }}
                 value={passwordInput}
               />
-              <br />
-              <br />
-              <button>Login</button>
+              <h1></h1>
+              <button>提交</button>
             </form>
           </div>
-          <h6>New to CoffeeProject?</h6>
-          <button>Create a new account</button>
         </div>
       </div>
     </>
