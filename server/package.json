@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "ts-node-dev server.ts",
     "dev": "ts-node-dev server.ts",
     "data": "knex migrate:rollback && knex migrate:latest && knex seed:run"
   },

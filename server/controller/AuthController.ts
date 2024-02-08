@@ -7,5 +7,14 @@ export class UserAuthController {
     this.router.post("/userLogin", this.userLogin);
   }
 
-  userLogin = async (req: Request, res: Response) => {};
+  userLogin = async (req: Request, res: Response) => {
+    let { loginName, loginPassword } = req.body;
+    let result = await this.userAuthService.userLogin(loginName, loginPassword);
+
+    if (result.flag) {
+      res.json({ message: result.message, token: result.token });
+    } else {
+      res.status(400).json(result.message);
+    }
+  };
 }

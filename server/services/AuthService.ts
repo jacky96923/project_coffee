@@ -5,7 +5,7 @@ import jwt from "../utils/jwt";
 
 export class UserAuthService {
   constructor(private knex: Knex) {}
-  async userlogin(userNameInput: string, userPasswordInput: string) {
+  async userLogin(userNameInput: string, userPasswordInput: string) {
     let userLoginInfo = await this.knex
       .select("*")
       .from("users")
