@@ -1,20 +1,22 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import BussinessLoginPage from "./BusinessLoginPage";
+import { Route, Routes, Navigate } from "react-router-dom";
+import BusinessLoginPage from "./BusinessLoginPage";
 import BusinessRegisterPage from "./BusinessRegisterPage";
 import BusinessLocation from "./BusinessLocationPage";
+
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/business-login" element={<BussinessLoginPage />} />
-        <Route path="/business-register" element={<BusinessRegisterPage />} />
-        <Route path="/business-location" element={<BusinessLocation />} />
-      </Routes>
-    </div>
+    <>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate to="/businessLogin" />} />
+          <Route path="/businessLogin" element={<BusinessLoginPage />} />
+          <Route path="/business-register" element={<BusinessRegisterPage />} />
+          <Route path="/business-location" element={<BusinessLocation />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
