@@ -176,6 +176,7 @@ shops
 -----
 id integer PK
 contact_no varchar not null
+email text
 area varchar
 district varchar
 address text

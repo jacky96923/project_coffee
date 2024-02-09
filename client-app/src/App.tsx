@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import ClientLoginPage from "./features/login/ClientLoginPage";
 import ClientRegisterPage from "./features/register/ClientRegisterPage";
@@ -9,17 +9,22 @@ import { useSelector } from "react-redux";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
-
   return (
     <>
-      {user ? <ClientMainPage /> : <ClientLoginPage />}
-      {/* <Router>
+      {/* <ClientMainPage /> */}
+      <Router>
+        {/* <div className="App">
+          {user ? <ClientMainPage /> : <ClientLoginPage />}
+        </div> */}
+      
         <div className="App">
           <Routes>
-            <Route path="/client-login" element={<ClientLoginPage />} />
+            <Route path="/" element={<Navigate to="/client-login"></Navigate>}/>
+            <Route path="/client-login" element={user ? <ClientMainPage /> : <ClientLoginPage />} />
+            <Route path="/client-register" element={user? <ClientMainPage /> : <ClientRegisterPage/>}/>
           </Routes>
         </div>
-      </Router> */}
+      </Router> 
     </>
   );
 }
