@@ -7,12 +7,13 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import ClientLoginPage from "./features/login/ClientLoginPage";
-import ClientRegisterPage from "./features/register/ClientRegisterPage";
-import ClientMainPage from "./features/main/ClientMainPage";
+import ClientLoginPage from "./features/login/LoginPage";
+import ClientRegisterPage from "./features/register/RegisterPage";
+import ClientMainPage from "./features/main/MainPage";
 
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
+import ShopSelection from "./features/shopSelection/ShopSelection";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -38,6 +39,7 @@ function App() {
               path="/client-register"
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
+            <Route path="/shopSelection" element={<ShopSelection />} />
           </Routes>
         </div>
       </Router>
