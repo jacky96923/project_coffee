@@ -77,7 +77,7 @@ export class BusinessAuthController {
     this.router.post("/businessLogin", this.businessLogin);
     this.router.post("/businessRegister", this.businessRegister);
   }
-  async businessLogin(req: Request, res: Response) {
+  businessLogin = async (req: Request, res: Response) =>{
     let { username, password } = req.body;
     let result = await this.businessAuthService.businessLogin(
       username,

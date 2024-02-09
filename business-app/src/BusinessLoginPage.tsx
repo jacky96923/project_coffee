@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 const source = "http://localhost:8100";
 
 export async function postLogin(username: string, password: string) {
-  const res = await fetch(`${source}/auth/userLogin`, {
+  const res = await fetch(`${source}/auth/businessLogin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
