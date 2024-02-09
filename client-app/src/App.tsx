@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import ClientLoginPage from "./features/login/ClientLoginPage";
 import ClientRegisterPage from "./features/register/ClientRegisterPage";
@@ -16,15 +21,24 @@ function App() {
         {/* <div className="App">
           {user ? <ClientMainPage /> : <ClientLoginPage />}
         </div> */}
-      
+
         <div className="App">
           <Routes>
-            <Route path="/" element={<Navigate to="/client-login"></Navigate>}/>
-            <Route path="/client-login" element={user ? <ClientMainPage /> : <ClientLoginPage />} />
-            <Route path="/client-register" element={user? <ClientMainPage /> : <ClientRegisterPage/>}/>
+            <Route
+              path="/"
+              element={<Navigate to="/client-login"></Navigate>}
+            />
+            <Route
+              path="/client-login"
+              element={user ? <ClientMainPage /> : <ClientLoginPage />}
+            />
+            <Route
+              path="/client-register"
+              element={user ? <ClientMainPage /> : <ClientRegisterPage />}
+            />
           </Routes>
         </div>
-      </Router> 
+      </Router>
     </>
   );
 }
