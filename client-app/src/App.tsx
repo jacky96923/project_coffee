@@ -10,6 +10,7 @@ import {
 import ClientLoginPage from "./features/login/LoginPage";
 import ClientRegisterPage from "./features/register/RegisterPage";
 import ClientMainPage from "./features/main/MainPage";
+import { CommentPage } from "./features/Comments/CommentPage";
 
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
@@ -40,7 +41,10 @@ function App() {
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
             <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route path="/CommentPage" element={<CommentPage />} />
+          
           </Routes>
+   
         </div>
       </Router>
     </>
