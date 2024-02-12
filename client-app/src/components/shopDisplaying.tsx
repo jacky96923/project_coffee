@@ -1,18 +1,38 @@
-export default function shopDisplaying() {
+import React from "react";
+import { Link } from "react-router-dom";
+
+export default function ShopSelectionList() {
+  const shops = [
+    { id: 1, name: "Blue bottle shop", address: "中環擺花街38號地舖及1樓" },
+    { id: 2, name: "Shop B", address: "456 Elm St" },
+    { id: 3, name: "Shop C", address: "789 Oak St" },
+    { id: 4, name: "Shop D", address: "789 Oak St" },
+    { id: 5, name: "Shop E", address: "789 Oak St" },
+  ];
+
   return (
     <div>
-      <div>
-        <img src="../logo192.png" alt="logo" />
-        <div>
-          <h2>Blue Bottle Coffee</h2>
-          <h4>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui vero
-            officia animi, itaque iure possimus repudiandae similique, molestias
-            nisi nihil laudantium et, molestiae autem saepe optio excepturi quia
-            delectus in!
-          </h4>
-        </div>
-      </div>
+      <h2>Shop Selection List</h2>
+      <ul className="space-y-4">
+        {shops.map((shop) => (
+          <li key={shop.id} className="m-4">
+            <Link to={`/ProductSelecrtion/${shop.id}`}>
+              <div className="border p-4 rounded-lg">
+                <div className="flex flex-wrap">
+                  <div className="m-1">
+                    <h1>images</h1>
+                    <img src="" alt="" />
+                  </div>
+                  <div className="m-1">
+                    <h3>{shop.name}</h3>
+                    <p>{shop.address}</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
