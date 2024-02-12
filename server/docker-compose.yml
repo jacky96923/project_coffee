@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  postgres:
+    image: "postgres:16"
+    environment:
+      POSTGRES_USER: kaheilai
+      POSTGRES_PASSWORD: s2008079
+      POSTGRES_DB: project_coffee
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+  coffee_server:
+    environment:
+      POSTGRES_USER: kaheilai
+      POSTGRES_PASSWORD: s2008079
+      POSTGRES_DB: project_coffee
+      POSTGRES_HOST: postgres
+      NODE_ENV: production
+      JWT_SECRET: asdkjf
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: "jacky96923/coffee_server:latest"
+    ports:
+      - "8100:8100"

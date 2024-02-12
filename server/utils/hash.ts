@@ -1,4 +1,4 @@
-import { hash, compare } from "bcrypt";
+import { hash, compare } from "bcryptjs";
 
 const saltRounds = 10;
 export async function hashPassword(password_input: string) {
