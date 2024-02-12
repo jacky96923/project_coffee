@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 export default function BottomNavBar() {
   return (
-    <>
-      <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-        <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gray-200 border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+      <div className="flex justify-around m-3">
+        <Link to="/">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -18,8 +20,10 @@ export default function BottomNavBar() {
             </svg>
             <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
               主頁{" "}
-            </span>
+            </span>{" "}
           </button>
+        </Link>
+        <Link to="/order">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -36,8 +40,10 @@ export default function BottomNavBar() {
             </svg>
             <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
               訂購
-            </span>
+            </span>{" "}
           </button>
+        </Link>
+        <Link to="/cart">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -59,8 +65,10 @@ export default function BottomNavBar() {
             </svg>
             <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
               購物車
-            </span>
+            </span>{" "}
           </button>
+        </Link>
+        <Link to="/profile">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -78,8 +86,8 @@ export default function BottomNavBar() {
               我的
             </span>
           </button>
-        </div>
+        </Link>
       </div>
-    </>
+    </div>
   );
 }
