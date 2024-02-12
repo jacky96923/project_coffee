@@ -1,11 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
-import ClientLoginPage from "./features/login/ClientLoginPage";
-import ClientRegisterPage from "./features/register/ClientRegisterPage";
-import ClientMainPage from "./features/main/ClientMainPage";
+
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import ClientLoginPage from "./features/login/LoginPage";
+import ClientRegisterPage from "./features/register/RegisterPage";
+import ClientMainPage from "./features/main/MainPage";
+import { CommentPage } from "./features/Comments/CommentPage";
+
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
+import ShopSelection from "./features/shopSelection/ShopSelection";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -16,15 +25,28 @@ function App() {
         {/* <div className="App">
           {user ? <ClientMainPage /> : <ClientLoginPage />}
         </div> */}
-      
+
         <div className="App">
           <Routes>
-            <Route path="/" element={<Navigate to="/client-login"></Navigate>}/>
-            <Route path="/client-login" element={user ? <ClientMainPage /> : <ClientLoginPage />} />
-            <Route path="/client-register" element={user? <ClientMainPage /> : <ClientRegisterPage/>}/>
+            <Route
+              path="/"
+              element={<Navigate to="/client-login"></Navigate>}
+            />
+            <Route
+              path="/client-login"
+              element={user ? <ClientMainPage /> : <ClientLoginPage />}
+            />
+            <Route
+              path="/client-register"
+              element={user ? <ClientMainPage /> : <ClientRegisterPage />}
+            />
+            <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route path="/CommentPage" element={<CommentPage />} />
+          
           </Routes>
+   
         </div>
-      </Router> 
+      </Router>
     </>
   );
 }

@@ -1,20 +1,30 @@
 import { FormEvent, useState } from "react";
-// import styles from "./ClientRegisterPage.module.css";
 import { jwtDecode } from "jwt-decode";
 import { login } from "../../slices/authSlice";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
 
-
 const source = "http://localhost:8100";
 
-export async function postRegister(username: string, email: string, contactNo: string, password: string, confirmPassword: string) {
+export async function postRegister(
+  username: string,
+  email: string,
+  contactNo: string,
+  password: string,
+  confirmPassword: string
+) {
   const res = await fetch(`${source}/auth/userRegister`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ username, email, contactNo, password, confirmPassword }),
+    body: JSON.stringify({
+      username,
+      email,
+      contactNo,
+      password,
+      confirmPassword,
+    }),
   });
 
   const resp = await res.json();
@@ -28,7 +38,7 @@ export async function postRegister(username: string, email: string, contactNo: s
   } else return false;
 }
 
-export default function ClientRegisterPage() {
+export default function RegisterPage() {
   const dispatch = useDispatch<AppDispatch>();
 
   const [usernameInput, setUsernameInput] = useState("");
@@ -41,14 +51,20 @@ export default function ClientRegisterPage() {
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    const result = await postRegister(usernameInput, emailInput, phoneInput, passwordInput, confirmPasswordInput)
+    const result = await postRegister(
+      usernameInput,
+      emailInput,
+      phoneInput,
+      passwordInput,
+      confirmPasswordInput
+    );
 
     if (result) {
       let decoded: { user_id: number; username: string } = jwtDecode(
         localStorage.getItem("token")!
       );
       dispatch(login(decoded.username));
-      window.location.href = "/"
+      window.location.href = "/";
     }
   };
 

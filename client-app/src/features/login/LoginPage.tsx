@@ -4,7 +4,6 @@ import { login } from "../../slices/authSlice";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-// import styles from "./ClientLoginPage.module.css";
 
 const source = "http://localhost:8100";
 
@@ -28,12 +27,12 @@ export async function postLogin(username: string, password: string) {
   } else return false;
 }
 
-export default function ClientLoginPage() {
+export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
 
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
-  
+
   const handleLogin = async (
     e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
   ) => {
