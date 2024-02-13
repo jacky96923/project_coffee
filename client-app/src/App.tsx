@@ -7,25 +7,23 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import ClientLoginPage from "./features/login/LoginPage";
-import ClientRegisterPage from "./features/register/RegisterPage";
-import ClientMainPage from "./features/main/MainPage";
-import { CommentPage } from "./features/Comments/CommentPage";
+
+import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage"
+import ClientLoginPage from "./Pages/login/LoginPage";
+import ClientRegisterPage from "./Pages/register/RegisterPage";
+import ClientMainPage from "./Pages/main/MainPage";
+import { CommentPage } from "./Pages/Comments/CommentPage";
 
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
-import ShopSelection from "./features/shopSelection/ShopSelection";
+import ShopSelection from "./Pages/shopSelection/ShopSelection";
+import ProductSelection from "./Pages/productSelection/ProductSelection";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
   return (
     <>
-      {/* <ClientMainPage /> */}
       <Router>
-        {/* <div className="App">
-          {user ? <ClientMainPage /> : <ClientLoginPage />}
-        </div> */}
-
         <div className="App">
           <Routes>
             <Route
@@ -41,14 +39,23 @@ function App() {
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
             <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route
+              path="/productSelection/:shopId"
+              element={<ProductSelectionWrapper />}
+            />
+
             <Route path="/CommentPage" element={<CommentPage />} />
-          
-          </Routes>
-   
+            <Route path="/shopping-cart" element={<ShoppingCartPage/>}/>
+          </Routes>   
         </div>
       </Router>
     </>
   );
+}
+
+function ProductSelectionWrapper({ match }: any) {
+  const { shopId } = match.params;
+  return <ProductSelection shopId={parseInt(shopId)} />;
 }
 
 export default App;

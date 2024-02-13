@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 export default function ThreeButton() {
   return (
     <>
-      <div className="flex justify-around">
-        <div className="location">
+      <div className="flex justify-around m-2">
+        <div className="location ">
           <h3>
             <Link to="/shopSelection" className="nav-link">
               <MapPinIcon />
-              附近咖啡店
+              附近咖啡
             </Link>
           </h3>
         </div>
@@ -24,15 +24,13 @@ export default function ThreeButton() {
             </Link>
           </h3>
         </div>
-        <div>
-          <div className="mybooking">
-            <h3>
-              <Link to="/shopSelection" className="nav-link">
-                <BriefcaseIcon />
-                我的訂單
-              </Link>
-            </h3>
-          </div>
+        <div className="mybooking">
+          <h3>
+            <Link to="/shopSelection" className="nav-link">
+              <BriefcaseIcon />
+              我的訂單
+            </Link>
+          </h3>
         </div>
       </div>
     </>
