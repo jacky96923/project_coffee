@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import ShoppingCartPage from "./Pages/shopping-cart/ShoppingCartPage"
+import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage"
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
