@@ -4,8 +4,8 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable("opening_days", function (table) {
     table.increments().primary();
     table.string("day", 60);
-    table.string("start_time", 60);
-    table.string("close_time", 60);
+    table.time("start_time");
+    table.time("close_time");
     table.integer("shop_id").unsigned().references("id").inTable("shops");
   });
 }
