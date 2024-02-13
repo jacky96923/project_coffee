@@ -1,16 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 
-const colors = require('tailwindcss/colors')
 
-const withMT = require("@material-tailwind/react/utils/withMT");
+// const withMT = require("@material-tailwind/react/utils/withMT");
 
 module.exports = {
-  content: ["./src/**/*.tsx"],
+  content: ["./src/**/*.tsx", 'node_modules/flowbite-react/lib/esm/**/*.js'],
   theme: {
     colors: {
-      ...colors,
       transparent: 'transparent',
       current: 'currentColor',
+      'white': '#ffffff',
       'midnight': '#121063',
       'metal': '#565584',
       'tahiti': '#3ab7bf',
@@ -21,17 +20,15 @@ module.exports = {
       'dark-brown':'#562B1A'
     },
     extend: {
-      colors: {
-        ...colors
-      }
+
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 };
-module.exports = withMT({
-  content: [],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-});
+// module.exports = withMT({
+//   content: [],
+//   theme: {
+//     extend: {},
+//   },
+//   plugins: [],
+// });
