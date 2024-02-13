@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage"
+import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
@@ -18,6 +18,7 @@ import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
+import ItemPage from "./Pages/items/ItemPage";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -43,10 +44,11 @@ function App() {
               path="/productSelection/:shopId"
               element={<ProductSelectionWrapper />}
             />
+            <Route path="/itemPage" element={<ItemPage />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
-            <Route path="/shopping-cart" element={<ShoppingCartPage/>}/>
-          </Routes>   
+            <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+          </Routes>
         </div>
       </Router>
     </>
