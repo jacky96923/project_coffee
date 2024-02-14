@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function BottomNavBar() {
   return (
     <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gray-200 border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-      <div className="flex justify-around m-3">
+      <div className=" justify-around flex m-3">
         <Link to="/">
           <button
             type="button"

@@ -16,7 +16,7 @@ export default function ShopSelectionList() {
       <ul className="space-y-4">
         {shops.map((shop) => (
           <li key={shop.id} className="m-4">
-            <Link to={`/ProductSelecrtion/${shop.id}`}>
+            <Link to={`/ProductSelection/${shop.id}`}>
               <div className="border p-4 rounded-lg">
                 <div className="flex flex-wrap">
                   <div className="m-1">

@@ -8,7 +8,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage"
+import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
@@ -41,21 +41,21 @@ function App() {
             <Route path="/shopSelection" element={<ShopSelection />} />
             <Route
               path="/productSelection/:shopId"
-              element={<ProductSelectionWrapper />}
+              element={<ProductSelection />}
             />
 
             <Route path="/CommentPage" element={<CommentPage />} />
-            <Route path="/shopping-cart" element={<ShoppingCartPage/>}/>
-          </Routes>   
+            <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+          </Routes>
         </div>
       </Router>
     </>
   );
 }
 
-function ProductSelectionWrapper({ match }: any) {
-  const { shopId } = match.params;
-  return <ProductSelection shopId={parseInt(shopId)} />;
-}
+// function ProductSelectionWrapper({ match }: any) {
+//   const { shopId } = match.params;
+//   return <ProductSelection shopId={parseInt(shopId)} />;
+// }
 
 export default App;
