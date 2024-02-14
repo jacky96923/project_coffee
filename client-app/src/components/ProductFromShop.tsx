@@ -42,7 +42,7 @@ export default function ProductFromShop() {
     <>
       <div>
         {coffeeProduct.map((item: any, id: number) => {
-          console.log(item);
+          // console.log(item);
           return (
             <div
               // className="rounded-full border-solid border-2 border-sky-500"
@@ -56,9 +56,13 @@ export default function ProductFromShop() {
             >
               <img src={item.thumbnail}></img>
               <div className="flex flex-col m-3">
-                <span className="mb-2 text-sm	">{item.name}</span>
-                <span className="mb-2 text-xs	">{item.description}</span>
-                <span className="flex justify-end">${item.price}</span>
+                <span className="font-bold mb-2 text-sm	">{item.name}</span>
+                <span className="font-bold mb-2 text-xs	">
+                  {item.description}
+                </span>
+                <span className="font-bold flex justify-end">
+                  ${item.price}
+                </span>
               </div>
             </div>
           );
