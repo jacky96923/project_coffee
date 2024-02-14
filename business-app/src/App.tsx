@@ -5,6 +5,7 @@ import BusinessLoginPage from "./BusinessLoginPage";
 import BusinessRegisterPage from "./BusinessRegisterPage";
 import BusinessLocation from "./BusinessLocationPage";
 import LoginokPage from "./LoginokPage";
+import { BusinessChooseShopOpenTime } from "./BusinessChooseShopOpenTime";
 
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/businessLogin" element={user? <LoginokPage/>: <BusinessLoginPage />}></Route>
           <Route path="/business-register" element={<BusinessRegisterPage />} />
           <Route path="/business-location" element={<BusinessLocation />} />
+          <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} />
         </Routes>
       </div>
     </>

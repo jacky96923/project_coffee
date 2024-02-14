@@ -215,7 +215,7 @@ export async function seed(knex: Knex): Promise<void> {
       price: 60,
       is_enabled: true,
       shop_id: 2,
-    },
+    }, //21
     {
       name: "抹茶鮮奶",
       item_photo:

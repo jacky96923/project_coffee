@@ -18,6 +18,7 @@ import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
+import ItemPage from "./Pages/items/ItemPage";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -43,6 +44,7 @@ function App() {
               path="/productSelection/:shopId"
               element={<ProductSelection />}
             />
+            <Route path="/itemPage" element={<ItemPage />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
