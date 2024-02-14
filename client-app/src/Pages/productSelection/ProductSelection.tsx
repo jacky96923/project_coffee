@@ -26,10 +26,10 @@ export default function ProductSelection() {
             </div>
           </Link>
           <div>
-            <div className="m-2 text-sm	">
+            <div className="m-2 text-sm	font-bold	">
               <h1>Blue Bottle Coffee</h1>
             </div>
-            <div className="m-2 text-sm	">
+            <div className="m-2 text-sm	font-bold	">
               <h1>中環擺花街38號地舖及1樓</h1>
             </div>
           </div>
