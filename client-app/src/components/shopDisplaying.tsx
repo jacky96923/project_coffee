@@ -42,8 +42,12 @@ export default function ShopSelectionList() {
                       borderRadius: "10px",
                     }}
                   >
-                    <h1>images</h1>
-                    <div className="flex flex-col m-2">
+                    <img
+                      src="https://rare-gallery.com/thumbs/510549-coffee.jpg"
+                      alt="image"
+                      className="m-4 rounded-md	 "
+                    />
+                    <div className="flex flex-col ml-5 mt-5">
                       <div className="text-base	m-2">{shop.shop_name}</div>
                       <div className=" text-xs	m-2">{shop.address}</div>
                       <div className="text-xs	m-2 flex justify-end">900m</div>
