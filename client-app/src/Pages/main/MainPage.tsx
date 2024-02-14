@@ -15,6 +15,9 @@ export default function MainPage() {
       </h1>
       <hr />
       <Search />
+      <h2 className=" m-3 text-2xl font-bold tracking-tight  sm:text-6xl ">
+        今日最抵 -
+      </h2>
       <Carousels />
       <MainThreeButton />
       <MainBottomNavBar />

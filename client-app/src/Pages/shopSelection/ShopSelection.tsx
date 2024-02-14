@@ -9,7 +9,7 @@ export default function ShopSelection() {
   return (
     <div className="relative overflow-hidden bg-white m-9">
       <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-        尋求咖啡店{" "}
+        尋找咖啡店
       </h1>
       <hr />
       <Search />

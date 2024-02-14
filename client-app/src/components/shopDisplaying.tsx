@@ -24,8 +24,8 @@ export default function ShopSelectionList() {
                     <img src="" alt="" />
                   </div>
                   <div className="m-1">
-                    <h3>{shop.name}</h3>
-                    <p>{shop.address}</p>
+                    <div className="text-lg		">{shop.name}</div>
+                    <div className="text-xs	">{shop.address}</div>
                   </div>
                 </div>
               </div>
