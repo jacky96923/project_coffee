@@ -1,0 +1,23 @@
+.button-container {
+  position: relative;
+  padding-top: 5px;
+  display: flex;
+justify-content: space-evenly;
+}
+.flex {
+
+justify-content: space-evenly;
+}
+
+h1 {
+  font-size: 24px; /* Adjust the font size as needed */
+  padding-bottom: 3rem;
+}
+.top{
+  padding-top: 1rem;
+}
+.flex1 {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
+}
