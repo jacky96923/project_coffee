@@ -17,9 +17,9 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Navigate to="/businessLogin" />} />
-          <Route path="/businessLogin" element={user? <LoginokPage/>: <BusinessLoginPage />}></Route>
-          <Route path="/business-register" element={<BusinessRegisterPage />} />
-          <Route path="/business-location" element={<BusinessLocation />} />
+          <Route path="/BusinessLogin" element={user? <LoginokPage/>: <BusinessLoginPage />}></Route>
+          <Route path="/BusinessRegister" element={<BusinessRegisterPage />} />
+          <Route path="/BusinessLocation" element={<BusinessLocation />} />
           <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} />
         </Routes>
       </div>
