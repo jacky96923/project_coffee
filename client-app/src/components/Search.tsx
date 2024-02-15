@@ -7,10 +7,10 @@ export default function Search() {
         <input
           type="text"
           placeholder="咖啡店名稱"
-          className="input input-bordered w-full max-w-xs m-3 rounded-lg"
+          className="input input-bordered w-full max-w-xs m-3 rounded-2xl	"
         />
 
-        <button className="rounded-lg w-10">
+        <button className="rounded-2xl	 w-10">
           <AdjustmentsHorizontalIcon />
         </button>
       </div>

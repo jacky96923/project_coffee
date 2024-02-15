@@ -19,6 +19,8 @@ import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
 import ItemPage from "./Pages/items/ItemPage";
+import MyReward from "./Pages/myReward/MyReward";
+import MyPage from "./Pages/myPage/MyPage";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -40,6 +42,9 @@ function App() {
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
             <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route path="/myReward" element={<MyReward />} />
+            <Route path="/myPage" element={<MyPage />} />
+
             <Route
               path="/productSelection/:shopId"
               element={<ProductSelection />}
