@@ -19,6 +19,8 @@ import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
 import ItemPage from "./Pages/items/ItemPage";
+import MyReward from "./Pages/myReward/MyReward";
+import MyPage from "./Pages/myPage/MyPage";
 import Receipt from "./Pages/receipt/ReceiptPage";
 import AllReceipt from "./Pages/receipt/AllReceiptPage";
 
@@ -42,6 +44,9 @@ function App() {
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
             <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route path="/myReward" element={<MyReward />} />
+            <Route path="/myPage" element={<MyPage />} />
+
             <Route
               path="/productSelection/:shopId"
               element={<ProductSelection />}
@@ -51,8 +56,8 @@ function App() {
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/CommentSummary" element={<CommentSummary/>} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
-            <Route path="/receipt/temp" element={<Receipt/>}/>
-            <Route path="/receipt/all" element={<AllReceipt/>}/>
+            <Route path="/receipt/temp" element={<Receipt />} />
+            <Route path="/receipt/all" element={<AllReceipt />} />
           </Routes>
         </div>
       </Router>

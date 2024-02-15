@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function BottomNavBar() {
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-gray-200 border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+    <div className="fixed bottom-0 left-0 right-0 w-full h-auto bg-gray-200 border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div className=" justify-around flex m-3">
         <Link to="/">
           <button
@@ -68,7 +68,7 @@ export default function BottomNavBar() {
             </span>{" "}
           </button>
         </Link>
-        <Link to="/profile">
+        <Link to="/myPage">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"

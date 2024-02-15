@@ -45,7 +45,6 @@ export default function ProductFromShop() {
           // console.log(item);
           return (
             <div
-              // className="rounded-full border-solid border-2 border-sky-500"
               style={{
                 display: "grid",
                 border: "1px solid grey",

@@ -17,11 +17,12 @@ export class UserAuthController {
     } else {
       res.status(400).json(result.message);
     }
-  }
+  };
 
   userRegister = async (req: Request, res: Response) => {
     try {
-      const { username, email, password, confirmPassword, contactNo } = req.body;
+      const { username, email, password, confirmPassword, contactNo } =
+        req.body;
       //console.log(email)
       if (!username) {
         return res
@@ -51,24 +52,35 @@ export class UserAuthController {
       }
 
       let checkEmail = await this.userAuthService.hasEmail(email);
-      let checkContactNo = await this.userAuthService.hasContactNo(contactNo)
+      let checkContactNo = await this.userAuthService.hasContactNo(contactNo);
       if (checkEmail) {
-        return res.status(401).json({ element: "email", error: "This email has been registered" })
-      } 
-      if (checkContactNo) {
-        return res.status(401).json({ element: "contactNo", error: "This contact number has been registered" })
+        return res
+          .status(401)
+          .json({ element: "email", error: "This email has been registered" });
       }
-      const result = await this.userAuthService.userRegister(username, email, confirmPassword, contactNo) as any
+      if (checkContactNo) {
+        return res
+          .status(401)
+          .json({
+            element: "contactNo",
+            error: "This contact number has been registered",
+          });
+      }
+      const result = (await this.userAuthService.userRegister(
+        username,
+        email,
+        confirmPassword,
+        contactNo
+      )) as any;
       if (result.flag) {
         return res.json({ message: result.message, token: result.token });
       } else {
         return res.status(400).json(result.message);
       }
-
     } catch (error) {
       return console.error("error:", error);
     }
-  }
+  };
 }
 
 export class BusinessAuthController {
@@ -77,7 +89,7 @@ export class BusinessAuthController {
     this.router.post("/businessLogin", this.businessLogin);
     this.router.post("/businessRegister", this.businessRegister);
   }
-  businessLogin = async (req: Request, res: Response) =>{
+  businessLogin = async (req: Request, res: Response) => {
     let { username, password } = req.body;
     let result = await this.businessAuthService.businessLogin(
       username,
@@ -89,15 +101,13 @@ export class BusinessAuthController {
     } else {
       res.status(400).json(result.message);
     }
-  }
+  };
   async businessRegister(req: Request, res: Response) {
     try {
       // Q1: if method is used rather than property of function, how can the router work?
       // Q2: store info of different pages in localstorage, then assemble them in 1 form
       // register according to the form?
       // Q3: should email be used as username for login? (validation issue)
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 }
