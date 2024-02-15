@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="fixed">
+    
+        <div class="w-screen h-screen flex justify-center items-center fixed z-0 ">
+      <div onclick="toggleSlideover()" class="cursor-pointer px-5 py-2 text-sm border text-gray-500 hover:bg-gray-100 rounded border-gray-300 toggle-button absolute z-1">Toggle Slide-over</div>
+        </div>
+        
+      <div id="slideover-container" class="w-screen h-screen">
+       
+        <div onclick="toggleSlideover()" id="slideover" class="w-full bg-black h-2/5  absolute duration-500  ease-out translate-y-full bottom-0">
+            
+            <div class="absolute cursor-pointer text-gray-600 top-0 w-8 h-8 flex items-center justify-center right-0 mt-5 mr-5 bg-red-100 ">
+                
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function toggleSlideover(){
+   document.getElementById('slideover').classList.toggle('translate-y-full');
+}
+</script>
+</html>

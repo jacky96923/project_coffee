@@ -32,6 +32,6 @@ app.listen(PORT, () => {
   console.log(`App running at http://localhost:${PORT}`);
 });
 
-let Holidays = require("date-holidays");
-let hd = new Holidays("HK");
-console.log(hd.getHolidays(2024));
+// let Holidays = require("date-holidays");
+// let hd = new Holidays("HK");
+// console.log(hd.getHolidays(2024));
