@@ -1,0 +1,12 @@
+.options {
+  border-bottom: 1px solid lightgrey;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.optionsButtonsClicked:active {
+  background-color: lightgray;
+}

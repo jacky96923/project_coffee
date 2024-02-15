@@ -1,0 +1,6 @@
+.slideover {
+  background-color: white;
+  border-radius: 33px;
+  position: fixed;
+  z-index: 1;
+}

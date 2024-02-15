@@ -1,0 +1,36 @@
+body {
+
+}
+
+h2 {
+  text-align: center; /* Center align the text */
+}
+
+/* .rating.rating-xs {
+  text-align: center;
+  padding-bottom: 1rem;
+} */
+.rating.rating-md {
+align-items: center;
+padding-bottom: 1rem;
+text-align: center;
+}
+
+.center-content {
+
+  align-items: center;
+}
+p{
+    margin-top: 1rem;
+}
+.btn.btn-wide{
+  margin-top: 1rem;
+}
+.container{
+  width: 360px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  text-align: center;
+}
