@@ -13,12 +13,16 @@ import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
 import { CommentPage } from "./Pages/Comments/CommentPage";
-
+import { CommentSummary } from "./Pages/Comments/CommentSummary";
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
 import ItemPage from "./Pages/items/ItemPage";
+import MyReward from "./Pages/myReward/MyReward";
+import MyPage from "./Pages/myPage/MyPage";
+import Receipt from "./Pages/receipt/ReceiptPage";
+import AllReceipt from "./Pages/receipt/AllReceiptPage";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -40,14 +44,20 @@ function App() {
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
             <Route path="/shopSelection" element={<ShopSelection />} />
+            <Route path="/myReward" element={<MyReward />} />
+            <Route path="/myPage" element={<MyPage />} />
+
             <Route
               path="/productSelection/:shopId"
-              element={<ProductSelectionWrapper />}
+              element={<ProductSelection />}
             />
             <Route path="/itemPage" element={<ItemPage />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
+            <Route path="/CommentSummary" element={<CommentSummary/>} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+            <Route path="/receipt/temp" element={<Receipt />} />
+            <Route path="/receipt/all" element={<AllReceipt />} />
           </Routes>
         </div>
       </Router>
@@ -55,9 +65,9 @@ function App() {
   );
 }
 
-function ProductSelectionWrapper({ match }: any) {
-  const { shopId } = match.params;
-  return <ProductSelection shopId={parseInt(shopId)} />;
-}
+// function ProductSelectionWrapper({ match }: any) {
+//   const { shopId } = match.params;
+//   return <ProductSelection shopId={parseInt(shopId)} />;
+// }
 
 export default App;

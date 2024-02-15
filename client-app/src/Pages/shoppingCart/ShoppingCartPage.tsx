@@ -64,7 +64,7 @@ export default function ShoppingCartPage() {
     return (
         <div className={styles.container}>
             <div className='flex border-b border-slate-700'>
-                <ChevronLeftIcon className="h-6 w-6 mr-2 self-center"/>
+                <ChevronLeftIcon className="h-6 w-6 mr-2 self-center" />
                 <div>
                     <h4 className='font-bold text-2xl'>我的購物車</h4>
                     <h6>Blue Bottle Coffee</h6>
@@ -77,15 +77,15 @@ export default function ShoppingCartPage() {
             <div className='border-b border-slate-700'>
                 <button className='block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white'
                 onClick={onMenuHandler}>增加産品</button>
-                <button className='block mx-auto w-72 my-1.5 border border-dark-brown rounded-2xl font-bold text-red'
-                onClick={onRemoveCartHandler}>清空購物車</button> {/*color not working*/}
+                <button className='block mx-auto w-72 my-1.5 border border-dark-brown rounded-2xl font-bold text-red-500'
+                onClick={onRemoveCartHandler}>清空購物車</button> 
             </div>
             <div className='border-b border-slate-700'>
                 <h6 className='font-bold'>訂單總結</h6>
             </div>
             <div className='border-b border-slate-700'>
-                <button className='block mx-auto font-bold text-tahiti'>+ 使用優惠卷</button> {/*color not working*/}
-                <button className='block mx-auto font-bold text-tahiti'>+ 使用積分</button> {/*color not working*/}
+                <button className='block mx-auto font-bold text-tahiti'>+ 使用優惠卷</button> 
+                <button className='block mx-auto font-bold text-tahiti'>+ 使用積分</button> 
             </div>
             <div className='w-5/6 mx-auto'>
                 <div className='flex justify-around my-1.5'>

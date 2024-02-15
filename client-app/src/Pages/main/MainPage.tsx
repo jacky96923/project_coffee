@@ -1,25 +1,33 @@
 import React from "react";
-import Carousels from "../../components/Carousels";
 import Search from "../../components/Search";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import MainBottomNavBar from "../../components/BottomNavBar";
 import MainThreeButton from "../../components/ThreeButton";
+import Carousels from "../../components/Carousels";
 
 export default function MainPage() {
   const username = useSelector((state: RootState) => state.auth.user);
   return (
     <div className="relative overflow-hidden bg-white m-9">
-      <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl ">
+      <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl m-2">
         早晨, {username}
       </h1>
-      <hr />
       <Search />
-      <Carousels />
+      <h2 className=" m-3 text-2xl font-bold tracking-tight ">今日最抵 -</h2>
+      <div className="flex justify-center mx-auto ">
+        <Carousels />
+      </div>
       <MainThreeButton />
       <MainBottomNavBar />
-      <h1 className="flex justify-center mt-9 border p-3 ">最新消息</h1>
-      <img src="" alt="" />
+      <h1 className="flex justify-center m-8 border p-3 rounded-2xl		 ">
+        最新消息
+      </h1>
+      <img
+        src="https://flash-coffee.com/zh-hk/wp-content/uploads/sites/21/2022/06/HK-zh-set1-1080x1080jpg-600x600.jpg"
+        alt="image"
+        className=" mt-3 w-76 h-auto rounded-2xl			"
+      />
     </div>
   );
 }
