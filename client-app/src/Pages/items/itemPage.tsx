@@ -1,6 +1,5 @@
 import React from "react";
 import "./ItemPage.css";
-import { ItemCard } from "../../components/ItemCard";
 
 export default function ItemPage() {
   return (
@@ -15,7 +14,6 @@ export default function ItemPage() {
         <div id="itemName_container">
           <div id="itemName"></div>
         </div>
-        <ItemCard />
       </div>
     </>
   );
