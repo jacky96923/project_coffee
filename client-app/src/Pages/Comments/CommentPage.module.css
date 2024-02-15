@@ -1,7 +1,5 @@
 body {
-  display: flex;
-  justify-content: center;
-  margin-top: 5%;
+
 }
 
 h2 {
@@ -13,13 +11,13 @@ h2 {
   padding-bottom: 1rem;
 } */
 .rating.rating-md {
-  
-padding-bottom: 1rem;}
+align-items: center;
+padding-bottom: 1rem;
+text-align: center;
+}
 
 .center-content {
-  /* margin-top: 2rem; */
-  display: flex;
-  justify-content: center;
+
   align-items: center;
 }
 p{
@@ -27,4 +25,12 @@ p{
 }
 .btn.btn-wide{
   margin-top: 1rem;
+}
+.container{
+  width: 360px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  text-align: center;
 }

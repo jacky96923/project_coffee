@@ -1,9 +1,10 @@
 import { Textarea, Button, IconButton } from "@material-tailwind/react";
 import React from 'react';
-import "./CommentPage.css";
+import styles from"./CommentPage.module.css";
 
 export function CommentPage() {
   return (
+    <div className={styles.container}>
     <div className="relative w-[32rem]">
 
 <div className="relative w-[32rem] flex justify-end">
@@ -36,6 +37,7 @@ export function CommentPage() {
         <button className="btn btn-wide">提交</button>
         </div>
       </div>
+    </div>
     </div>
   );
 }
