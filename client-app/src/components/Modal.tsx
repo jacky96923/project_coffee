@@ -1,6 +1,4 @@
-import { Button, Modal, Select } from 'flowbite-react';
 import { ChangeEvent, useState } from 'react';
-
 
 type pickupModalProps = {
   show: boolean,
@@ -18,10 +16,11 @@ export function PickupModal(props: pickupModalProps) {
   }
   return (
     <>
-      <Modal dismissible size={'sm'} show={props.show} onClose={props.onClose}>
-        <Modal.Header>自取時間</Modal.Header>
-        <Modal.Body>
-          <Select defaultValue={pickupTime} onChange={(e)=>onSelectTimeHandler(e)}>
+      <dialog id="my_modal_1" className={props.show === true? "modal modal-open":"modal"}>
+        <div className="modal-box w-11/12 max-w-xs">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={props.onClose}>✕</button>
+          <h3 className="font-bold text-lg">自取時間</h3>
+          <select className="modal-action select w-full max-w-sm" defaultValue={pickupTime} onChange={(e)=>onSelectTimeHandler(e)}>
             <option value="10:00">10:00</option>
             <option value="10:15">10:15</option>
             <option value="10:30">10:30</option>
@@ -31,15 +30,15 @@ export function PickupModal(props: pickupModalProps) {
             <option value="11:30">11:30</option>
             <option value="11:45">11:45</option>
             <option value="12:00">12:00</option>
-          </Select>
-        </Modal.Body>
-        {/* <Modal.Footer>
-          <Button color="gray" onClick={props.onClose}>I accept</Button>
-          <Button color="gray" onClick={props.onClose}>
-            Decline
-          </Button>
-        </Modal.Footer> */}
-      </Modal>
+          </select>
+        </div>
+          {/* <Modal.Footer>
+            <Button color="gray" onClick={props.onClose}>I accept</Button>
+            <Button color="gray" onClick={props.onClose}>
+              Decline
+            </Button>
+          </Modal.Footer> */}
+      </dialog>
     </>
   );
 }

@@ -19,6 +19,8 @@ import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import ProductSelection from "./Pages/productSelection/ProductSelection";
 import ItemPage from "./Pages/items/ItemPage";
+import Receipt from "./Pages/receipt/ReceiptPage";
+import AllReceipt from "./Pages/receipt/AllReceiptPage";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -48,6 +50,8 @@ function App() {
 
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+            <Route path="/receipt/temp" element={<Receipt/>}/>
+            <Route path="/receipt/all" element={<AllReceipt/>}/>
           </Routes>
         </div>
       </Router>
