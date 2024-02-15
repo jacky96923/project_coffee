@@ -13,7 +13,7 @@ import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
 import { CommentPage } from "./Pages/Comments/CommentPage";
-
+import { CommentSummary } from "./Pages/Comments/CommentSummary";
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
@@ -49,6 +49,7 @@ function App() {
             <Route path="/itemPage" element={<ItemPage />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
+            <Route path="/CommentSummary" element={<CommentSummary/>} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
             <Route path="/receipt/temp" element={<Receipt/>}/>
             <Route path="/receipt/all" element={<AllReceipt/>}/>
