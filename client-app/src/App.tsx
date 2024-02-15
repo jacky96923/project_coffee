@@ -44,7 +44,7 @@ function App() {
             <Route path="/shopSelection" element={<ShopSelection />} />
             <Route
               path="/productSelection/:shopId"
-              element={<ProductSelectionWrapper />}
+              element={<ProductSelection />}
             />
             <Route path="/itemPage" element={<ItemPage />} />
 
@@ -59,9 +59,9 @@ function App() {
   );
 }
 
-function ProductSelectionWrapper({ match }: any) {
-  const { shopId } = match.params;
-  return <ProductSelection shopId={parseInt(shopId)} />;
-}
+// function ProductSelectionWrapper({ match }: any) {
+//   const { shopId } = match.params;
+//   return <ProductSelection shopId={parseInt(shopId)} />;
+// }
 
 export default App;

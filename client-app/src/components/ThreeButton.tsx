@@ -9,26 +9,26 @@ export default function ThreeButton() {
     <>
       <div className="flex justify-around m-2">
         <div className="location ">
-          <h3>
+          <div className="w-">
             <Link to="/shopSelection" className="nav-link">
-              <MapPinIcon />
-              附近咖啡
+              <MapPinIcon className="w-14" />
+              <div className="w-14 text-sm	">附近咖啡</div>
             </Link>
-          </h3>
+          </div>
         </div>
         <div className="award">
           <h3>
             <Link to="/shopSelection" className="nav-link">
-              <TagIcon />
-              我的獎賞
+              <TagIcon className="w-14" />
+              <div className="w-14 text-sm	"> 我的獎賞</div>
             </Link>
           </h3>
         </div>
         <div className="mybooking">
           <h3>
             <Link to="/shopSelection" className="nav-link">
-              <BriefcaseIcon />
-              我的訂單
+              <BriefcaseIcon className="w-14" />
+              <div className="w-14 text-sm	">我的訂單</div>
             </Link>
           </h3>
         </div>
