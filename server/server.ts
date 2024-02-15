@@ -12,8 +12,10 @@ import {
   UserAuthController,
 } from "./controller/AuthController";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
-import { ShopController } from "./controller/shopController";
-import { ShopService } from "./services/shopService";
+import { ShopController } from "./controller/ShopController";
+import { ShopService } from "./services/ShopService";
+import { MenuIdService } from "./services/MenuService";
+import { MenuController } from "./controller/MenuController";
 
 const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
@@ -26,10 +28,13 @@ const businessAuthService = new BusinessAuthService(knex);
 const businessAuthController = new BusinessAuthController(businessAuthService);
 const shopService = new ShopService(knex);
 const shopController = new ShopController(shopService);
+const menuIdService = new MenuIdService(knex);
+const menuController = new MenuController(menuIdService);
 
 app.use("/auth", userAuthController.router);
 app.use("/auth", businessAuthController.router);
 app.use("/shops", shopController.router);
+app.use("/menus", menuController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

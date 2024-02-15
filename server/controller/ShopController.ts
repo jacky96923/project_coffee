@@ -1,6 +1,6 @@
 import express from "express";
-import { ShopService } from "../services/shopService";
 import { Request, Response } from "express";
+import { ShopService } from "../services/ShopService";
 
 export class ShopController {
   router = express.Router();
