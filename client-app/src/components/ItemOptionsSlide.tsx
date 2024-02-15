@@ -17,7 +17,7 @@ export default function ItemOptionSlide(props: SlideProps) {
         <div
           onClick={slideHandler}
           id="slideover-bg"
-          className={`w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-zinc ${props.isBgShow}`}
+          className={`w-full h-full duration-500 ease-out transition-all inset-0 absolute bg-black ${props.isBgShow}`}
         ></div>
         <div
           id="slideover"

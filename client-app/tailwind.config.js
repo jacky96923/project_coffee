@@ -1,9 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
 const colors = require("tailwindcss/colors");
-// const withMT = require("@material-tailwind/react/utils/withMT");
-
-const colors = require("tailwindcss/colors");
 module.exports = {
   content: ["./src/**/*.tsx"],
   theme: {
@@ -26,7 +23,6 @@ module.exports = {
       "light-brown": "#CB8A58",
       "dark-brown": "#562B1A",
     },
-    extend: {},
     extend: {},
   },
   plugins: [require("daisyui")],
