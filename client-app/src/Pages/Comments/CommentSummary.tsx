@@ -65,7 +65,7 @@ export function CommentSummary() {
           </div>
         </div>
 
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 fixed z-0 mx-auto inset-x-0">
           <button className="btn btn-wide">提交</button>
         </div>
       </div>

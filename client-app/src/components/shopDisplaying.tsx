@@ -1,20 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { getShopDisplaying } from "../hooks/dataAPI";
+import { GetShopDisplaying } from "../hooks/dataAPI";
 
 export default function ShopSelectionList() {
-  const shops = [
-    { id: 1, name: "Blue bottle shop", address: "中環擺花街38號地舖及1樓" },
-    { id: 2, name: "Shop B", address: "456 Elm St" },
-    { id: 3, name: "Shop C", address: "789 Oak St" },
-  ];
+  // const shops = [
+  //   { id: 1, name: "Blue bottle shop", address: "中環擺花街38號地舖及1樓" },
+  //   { id: 2, name: "Shop B", address: "456 Elm St" },
+  //   { id: 3, name: "Shop C", address: "789 Oak St" },
+  // ];
 
   const queryClient = useQueryClient();
   const shopItem:
     | string
     | Array<{ id: number; shop_name: string; address: string }> =
-    getShopDisplaying();
+    GetShopDisplaying();
   const OnShopItem = useMutation({
     mutationFn: async () => {},
     onSuccess: () =>

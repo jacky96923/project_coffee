@@ -1,21 +1,38 @@
-import { log } from "console";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CategoryButton from "../../components/CategoryButton";
 import ProductFromShop from "../../components/ProductFromShop";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 
 import { Link } from "react-router-dom";
-
-// interface ProductSelectionPageProps {
-//   shopId: number;
-// }
+import { CategoryId, CategoryName } from "../../hooks/dataAPI";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProductSelection() {
-  // Fetch products for the selected shop using the shopId
   const url = window.location.pathname;
-
   console.log(url.charAt(url.length - 1));
+
+  // const menu = MenuId(parseInt(url.charAt(url.length - 1)));
+  // console.log("menu", menu);
+  const queryClient = useQueryClient();
+  const categoryId: string | Array<{ id: number }> = CategoryId(
+    parseInt(url.charAt(url.length - 1))
+  );
+  console.log("categoryId", categoryId);
+
+  // const OnShopItem = useMutation({
+  //   mutationFn: async () => {},
+  //   onSuccess: () =>
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["shopDisplaying"],
+  //       exact: true,
+  //     }),
+  // });
+  const categoryNameList: string | Array<{ id: number }> = CategoryName(
+    categoryId as Array<{ id: number }>
+  );
+  console.log("categoryNameList", categoryNameList);
+
   return (
     <div className="m-4">
       <div className="flex justify-around">
@@ -35,8 +52,8 @@ export default function ProductSelection() {
           </div>
         </div>
         <div className="flex m-2">
-          <div className="ml-2 ">
-            <span className="m-3 text-sm ">評論區</span>
+          <div className="m-2 ">
+            <span className=" text-sm ">評論區</span>
           </div>
           <div>
             <div className="m-2 w-6">
