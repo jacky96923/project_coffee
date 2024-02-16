@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
       .references("id")
       .inTable("transaction");
     table.integer("shop_id").unsigned().references("id").inTable("shops");
+    console.log('This is my function');
   });
 }
 

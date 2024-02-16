@@ -42,3 +42,4 @@ const config: { [key: string]: Knex.Config } = {
 console.log("check check", process.env.POSTGRES_HOST);
 
 module.exports = config;
+export default config;
