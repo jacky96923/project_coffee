@@ -3,9 +3,12 @@ import styles from "./ItemPageOptions.module.css";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import ItemOptionSlide from "./ItemOptionsSlide";
 
-type ItemPageOptionsProps = {};
+type ItemPageOptionsProps = {
+  itemId: string;
+  options: string;
+};
 
-export default function ItemPageOptions() {
+export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const [isClicked, setIsClicked] = useState(false);
   const [slide, setSlide] = useState("invisible");
   const [slideOptions, setSlideOption] = useState("translate-y-full");
@@ -30,7 +33,7 @@ export default function ItemPageOptions() {
     <>
       <div className={optionsButtons} onClick={slideHandler}>
         <div className={styles.options}>
-          <div>凍/熱</div>
+          <div>{props.options}</div>
           <div>
             <ChevronRightIcon className="h-6 w-6" />
           </div>
@@ -42,6 +45,8 @@ export default function ItemPageOptions() {
         isSlideOptionShow={slideOptions}
         isBgShow={bg}
         onHide={handleClose}
+        itemId={props.itemId}
+        options={props.options}
       />
     </>
   );

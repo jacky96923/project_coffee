@@ -6,6 +6,7 @@ import {
   Route,
   Routes,
   Navigate,
+   
 } from "react-router-dom";
 
 import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
@@ -51,7 +52,7 @@ function App() {
               path="/productSelection/:shopId"
               element={<ProductSelection />}
             />
-            <Route path="/itemPage" element={<ItemPage />} />
+            <Route path="/itemPage/:id" element={<ItemPage />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/CommentSummary" element={<CommentSummary />} />

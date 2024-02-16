@@ -1,7 +1,7 @@
 .content {
   padding-top: 16rem;
   position: relative;
-  bottom: 7rem;
+  bottom: 0.5rem;
   z-index: 1;
 }
 
@@ -16,7 +16,7 @@
 
 .itemImg {
   position: fixed;
-  aspect-ratio: 4/3;
+  aspect-ratio: 1/1;
 }
 
 .itemWrap {

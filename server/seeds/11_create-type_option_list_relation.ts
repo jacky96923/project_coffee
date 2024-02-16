@@ -36,8 +36,6 @@ export async function seed(knex: Knex): Promise<void> {
     { type_id: 2, option_list_id: 15 },
     { type_id: 2, option_list_id: 16 },
     { type_id: 2, option_list_id: 17 },
-    { type_id: 2, option_list_id: 18 },
-    { type_id: 2, option_list_id: 19 },
     { type_id: 4, option_list_id: 3 },
     { type_id: 4, option_list_id: 4 },
     { type_id: 4, option_list_id: 8 },
