@@ -5,8 +5,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 
 import { Link } from "react-router-dom";
-import { CategoryId, CategoryName } from "../../hooks/dataAPI";
-import { useQueryClient } from "@tanstack/react-query";
+import { GetCategoryName } from "../../hooks/dataAPI";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function ProductSelection() {
   const url = window.location.pathname;
@@ -15,10 +15,19 @@ export default function ProductSelection() {
   // const menu = MenuId(parseInt(url.charAt(url.length - 1)));
   // console.log("menu", menu);
   const queryClient = useQueryClient();
-  const categoryId: string | Array<{ id: number }> = CategoryId(
-    parseInt(url.charAt(url.length - 1))
-  );
-  console.log("categoryId", categoryId);
+  const result:
+    | string
+    | {
+        CategoryName: { data: any[] };
+        shopInformation: {
+          data: Array<{
+            id: number;
+            shop_name: string;
+            address: string;
+          }>;
+        };
+      } = GetCategoryName(parseInt(url.charAt(url.length - 1)));
+  // console.log("categoryNameList", categoryNameList);
 
   // const OnShopItem = useMutation({
   //   mutationFn: async () => {},
@@ -28,10 +37,6 @@ export default function ProductSelection() {
   //       exact: true,
   //     }),
   // });
-  const categoryNameList: string | Array<{ id: number }> = CategoryName(
-    categoryId as Array<{ id: number }>
-  );
-  console.log("categoryNameList", categoryNameList);
 
   return (
     <div className="m-4">
@@ -42,14 +47,21 @@ export default function ProductSelection() {
               <ChevronLeftIcon />
             </div>
           </Link>
-          <div>
-            <div className="m-2 text-sm	font-bold	">
-              <h1>Blue Bottle Coffee</h1>
-            </div>
-            <div className="m-2 text-sm	font-bold	">
-              <h1>中環擺花街38號地舖及1樓</h1>
-            </div>
-          </div>
+
+          {typeof result === "string"
+            ? ""
+            : result.shopInformation.data.length > 0
+            ? result.shopInformation.data.map((shop) => (
+                <div>
+                  <div className="m-2 text-sm	font-bold	">
+                    <h1>{shop.shop_name}</h1>
+                  </div>
+                  <div className="m-2 text-sm	font-bold	">
+                    <h1>{shop.address}</h1>
+                  </div>
+                </div>
+              ))
+            : "No shop information"}
         </div>
         <div className="flex m-2">
           <div className="m-2 ">
@@ -62,7 +74,18 @@ export default function ProductSelection() {
           </div>
         </div>
       </div>
-      <CategoryButton />
+      {typeof result === "string"
+        ? ""
+        : result.CategoryName.data.length > 0
+        ? result.CategoryName.data.map((name) => (
+            <div className="flex justify-between m-2">
+              <button className="flex items-center justify-center w-auto p-2 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+                {name}
+              </button>
+            </div>
+          ))
+        : "No category"}
+
       <ProductFromShop />
       <div className="flex justify-center	m-10 bg-black text-white rounded-xl	">
         <button className="m-3		">檢視購物車 | 1件</button>

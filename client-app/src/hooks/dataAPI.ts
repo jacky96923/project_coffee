@@ -25,11 +25,23 @@ export function GetShopDisplaying() {
   return data;
 }
 
-export function CategoryId(id: number) {
+export function GetCategoryName(id: number) {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["CategoryId"],
     queryFn: async () => {
-      const res = await fetch(`${source}/menus/menu`, {
+      let result: {
+        CategoryName: { data: any[] };
+        shopInformation: {
+          data: Array<{
+            id: number;
+            shop_name: string;
+            address: string;
+          }>;
+        };
+      } = { CategoryName: { data: [] }, shopInformation: { data: [] } };
+
+      // ------------------------------------------------------------------------------
+      const resMenuId = await fetch(`${source}/menus/menu`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,39 +50,56 @@ export function CategoryId(id: number) {
           id,
         }),
       });
-      const resp = await res.json();
-      return resp;
-    },
-  });
+      const MenuId = await resMenuId.json();
 
-  if (isLoading || isFetching) return "Data is coming";
-  if (error) return "Error occurred";
-  if (!data) return [];
-  return data;
-}
-
-export function CategoryName(categoryIdList: { id: number }[]) {
-  const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: ["CategoryName"],
-    queryFn: async () => {
-      const res = await fetch(`${source}/menus/menu`, {
+      // ------------------------------------------------------------------------------
+      const resCategoryName = await fetch(`${source}/menus/category`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          categoryIdList,
+          categoryIdList: MenuId.data,
         }),
       });
-      const resp = await res.json();
-      return resp;
+      const CategoryName = await resCategoryName.json();
+      result.CategoryName = CategoryName;
+
+      // ------------------------------------------------------------------------------
+      const resShopInformation = await fetch(
+        `${source}/menus/shopInformation`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+        }
+      );
+      const shopInformation = await resShopInformation.json();
+      result.shopInformation = shopInformation;
+
+      // ------------------------------------------------------------------------------
+      // const ItemsInformation = await fetch(`${source}/menus/itemsInformation`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     categoryIdList: MenuId.data,
+      //   }),
+      // });
+
+      // ------------------------------------------------------------------------------
+      console.log("result", result);
+      return result;
     },
   });
 
   if (isLoading || isFetching) return "Data is coming";
   if (error) return "Error occurred";
-  if (!data) return [];
+  if (!data) return "";
   return data;
 }
-
-// Not ok here!!!!!!!!!!!!!!!!!
