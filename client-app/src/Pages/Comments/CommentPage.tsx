@@ -1,10 +1,12 @@
 import { Textarea } from "@material-tailwind/react";
 import React, { useState } from "react";
 import styles from "./CommentPage.module.css";
+import { useNavigate } from 'react-router-dom';
 
 export function CommentPage() {
   const [comment, setComment] = useState("");
   const [star, setStar] = useState("0");
+  const navigate = useNavigate(); // Moved here to comply with the Rules of Hooks
 
   const handleCommentChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setComment(event.target.value);
@@ -13,13 +15,13 @@ export function CommentPage() {
   const handleRatingChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setStar(event.target.value);
   };
-
+  const crossSubmit = async () => {navigate('/CommentSummary')}
   const handleSubmit = async () => {
     console.log("Comment:", comment);
     console.log("Star rating:", star);
-  
     try {
-      const response = await fetch("http://localhost:8100/comments/rating", { // Update the endpoint to '/comments'
+      // Perform your fetch operation here
+      const response = await fetch("http://localhost:8100/comments/rating", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -29,27 +31,24 @@ export function CommentPage() {
           description: comment,
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
-      }
-  
-      // Assuming submission was successful, you can handle accordingly
-      else{
+      } else {
         console.log("Submission successful!");
+        navigate('/CommentSummary'); // Navigate after the successful submission
       }
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
       // Handle error here
     }
   };
-  // console.log("Sending data:", JSON.stringify({rating: star, description: comment}));
 
   return (
     <div className={styles.container}>
       <div className="relative w-[32rem]">
         <div className="relative w-[32rem] flex justify-end">
-          <button className="btn btn-circle btn-outline">
+          <button className="btn btn-circle btn-outline" onClick={crossSubmit}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -105,10 +104,10 @@ export function CommentPage() {
           onChange={handleCommentChange}
         />
 
-        <div className="flex flex-col items-center py-1.5 fixed z-0 mx-auto inset-x-0">
-          <button className="btn btn-wide" onClick={handleSubmit}>
-            提交
-          </button>
+        <div className="flex flex-col items-center py-1.5  absolute fixed z-0 mx-auto inset-x-0">
+        <button className="btn btn-wide" onClick={handleSubmit}>
+      提交
+    </button>
         </div>
       </div>
     </div>
