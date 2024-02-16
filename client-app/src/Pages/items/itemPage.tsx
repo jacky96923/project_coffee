@@ -3,17 +3,38 @@ import styles from "./ItemPage.module.css";
 import ItemPageOptions from "../../components/ItemPageOptions";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import { GetItemInfo } from "../../hooks/ItemPageAPI";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 
 export default function ItemPage() {
-  const navigate = useNavigate();
-  const [cupSize, setCupSize] = useState(null);
+  let { id } = useParams();
+  console.log("page", id);
 
+  const items:
+    | string
+    | {
+        itemInfo: Array<{
+          id: number;
+          name: string;
+          item_photo: string;
+          size: string;
+          price: number;
+          description: string;
+          is_enabled: boolean;
+          shop_id: number;
+        }>;
+        optionList: Array<{
+          option_list_name: string;
+        }>;
+      } = GetItemInfo(id!);
+  const navigate = useNavigate();
   return (
     <>
       <div className={styles.imageContainer}>
         <img
           className={styles.itemImg}
-          src="https://www.thespruceeats.com/thmb/mouqNJc2-paHkBuRRuPU7ht_L4o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/SES-mocha-4797918-hero-01-1-f8fb7ebd74914895b61366f6fc1d4b05.jpg"
+          src={typeof items === "string" ? "" : items.itemInfo[0].item_photo}
         ></img>
       </div>
       <button
@@ -25,7 +46,9 @@ export default function ItemPage() {
       <div className={styles.content}>
         <div className={styles.itemWrap}>
           <div className={styles.itemName_container}>
-            <div className={styles.itemName}>朱古力咖啡</div>
+            <div className={styles.itemName}>
+              {typeof items === "string" ? "No data" : items.itemInfo[0].name}
+            </div>
           </div>
           <div className={styles.itemCard}>
             <div className={styles.itemDetails}>
@@ -33,31 +56,60 @@ export default function ItemPage() {
                 <div className={styles.itemh2}>關於此產品</div>
                 <hr className={styles.divider} />
                 <div className={styles.itemh3}>
-                  摩卡咖啡是義式拿鐵咖啡的變種。和經典的義式拿鐵咖啡一樣，它通常是由三分之一的義式濃縮咖啡和三分之二的奶沫配成，不過它還會加入少量巧克力。
+                  {typeof items === "string"
+                    ? "No data"
+                    : items.itemInfo[0].description}
                 </div>
               </div>
               <div className={styles.itemDiscription}>
-                <div>
-                  <div className={styles.itemh2}>飲品尺寸</div>
-                  <div className={styles.sizeButtonWrap}>
-                    <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
-                      <div className={styles.buttonText}>小杯</div>
-                    </button>
-                    <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
-                      <div className={styles.buttonText}>中杯</div>
-                    </button>
-                    <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
-                      <div className={styles.buttonText}>大杯</div>
-                    </button>
+                {typeof items === "string" ? (
+                  ""
+                ) : items.itemInfo.length > 1 ? (
+                  <div>
+                    <div className={styles.itemh2}>飲品尺寸</div>
+                    <div className={styles.sizeButtonWrap}>
+                      <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
+                        <div className={styles.buttonText}>
+                          {typeof items === "string"
+                            ? " "
+                            : items.itemInfo[0].size}
+                        </div>
+                      </button>
+                      <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
+                        <div className={styles.buttonText}>
+                          {typeof items === "string"
+                            ? " "
+                            : items.itemInfo[1].size}
+                        </div>
+                      </button>
+                      <button className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown">
+                        <div className={styles.buttonText}>
+                          {typeof items === "string"
+                            ? " "
+                            : items.itemInfo[2].size}
+                        </div>
+                      </button>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  " "
+                )}
               </div>
             </div>
             <div className={styles.optionsWrap}>
               <div className={styles.optionsTitle}>
                 <div className={styles.itemh2}>自訂選項</div>
               </div>
-              <ItemPageOptions />
+              {typeof items === "string"
+                ? ""
+                : items.optionList.length > 0
+                ? items.optionList.map((entry) => (
+                    <ItemPageOptions
+                      options={entry.option_list_name}
+                      itemId={id!}
+                    />
+                  ))
+                : "No Option data"}
             </div>
             <div className={styles.addItemWrap}>
               <button className="btn rounded-full  bg-zinc px-28">
