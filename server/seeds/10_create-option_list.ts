@@ -8,8 +8,8 @@ export async function seed(knex: Knex): Promise<void> {
   await knex("option_list").insert([
     { name: "數量(濃縮咖啡)", custom_option_id: 1, shop_id: 1 },
     { name: "數量(濃縮咖啡)", custom_option_id: 2, shop_id: 1 },
-    { name: "凍/熱飲", custom_option_id: 3, shop_id: 1 },
-    { name: "凍/熱飲", custom_option_id: 4, shop_id: 1 },
+    { name: "凍或熱飲", custom_option_id: 3, shop_id: 1 },
+    { name: "凍或熱飲", custom_option_id: 4, shop_id: 1 },
     { name: "咖啡豆", custom_option_id: 5, shop_id: 1 },
     { name: "咖啡豆", custom_option_id: 6, shop_id: 1 },
     { name: "咖啡豆", custom_option_id: 7, shop_id: 1 }, //7

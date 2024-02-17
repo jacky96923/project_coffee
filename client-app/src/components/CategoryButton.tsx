@@ -37,7 +37,7 @@ export default function CategoryButton() {
               <button className="m-2 ">{item.name}</button>
             </div>
           );
-        })}{" "}
+        })}
       </div>
     </>
   );

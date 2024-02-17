@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export default function ThreeButton() {
   return (
     <>
-      <div className="flex justify-around m-2">
+      <div className="flex justify-around m-8">
         <div className="location ">
           <div className="w-">
             <Link to="/shopSelection" className="nav-link">
@@ -18,7 +18,7 @@ export default function ThreeButton() {
         </div>
         <div className="award">
           <h3>
-            <Link to="/shopSelection" className="nav-link">
+            <Link to="/myReward" className="nav-link">
               <TagIcon className="w-14" />
               <div className="w-14 text-sm	"> 我的獎賞</div>
             </Link>

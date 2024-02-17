@@ -13,6 +13,8 @@
 #  >0-  - zero or many to one
 #
 ////////////////////////////////////
+
+
 set
 ---
 id integer PK
@@ -24,58 +26,61 @@ shop_id integer FK - shops.id
 set_item_relation
 -----------------
 id integer PK
-item_id integer FK >- item.id
+food_item_id integer FK >- item.id
+drink_item_id integer FK >- item.id
+drink_size varchar
+extra_cost float
 set_id integer FK >- set.id
 
 
 option_list
 -----------
-id
+id integer PK
 name varchar
-custom_option_id FK -< custom_option.id
+custom_option_id integer FK -< custom_option.id
 shop_id integer FK - shops.id
 
-     
 
 custom_option
------------
+-------------
 id integer PK
 name varchar
 price float
 shop_id integer FK - shops.id
 
-     
 
 type_option_list_relation
-------------------
+-------------------------
 id integer PK
 type_id integer FK >- type.id
-option_list_id FK >- option_list.id
-     
+option_list_id integer FK >- option_list.id
+
 
 item
 ----
 id integer PK
 name varchar
-item_photo varchar 255
+item_photo varchar
 size varchar
 price float
-description varchar 255
+description varchar
 is_enabled boolean
 shop_id integer FK - shops.id
 
 
 type
--------------------------
+----
 id integer PK
 name varchar
-     
+shop_id integer FK - shops.id
+
 
 item_type_relation
 ------------------
 id integer PK
 item_id integer FK >0- item.id
 type_id integer FK >0- type.id
+
 
 comment
 -------
@@ -85,35 +90,30 @@ description text
 transaction_id integer FK - transaction.id
 shop_id integer FK - shops.id
 
-     
 
 order
 -----
 id integer PK
-item_id FK - item.id
-set_id FK - set.id 
-transaction_id FK 
+item_id integer FK - item.id
+set_id integer FK - set.id
+transaction_id integer FK >0- transaction.id
 sub_total integer
-created_at
-updated_at
-     
+created_at integer
+updated_at integer
+
 
 order_detail
----------------
-id
-order_id FK - order.id
-item_id FK - item.id
-     
+------------
+id integer PK
+order_id integer FK - order.id
+item_id integer FK - item.id
+
 
 order_custom_option_relation
 ----------------------------
-id
-order_detail_id FK - order_detail.id
-custom_option_id FK - custom_option.id
-     
-
-
-
+id integer PK
+order_detail_id integer FK - order_detail.id
+custom_option_id integer FK - custom_option.id
 
 
 transaction
@@ -134,15 +134,16 @@ menu
 id integer PK
 name integer
 last_update timestamp
-photo blob???
+photo blob
 shop_id integer FK - shops.id
-     
+
 
 menu_category_relation
 ----------------------
 id integer PK
 category_id integer FK >- category.id
 menu_id integer FK >- menu.id
+
 
 category
 --------
@@ -153,36 +154,38 @@ category_active_time_id integer FK >- category_active_time.id
 
 
 category_active_time
-----------------
+--------------------
 id integer PK
 day varchar
 start_time time
 close_time time
+
 
 category_item_relation
 ----------------------
 id integer PK
 category_id integer FK >- category.id
 item_id integer FK >- item.id
-     
+
 
 category_set_relation
-----------------------
+---------------------
 id integer PK
 category_id integer FK >- category.id
 set_id integer FK >- set.id
 
+
 shops
 -----
 id integer PK
-contact_no varchar not null
-email text
+shop_name varchar
+contact_no varchar
 area varchar
 district varchar
 address text
 description text
-login_name varchar not null
-login_password varchar not null
+login_name varchar
+login_password varchar
 latitude float
 longitude float
 
@@ -195,6 +198,7 @@ start_time time
 close_time time
 shop_id integer FK >0- shops.id
 
+
 shop_photos
 -----------
 id integer PK
@@ -203,20 +207,23 @@ cover_photo boolean
 logo boolean
 shop_id integer FK >0- shops.id
 
+
 users
 -----
 id integer PK
 email text
 contact_no varchar
 reward_points integer
-login_name varchar not null
-login_password varchar not null
+login_name varchar
+login_password varchar
+
 
 users_favourite_shops_relation
-----------------------
+------------------------------
 id integer PK
 user_id integer FK >- users.id
 shop_id integer FK >- shops.id
+
 
 kitchen
 -------
@@ -225,36 +232,36 @@ transaction_done boolean
 transaction_id integer FK >- transaction.id
 
 
-# zoom: 0.673
-# view: (564, 257)
+# zoom: 0.690
+# view: (-186, 885)
 # text-bg: #6495ed
 # text-color: #000000
 # diagram-bg: #f5f5f5
 # diagram-text: #000000
 # table-bg: #ffffff
 # table-text: #000000
-# set (1142, 307, #009600)
-# set_item_relation (1538, -376, #009600)
-# option_list (1040, 51, #b94fcf)
-# custom_option (1190, -363, #ce3de1)
-# type_option_list_relation (678, -62, #da0b0b)
-# item (1319, -681, #d1c323)
-# type (862, -242)
-# item_type_relation (764, -512, #d11010)
-# comment (-379, -759)
-# order (399, -779, #ebac00)
-# order_detail (883, -829, #c0d651)
-# order_custom_option_relation (768, -625, #f51414)
-# transaction (-32, -684)
-# menu (199, 200)
-# menu_category_relation (147, -121, #d51010)
-# category (314, -335)
-# category_active_time (412, 9)
-# category_item_relation (280, -542)
-# category_set_relation (701, 173)
-# shops (-397, 83)
-# opening_days (-305, -130)
-# shop_photos (-46, -91)
-# users (-314, -480)
-# kitchen (-611, -604)
-# users_favourite_shops_relation (-334, -312, #ec1818)
+# set (1167, 392, #050505)
+# set_item_relation (1590, -382, #0a0a0a)
+# option_list (1040, 51, #000000)
+# custom_option (1253, -366, #030303)
+# type_option_list_relation (691, -114, #030303)
+# item (1334, -723, #050505)
+# type (911, -303, #0a0a0a)
+# item_type_relation (815, -514, #0a0a0a)
+# comment (-361, -771)
+# order (400, -779)
+# order_detail (883, -829)
+# order_custom_option_relation (652, -698)
+# transaction (-23, -712)
+# menu (182, 45, #050505)
+# menu_category_relation (75, -239, #080808)
+# category (352, -417, #0d0d0d)
+# category_active_time (433, -13, #050505)
+# category_item_relation (281, -542, #080808)
+# category_set_relation (719, 141, #050505)
+# shops (-398, 85, #050505)
+# opening_days (-139, 326, #050505)
+# shop_photos (-104, -123, #050505)
+# users (-361, -554, #0a0a0a)
+# users_favourite_shops_relation (-239, -304, #050505)
+# kitchen (-685, -612)
