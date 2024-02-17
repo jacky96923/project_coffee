@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className="App">
+        <div className="App ">
           <Routes>
             <Route
               path="/"
@@ -41,6 +41,7 @@ function App() {
               path="/client-register"
               element={user ? <ClientMainPage /> : <ClientRegisterPage />}
             />
+            {/* <Route path="/main" element={<ClientMainPage/>}/> */}
             <Route path="/shopSelection" element={<ShopSelection />} />
             <Route
               path="/productSelection/:shopId"

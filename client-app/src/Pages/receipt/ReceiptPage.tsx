@@ -1,9 +1,9 @@
-import { BellIcon } from "@heroicons/react/24/outline";
+import { BellIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import styles from "./ReceiptPage.module.css"
 import { useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar";
 
-export default function receipt() {
+export default function Receipt() {
     const [collected, setCollected] = useState(false)
     const onCommentHandler = ()=>{
 
@@ -11,7 +11,10 @@ export default function receipt() {
     return (
         <div className={styles.container}>
             <div className="flex justify-between my-5">
-                <h3>訂單收據</h3>
+                <div className="flex">
+                    <ChevronLeftIcon className="h-6 w-6 mr-2 self-center" />
+                    <h3>訂單收據</h3>
+                </div>
                 <BellIcon className="h-6 w-6" />
             </div>
             <div className="flex justify-between">
@@ -77,7 +80,7 @@ export default function receipt() {
                         </thead>
                         <tbody>
                             {/* row 1 */}
-                            <tr>
+                            <tr className="hover">
                                 <td>朱古力咖啡(小)</td>
                                 <td>少甜, 少冰</td>
                                 <td>x1</td>

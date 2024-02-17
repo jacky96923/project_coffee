@@ -36,7 +36,7 @@ const products = [
 export default function ShoppingCartPage() {
     // const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
-
+    
     // const shop = useSelector((state: RootState) => state.shoppingCart.shop)
     // const itemsToBuy = useSelector((state: RootState) => state.shoppingCart.itemList)
     const itemsToBuy = JSON.parse(localStorage.getItem("shoppingCart")as string) || undefined
@@ -64,7 +64,7 @@ export default function ShoppingCartPage() {
     return (
         <div className={styles.container}>
             <div className='flex border-b border-slate-700'>
-                <ChevronLeftIcon className="h-6 w-6 mr-2 self-center" />
+                <ChevronLeftIcon onClick={()=>navigate(-1)} className="h-6 w-6 mr-2 self-center cursor-pointer" />
                 <div>
                     <h4 className='font-bold text-2xl'>我的購物車</h4>
                     <h6>Blue Bottle Coffee</h6>
