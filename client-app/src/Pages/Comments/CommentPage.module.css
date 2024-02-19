@@ -1,10 +1,7 @@
-body {
 
-}
-
-h2 {
-  text-align: center; /* Center align the text */
-}
+/* h2 {
+  text-align: center;
+} */
 
 .rating.rating-md {
   align-items: center;
@@ -16,9 +13,9 @@ h2 {
   align-items: center;
 }
 
-p {
+/* p {
   margin-top: 1rem;
-}
+} */
 
 .btn.btn-wide {
   margin-top: 1rem;

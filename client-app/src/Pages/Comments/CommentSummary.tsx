@@ -16,15 +16,15 @@ export function CommentSummary() {
   };
 
   useEffect(() => {
-    console.log("Component mounted or commentData changed");
+    // console.log("Component mounted or commentData changed");
     const storedData = localStorage.getItem("commentFormData");
-    console.log("Stored data:", storedData);
+
     if (storedData !== null) {
       const parsedData = JSON.parse(storedData);
       console.log("Parsed data:", parsedData);
       setCommentData(parsedData);
     }
-  }, [commentData]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -33,7 +33,7 @@ export function CommentSummary() {
           {/* Additional controls could be placed here */}
         </div>
 
-        <h2>你好，Maggie </h2>
+        <div style={{ textAlign: "center" }}>你好，Maggie</div>
         <h2>Maggie 謝謝您的寶貴意見 ｜10積分已加至你的户口</h2>
 
         <div className="relative">

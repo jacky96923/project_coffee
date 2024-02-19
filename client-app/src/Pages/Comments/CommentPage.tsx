@@ -65,7 +65,7 @@ export function CommentPage() {
 
   return (
     <div className={styles.container}>
-      <div className="relative w-[32rem]">
+      <div className="{styles.relative w-[32rem]}">
         <div className="relative w-[32rem] flex justify-end">
           <button className="btn btn-circle btn-outline" onClick={crossSubmit}>
             <svg
