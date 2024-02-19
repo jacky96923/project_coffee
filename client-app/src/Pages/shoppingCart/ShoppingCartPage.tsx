@@ -7,7 +7,7 @@ import ShoppingCartItem, { ItemProps } from '../../components/ShoppingCartItem'
 
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 export default function ShoppingCartPage() {
     // const dispatch = useDispatch<AppDispatch>()
@@ -58,6 +58,7 @@ export default function ShoppingCartPage() {
     }, [])
 
     // All data received for this page
+    const user_id = useSelector((state: RootState) => state.auth.user_id)
     let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined
     console.log("shoppingCartPage", shoppingCartPage)
 
@@ -125,11 +126,11 @@ export default function ShoppingCartPage() {
         // 1. check if there is user login (isLoggedIn guard solved)
         
         // 2. if yes, create req.body for checkout fetch
-        const user_id = useSelector((state: RootState) => state.auth.user_id)
+        
         const checkoutData = {user_id: user_id, cart: itemListWithKey}
         console.log("checkoutData", checkoutData)
         // 3. fetch to get the url for checkout
-        let result = await fetch("/create-checkout-session", {
+        let result = await fetch("http://localhost:8100/stripe/create-checkout-session", {
             method: 'post',
             headers: {
                 'Content-Type': "application/json",

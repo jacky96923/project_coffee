@@ -7,14 +7,14 @@ type loginType = {
   isAuthenticated: boolean
 };
 
-let decoded: { user_id: number; username: string } | undefined;
+let decoded: { id: number; username: string } | undefined;
 if (localStorage.getItem("token")) {
   decoded = jwtDecode(localStorage.getItem("token")!);
 }
 
 const initialState: loginType = {
   user: decoded?.username || undefined,
-  user_id: decoded?.user_id || undefined,
+  user_id: decoded?.id || undefined,
   isAuthenticated: localStorage.getItem('token') !== null,
 };
 
@@ -28,6 +28,7 @@ export const authSlice = createSlice({
       state.user_id = user_id
       state.isAuthenticated = true
       console.log("user in redux", state.user)
+      console.log("userID in redux", state.user_id)
     },
     logout: (state) => {
       state.user = undefined
