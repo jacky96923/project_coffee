@@ -17,11 +17,11 @@ import {
 } from "./controller/AuthController";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { ShopController } from "./controller/ShopController";
-import { ShopService } from "./services/shopService";
 import { ItemPageController } from "./controller/ItemPageController";
 import { ItemPageService } from "./services/ItemPageService";
 import { OptionSlideService } from "./services/OptionSlideService";
 import { OptionSlideController } from "./controller/OptionSlideController";
+import { ShopService } from "./services/ShopService";
 
 // Database Connection Setup
 const knexConfig = require("./knexfile");

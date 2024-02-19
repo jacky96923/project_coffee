@@ -26,11 +26,11 @@ export class MenuIdService {
 
   // ------------------------------------------------------------------------------
 
-  async getCategoryName(categoryId: number) {
+  async getCategoryItem(categoryId: number) {
     try {
       // console.log("categoryId", categoryId);
 
-      let result = await this.knex
+      let categoryName = await this.knex
         .select("category.name")
         .from("category_active_time")
         .rightOuterJoin(
@@ -40,8 +40,32 @@ export class MenuIdService {
         )
         .join("menu_category_relation", "category_id", "category.id")
         .where("category.id", categoryId);
-      // console.log("getCategoryName result", result);
-      return result;
+      // console.log("categoryName result", categoryName);
+
+      let itemsInformation = await this.knex
+        .select(
+          "item.id",
+          "item.name",
+          "item.item_photo",
+          "item.price",
+          "item.description",
+          "item.shop_id",
+          "item.size"
+        )
+        .from("category")
+        .join(
+          "category_item_relation",
+          "category_item_relation.category_id",
+          "category.id"
+        )
+        .join("item", "item.id", "category_item_relation.item_id")
+        .where(function () {
+          this.where("item.size", "小杯").orWhereNull("item.size");
+        })
+        .where("category.id", categoryId);
+      // console.log("itemsInformation", itemsInformation);
+
+      return [categoryName, itemsInformation];
     } catch (error) {
       console.log(error);
       return false;
