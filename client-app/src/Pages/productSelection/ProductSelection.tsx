@@ -5,8 +5,8 @@ import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { PhoneIcon } from "@heroicons/react/24/solid";
 
 import { Link } from "react-router-dom";
-import { GetCategoryName } from "../../hooks/dataAPI";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GetMenuPage } from "../../hooks/dataAPI";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function ProductSelection() {
   const url = window.location.pathname;
@@ -18,7 +18,16 @@ export default function ProductSelection() {
   const result:
     | string
     | {
-        CategoryName: { data: any[] };
+        categoryItemList: {
+          categoryName: string;
+          itemsInformation: {
+            name: string;
+            item_photo: string;
+            price: number;
+            description: string;
+            shop_id: number;
+          }[];
+        }[];
         shopInformation: {
           data: Array<{
             id: number;
@@ -26,7 +35,26 @@ export default function ProductSelection() {
             address: string;
           }>;
         };
-      } = GetCategoryName(parseInt(url.charAt(url.length - 1)));
+      } = GetMenuPage(parseInt(url.charAt(url.length - 1)));
+
+  let categoryNameList: { categoryName: string }[] = [];
+  let itemsInformationList: {
+    name: string;
+    item_photo: string;
+    price: number;
+    description: string;
+    shop_id: number;
+  }[] = [];
+
+  if (typeof result !== "string") {
+    categoryNameList = result.categoryItemList.map(({ categoryName }) => ({
+      categoryName,
+    }));
+
+    itemsInformationList = result.categoryItemList.flatMap(
+      ({ itemsInformation }) => itemsInformation
+    );
+  }
   // console.log("categoryNameList", categoryNameList);
 
   // const OnShopItem = useMutation({
@@ -74,17 +102,33 @@ export default function ProductSelection() {
           </div>
         </div>
       </div>
-      {typeof result === "string"
-        ? ""
-        : result.CategoryName.data.length > 0
-        ? result.CategoryName.data.map((name) => (
-            <div className="flex justify-between m-2">
-              <button className="flex items-center justify-center w-auto p-2 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
-                {name}
-              </button>
-            </div>
-          ))
-        : "No category"}
+
+      {categoryNameList.map((category) => (
+        <div className="flex justify-between m-2">
+          <button className="flex items-center justify-center w-auto p-2 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+            {category.categoryName}
+          </button>
+        </div>
+      ))}
+      {itemsInformationList.map((item, index) => (
+        <div
+          key={index}
+          style={{
+            display: "grid",
+            border: "1px solid grey",
+            margin: "20px",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            borderRadius: "10px",
+          }}
+        >
+          <img src={item.item_photo} alt={item.name} />
+          <div className="flex flex-col m-3">
+            <span className="font-bold mb-2 text-sm	">{item.name}</span>
+            <span className="font-bold mb-2 text-xs	">{item.description}</span>
+            <span className="font-bold flex justify-end">${item.price}</span>
+          </div>
+        </div>
+      ))}
 
       <ProductFromShop />
       <div className="flex justify-center	m-10 bg-black text-white rounded-xl	">

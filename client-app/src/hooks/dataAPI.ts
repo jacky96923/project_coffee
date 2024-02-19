@@ -25,12 +25,21 @@ export function GetShopDisplaying() {
   return data;
 }
 
-export function GetCategoryName(id: number) {
+export function GetMenuPage(id: number) {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["CategoryId"],
     queryFn: async () => {
       let result: {
-        CategoryName: { data: any[] };
+        categoryItemList: {
+          categoryName: string;
+          itemsInformation: {
+            name: string;
+            item_photo: string;
+            price: number;
+            description: string;
+            shop_id: number;
+          }[];
+        }[];
         shopInformation: {
           data: Array<{
             id: number;
@@ -38,7 +47,7 @@ export function GetCategoryName(id: number) {
             address: string;
           }>;
         };
-      } = { CategoryName: { data: [] }, shopInformation: { data: [] } };
+      } = { categoryItemList: [], shopInformation: { data: [] } };
 
       // ------------------------------------------------------------------------------
       const resMenuId = await fetch(`${source}/menus/menu`, {
@@ -53,7 +62,7 @@ export function GetCategoryName(id: number) {
       const MenuId = await resMenuId.json();
 
       // ------------------------------------------------------------------------------
-      const resCategoryName = await fetch(`${source}/menus/category`, {
+      const resCategoryItem = await fetch(`${source}/menus/categoryItem`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,8 +71,10 @@ export function GetCategoryName(id: number) {
           categoryIdList: MenuId.data,
         }),
       });
-      const CategoryName = await resCategoryName.json();
-      result.CategoryName = CategoryName;
+      const CategoryItem = await resCategoryItem.json();
+      // console.log("CategoryItem", CategoryItem);
+
+      result.categoryItemList = CategoryItem;
 
       // ------------------------------------------------------------------------------
       const resShopInformation = await fetch(
@@ -82,18 +93,24 @@ export function GetCategoryName(id: number) {
       result.shopInformation = shopInformation;
 
       // ------------------------------------------------------------------------------
-      // const ItemsInformation = await fetch(`${source}/menus/itemsInformation`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     categoryIdList: MenuId.data,
-      //   }),
-      // });
+      // const resItemsInformation = await fetch(
+      //   `${source}/menus/itemsInformation`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({
+      //       categoryIdList: MenuId.data,
+      //     }),
+      //   }
+      // );
+
+      // const itemsInformation = await resItemsInformation.json();
+      // result.itemsInformation = itemsInformation;
 
       // ------------------------------------------------------------------------------
-      console.log("result", result);
+      // console.log("result", result);
       return result;
     },
   });
