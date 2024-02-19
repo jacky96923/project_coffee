@@ -33,6 +33,7 @@ export function GetMenuPage(id: number) {
         categoryItemList: {
           categoryName: string;
           itemsInformation: {
+            id: number;
             name: string;
             item_photo: string;
             price: number;

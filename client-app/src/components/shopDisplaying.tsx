@@ -31,7 +31,7 @@ export default function ShopSelectionList() {
         {Array.isArray(shopItem) ? (
           shopItem.length > 0 ? (
             shopItem.map((shop) => (
-              <li key={shop.id} className="m-4">
+              <li key={shop.id} className="">
                 <Link to={`/ProductSelection/${shop.id}`}>
                   <div
                     style={{
@@ -40,6 +40,8 @@ export default function ShopSelectionList() {
                       margin: "7px",
                       gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                       borderRadius: "10px",
+                      width: "auto",
+                      height: "10rem",
                     }}
                   >
                     <img
@@ -48,7 +50,9 @@ export default function ShopSelectionList() {
                       className="m-4 rounded-md	 "
                     />
                     <div className="flex flex-col ml-5 mt-5">
-                      <div className="text-base	m-2">{shop.shop_name}</div>
+                      <div className="text-base	m-2 font-bold">
+                        {shop.shop_name}
+                      </div>
                       <div className=" text-xs	m-2">{shop.address}</div>
                       <div className="text-xs	m-2 flex justify-end">900m</div>
                     </div>

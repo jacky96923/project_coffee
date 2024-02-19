@@ -6,7 +6,6 @@ import {
   Route,
   Routes,
   Navigate,
-   
 } from "react-router-dom";
 
 import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
@@ -24,6 +23,7 @@ import MyPage from "./Pages/myPage/MyPage";
 import Receipt from "./Pages/receipt/ReceiptPage";
 import AllReceipt from "./Pages/receipt/AllReceiptPage";
 import ItemPage from "./Pages/items/itemPage";
+import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -54,6 +54,7 @@ function App() {
               element={<ProductSelection />}
             />
             <Route path="/itemPage/:id" element={<ItemPage />} />
+            <Route path="/CheckoutCancel" element={<CheckoutCancel />} />
 
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/CommentSummary" element={<CommentSummary />} />

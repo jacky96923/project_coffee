@@ -3,9 +3,9 @@ import styles from "./ItemPage.module.css";
 import ItemPageOptions from "../../components/ItemPageOptions";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
-import { GetItemInfo } from "../../hooks/ItemPageAPI";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { GetItemInfo } from "../../hooks/ItemPageAPI";
 
 export default function ItemPage() {
   let { id } = useParams();
