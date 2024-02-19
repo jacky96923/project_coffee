@@ -115,8 +115,8 @@ export function CommentPage() {
         </div>
 
         <Textarea
-  className="w-80" // Add this line
-  style={{ paddingTop: "1rem" }}
+  className="a" // Add this line
+  style={{ paddingTop: "1rem", width: "75%"}}
   placeholder="請留下你的寶貴意見！"
   rows={15}
   onChange={handleCommentChange}
@@ -124,9 +124,9 @@ export function CommentPage() {
 
 
         <div className="flex flex-col items-center py-1.5  absolute fixed z-0 mx-auto inset-x-0">
-          <button className="btn btn-wide" onClick={handleSubmit}>
-            提交
-          </button>
+<button className="btn btn-wide" onClick={handleSubmit} style={{ position: "relative" }}>
+  提交
+</button>
         </div>
       </div>
     </div>
