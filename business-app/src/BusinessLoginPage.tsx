@@ -1,110 +1,106 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import { login } from "./slices/authSlice";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { login } from "./slices/authSlice";
 
 const source = "http://localhost:8100";
 
 export async function postLogin(username: string, password: string) {
-  const res = await fetch(`${source}/auth/businessLogin`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
+  try {
+    const response = await fetch(`${source}/auth/businessLogin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
 
-  const resp = await res.json();
+    if (!response.ok) {
+      throw new Error('Login failed');
+    }
 
-  // on receive token, save in localStorage
+    const data = await response.json();
+    console.log('Success:', data);
 
-  if (resp.message === "success") {
-    localStorage.setItem("token", resp.token);
-    return true;
-  } else return false;
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      return data; // Return the full data object including the token
+    } else {
+      throw new Error(data.message || 'Login failed');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; // Rethrow the error to be handled by the caller
+  }
 }
 
 export default function BusinessLoginPage() {
-  // const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
 
-  const handleLogin = async (
-    e: FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    console.log("username", usernameInput);
-    console.log("password", passwordInput);
-
-    let result = await postLogin(usernameInput, passwordInput);
-    if (result) {
-      // let decoded: { user_id: number; username: string } = jwtDecode(
-      //   localStorage.getItem("token")!
-      // );
-      // dispatch(login(decoded.username));
+  
+    try {
+      const data = await postLogin(usernameInput, passwordInput);
+      console.log('Login successful:', data);
+  
+      // Dispatch the login action with the received data
+      dispatch(login(data));
+  
+      // Redirect the user to the profile page using useNavigate
+      console.log('Attempting to navigate to /profile...');
+      navigate('/login-success');
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(error); // Show an alert if there is an error
     }
   };
+
 
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Project Coffee
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Sign in to your business account
           </h2>
-          <h4 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Business
-          </h4>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleLogin}>
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                店舖名稱
-              </label>
-              <div className="mt-2">
+          <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+            <input type="hidden" name="remember" defaultValue="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="username" className="sr-only">
+                  Username
+                </label>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
                   required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Username"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                密碼
-              </label>
-              <div className="mt-2">
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
                 <input
                   id="password"
                   name="password"
                   type="password"
                   autoComplete="current-password"
                   required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -112,23 +108,20 @@ export default function BusinessLoginPage() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={handleLogin}
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Sign in
               </button>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            沒有帳號?{" "}
+          <div className="mt-6">
             <Link
               to="/business-register"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              新商戶登記
+              Don't have an account? Sign up
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </>
