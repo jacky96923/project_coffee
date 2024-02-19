@@ -15,7 +15,7 @@ export class UserAuthController {
     if (result.flag) {
       res.json({ message: result.message, token: result.token });
     } else {
-      res.status(400).json(result.message);
+      res.status(400).json({message: result.message});
     }
   };
 

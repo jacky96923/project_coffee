@@ -88,9 +88,9 @@ export default function ShoppingCartPage() {
     //
     useEffect(() => {
         let itemsSubtotalList = cart.map((item) => item.subTotal)
-        console.log("itemsSubtotalList", itemsSubtotalList)
+        //console.log("itemsSubtotalList", itemsSubtotalList)
         let itemsSubtotalSum = itemsSubtotalList.reduce((acc, cur) => acc + cur, 0)
-        console.log("itemsSubtotalSum", itemsSubtotalSum)
+        //console.log("itemsSubtotalSum", itemsSubtotalSum)
         setTotal(itemsSubtotalSum)
         setDiscountedTotal(itemsSubtotalSum)
     }, [total, discountedTotal])
@@ -121,13 +121,32 @@ export default function ShoppingCartPage() {
         setSafeClearCartModal(false)
     }
 
-    const onCheckoutHandler = () => {
+    const onCheckoutHandler = async () => {
         // 1. check if there is user login (isLoggedIn guard solved)
         
         // 2. if yes, create req.body for checkout fetch
-        
+        const user_id = useSelector((state: RootState) => state.auth.user_id)
+        const checkoutData = {user_id: user_id, cart: itemListWithKey}
+        console.log("checkoutData", checkoutData)
         // 3. fetch to get the url for checkout
+        let result = await fetch("/create-checkout-session", {
+            method: 'post',
+            headers: {
+                'Content-Type': "application/json",
+                "Authorization":`Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(checkoutData)
+        })
         // 4. direct to the url in question 
+        if (result.ok) {
+            console.log('Request sent successfully');
+    
+            // Fetch the session URL from the response
+            const { url } = await result.json();
+    
+            // Redirect the user to the Stripe Checkout page
+            window.location.href = url;
+        }
     }
 
     const onPickupTimeHandler = () => {
