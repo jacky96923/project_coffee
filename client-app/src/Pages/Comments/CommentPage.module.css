@@ -1,36 +1,43 @@
-body {
 
-}
-
-h2 {
-  text-align: center; /* Center align the text */
-}
-
-/* .rating.rating-xs {
+/* h2 {
   text-align: center;
-  padding-bottom: 1rem;
 } */
+
 .rating.rating-md {
-align-items: center;
-padding-bottom: 1rem;
-text-align: center;
+  align-items: center;
+  width: 368px; /* Default width for larger screens */
+  padding-bottom: 1rem;
+  text-align: center;
 }
-
 .center-content {
-
   align-items: center;
 }
-p{
-    margin-top: 1rem;
-}
-.btn.btn-wide{
+
+/* p {
+  margin-top: 1rem;
+} */
+
+.btn.btn-wide {
   margin-top: 1rem;
 }
-.container{
+
+.container {
+  /* Set the default width to 360px */
   width: 360px;
   margin: auto;
   display: flex;
   justify-content: center;
   margin-top: 5%;
   text-align: center;
+  transition: width 0.3s ease-in-out; /* Smooth transition for width change */
 }
+.textbox {
+  width: 100%; /* Makes each textbox take the full width of its parent container */
+  padding: 10px; /* Adds some padding inside the textboxes for better text visibility */
+  margin-bottom: 1rem; /* Adds some space between the textboxes */
+  box-sizing: border-box; /* Ensures padding does not add to the overall width */
+}
+.textarea{
+  width: 8%
+}
+

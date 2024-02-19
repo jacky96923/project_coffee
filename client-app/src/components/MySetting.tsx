@@ -1,6 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../store";
+import { logout } from "../slices/authSlice";
 
 const MySetting = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const onLogoutHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    // dispatch(logout)
+  }
   return (
     <div>
       <div className="flex flex-col">
@@ -50,7 +58,7 @@ const MySetting = () => {
         >
           回饋{" "}
         </a>
-        <button className=" p-4 mt-8 block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+        <button onClick={onLogoutHandler} className=" p-4 mt-8 block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
           登出
         </button>
       </div>

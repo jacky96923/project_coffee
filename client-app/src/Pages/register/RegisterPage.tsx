@@ -63,7 +63,7 @@ export default function RegisterPage() {
       let decoded: { user_id: number; username: string } = jwtDecode(
         localStorage.getItem("token")!
       );
-      dispatch(login(decoded.username));
+      dispatch(login({user: decoded.username, user_id: decoded.user_id}));
       window.location.href = "/";
     }
   };

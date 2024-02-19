@@ -1,10 +1,5 @@
-body {
 
-}
 
-h2 {
-  text-align: center; /* Center align the text */
-}
 
 /* .rating.rating-xs {
   text-align: center;
@@ -13,22 +8,26 @@ h2 {
 .rating.rating-md {
   
 padding-bottom: 1rem;}
-
 .center-content {
-  /* margin-top: 2rem; */
+
 
   align-items: center;
 }
-p{
-    margin-top: 1rem;
-}
+
 .btn.btn-wide{
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 .container{
-  width: 368px;
+  width: 370px;
   margin: auto;
   display: flex;
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 12%;
+}
+.fixed-button {
+  position: relative;
+  bottom: 20px; /* Adjust the bottom offset as needed */
+  left: 50%; /* Position the button horizontally in the center */
+  transform: translateX(-50%); /* Center the button horizontally */
+  z-index: 1000; /* Ensure the button is above other elements */
 }

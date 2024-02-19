@@ -1,24 +1,36 @@
 import { Textarea } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./CommentPage.module.css";
 import { useNavigate } from 'react-router-dom';
 
 export function CommentPage() {
   const [comment, setComment] = useState("");
   const [star, setStar] = useState("0");
-  const navigate = useNavigate(); // Moved here to comply with the Rules of Hooks
+  const navigate = useNavigate();
 
   const handleCommentChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setComment(event.target.value);
   };
 
-  const handleRatingChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleRatingChange = (        event: { target: { value: React.SetStateAction<string>; }; }) => {
     setStar(event.target.value);
   };
-  const crossSubmit = async () => {navigate('/CommentSummary')}
+
+  const crossSubmit = () => {
+    navigate('/CommentSummary');
+  };
+
   const handleSubmit = async () => {
     console.log("Comment:", comment);
     console.log("Star rating:", star);
+
+    // Save data to local storage
+    const formData = {
+      rating: star,
+      description: comment
+    };
+    localStorage.setItem("commentFormData", JSON.stringify(formData));
+
     try {
       // Perform your fetch operation here
       const response = await fetch("http://localhost:8100/comments/rating", {
@@ -26,17 +38,14 @@ export function CommentPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          rating: star,
-          description: comment,
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
       } else {
         console.log("Submission successful!");
-        navigate('/CommentSummary'); // Navigate after the successful submission
+        navigate('/CommentSummary');
       }
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
@@ -44,9 +53,19 @@ export function CommentPage() {
     }
   };
 
+  useEffect(() => {
+    // Retrieve form data from local storage when component mounts
+    const storedFormData = localStorage.getItem("commentFormData");
+    if (storedFormData) {
+      const { rating, description } = JSON.parse(storedFormData);
+      setStar(rating);
+      setComment(description);
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
-      <div className="relative w-[32rem]">
+      <div className="{styles.relative w-[32rem]}">
         <div className="relative w-[32rem] flex justify-end">
           <button className="btn btn-circle btn-outline" onClick={crossSubmit}>
             <svg
@@ -71,10 +90,8 @@ export function CommentPage() {
         <h4>請為 Blue Bottle Coffee 評分</h4>
         <div className="center-content">
           <div className="rating rating-md">
-            {/* Star inputs here */}
-            {/* Hidden radio button for 0-star rating */}
             <input
-              key="0"
+               key="0"
               type="radio"
               name="rating"
               className="hidden"
@@ -98,16 +115,18 @@ export function CommentPage() {
         </div>
 
         <Textarea
-          style={{ paddingTop: "1rem" }}
-          placeholder="請留下你的保貴意見！"
-          rows={15}
-          onChange={handleCommentChange}
-        />
+  className="a" // Add this line
+  style={{ paddingTop: "1rem", width: "75%"}}
+  placeholder="請留下你的寶貴意見！"
+  rows={15}
+  onChange={handleCommentChange}
+/>
+
 
         <div className="flex flex-col items-center py-1.5  absolute fixed z-0 mx-auto inset-x-0">
-        <button className="btn btn-wide" onClick={handleSubmit}>
-      提交
-    </button>
+<button className="btn btn-wide" onClick={handleSubmit} style={{ position: "relative" }}>
+  提交
+</button>
         </div>
       </div>
     </div>

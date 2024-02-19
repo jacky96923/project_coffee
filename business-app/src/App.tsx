@@ -3,23 +3,28 @@ import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 import BusinessLoginPage from "./BusinessLoginPage";
 import BusinessRegisterPage from "./BusinessRegisterPage";
-import BusinessLocation from "./BusinessLocationPage";
-import LoginokPage from "./LoginokPage";
+import BusinessLocationPage from "./BusinessLocationPage";
+import LoginokPage from "./LoginokPage"; // Make sure this import is correct
 import { BusinessChooseShopOpenTime } from "./BusinessChooseShopOpenTime";
 
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
+
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
+
   return (
-    
     <>
       <div className="App">
         <Routes>
           <Route path="/" element={<Navigate to="/BusinessLogin" />} />
-          <Route path="/BusinessLogin" element={user? <LoginokPage/>: <BusinessLoginPage />}></Route>
+          <Route 
+            path="/BusinessLogin" 
+            element={user ? <Navigate replace to="/login-success" /> : <BusinessLoginPage />}
+          />
+          <Route path="/login-success" element={<LoginokPage />} /> // Define the route for login success
           <Route path="/BusinessRegister" element={<BusinessRegisterPage />} />
-          <Route path="/BusinessLocation" element={<BusinessLocation />} />
+          <Route path="/BusinessLocation" element={<BusinessLocationPage />} />
           <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} />
         </Routes>
       </div>

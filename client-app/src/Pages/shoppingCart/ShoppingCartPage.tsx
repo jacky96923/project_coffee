@@ -57,12 +57,15 @@ export default function ShoppingCartPage() {
 
     }, [])
 
+    // All data received for this page
     let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined
     console.log("shoppingCartPage", shoppingCartPage)
 
+    // Shop Info
     const shopName = shoppingCartPage?.shopName
     const shopAddress = shoppingCartPage?.shopAddress
 
+    // Shopping Cart Info & Utils
     // const [key, setKey] = useState(shoppingCartPage?.itemList.length)
     const itemListWithKey = shoppingCartPage?.itemList.map((item: ItemProps, idx: number)=>{
         item.key = idx+1
@@ -72,19 +75,22 @@ export default function ShoppingCartPage() {
     const [cart, setCart]: [Array<ItemProps>, any] = useState(itemListWithKey)
     const [safeClearCartModal, setSafeClearCartModal] = useState(false)
 
+        // State for pickup time
     const [pickupModal, setPickupModal] = useState(false)
     const pickupTime = useSelector((state: RootState) => state.shoppingCart.pickupTime)
 
+        // State for bill
     // const [discount, setDiscount] = useState(false)
     // const [rewardPoint, setRewardPoint] = useState(false)
     const [total, setTotal] = useState(0)
     const [discountedTotal, setDiscountedTotal] = useState(0)
 
+    //
     useEffect(() => {
         let itemsSubtotalList = cart.map((item) => item.subTotal)
-        console.log("itemsSubtotalList", itemsSubtotalList)
+        //console.log("itemsSubtotalList", itemsSubtotalList)
         let itemsSubtotalSum = itemsSubtotalList.reduce((acc, cur) => acc + cur, 0)
-        console.log("itemsSubtotalSum", itemsSubtotalSum)
+        //console.log("itemsSubtotalSum", itemsSubtotalSum)
         setTotal(itemsSubtotalSum)
         setDiscountedTotal(itemsSubtotalSum)
     }, [total, discountedTotal])
@@ -115,8 +121,32 @@ export default function ShoppingCartPage() {
         setSafeClearCartModal(false)
     }
 
-    const onPaymentHandler = () => {
-
+    const onCheckoutHandler = async () => {
+        // 1. check if there is user login (isLoggedIn guard solved)
+        
+        // 2. if yes, create req.body for checkout fetch
+        const user_id = useSelector((state: RootState) => state.auth.user_id)
+        const checkoutData = {user_id: user_id, cart: itemListWithKey}
+        console.log("checkoutData", checkoutData)
+        // 3. fetch to get the url for checkout
+        let result = await fetch("/create-checkout-session", {
+            method: 'post',
+            headers: {
+                'Content-Type': "application/json",
+                "Authorization":`Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify(checkoutData)
+        })
+        // 4. direct to the url in question 
+        if (result.ok) {
+            console.log('Request sent successfully');
+    
+            // Fetch the session URL from the response
+            const { url } = await result.json();
+    
+            // Redirect the user to the Stripe Checkout page
+            window.location.href = url;
+        }
     }
 
     const onPickupTimeHandler = () => {
@@ -179,7 +209,7 @@ export default function ShoppingCartPage() {
                     <h4>訂單總額</h4>
                     <h4>HK$ {discountedTotal}.00</h4>
                 </div>
-                <button className='border rounded-2xl w-16 border-black' onClick={onPaymentHandler}>付款</button> {/*color not working*/}
+                <button className='border rounded-2xl w-16 border-black' onClick={onCheckoutHandler}>付款</button> {/*color not working*/}
             </div>
         </div>
     )
