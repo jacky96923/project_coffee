@@ -86,8 +86,8 @@ export class UserAuthController {
 export class BusinessAuthController {
   router = express.Router();
   public constructor(private businessAuthService: BusinessAuthService) {
-    this.router.post("/businessLogin", this.businessLogin);
-    this.router.post("/businessRegister", this.businessRegister);
+    this.router.post("/BusinessLogin", this.businessLogin);
+    this.router.post("/BusinessRegister", this.businessRegister);
   }
   businessLogin = async (req: Request, res: Response) => {
     let { username, password } = req.body;
