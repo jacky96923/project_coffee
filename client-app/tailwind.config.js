@@ -14,6 +14,7 @@ module.exports = {
       emerald: colors.emerald,
       indigo: colors.indigo,
       yellow: colors.yellow,
+      slate: colors.slate,
       midnight: "#121063",
       metal: "#565584",
       tahiti: "#3ab7bf",

@@ -29,3 +29,31 @@ export function GetItemInfo(itemId: string) {
 
   return data;
 }
+
+export function Getalloptions(itemId: string) {
+  const { isLoading, error, data, isFetching } = useQuery({
+    queryKey: ["initialState"],
+    queryFn: async () => {
+      const res = await fetch(`${source}/itemPage/initialState/${itemId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await res.json();
+      console.log("-------API--initialState---------", result);
+      return result;
+    },
+  });
+
+  if (isLoading || isFetching) return "Incoming Data ...";
+
+  if (error) {
+    return "Error occured";
+  }
+
+  if (!data) {
+    return [];
+  }
+
+  return data;
+}

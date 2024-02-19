@@ -2,22 +2,28 @@ import React, { useState } from "react";
 import styles from "./ItemPageOptions.module.css";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import ItemOptionSlide from "./ItemOptionsSlide";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ItemPageOptionsProps = {
   itemId: string;
-  options: string;
+  optionListName: string;
 };
 
 export default function ItemPageOptions(props: ItemPageOptionsProps) {
+  const queryClient = useQueryClient();
   const [isClicked, setIsClicked] = useState(false);
   const [slide, setSlide] = useState("invisible");
   const [slideOptions, setSlideOption] = useState("translate-y-full");
   const [bg, setBg] = useState("opacity-0");
+
+  console.log("optionPage", props.itemId);
+
   function slideHandler() {
     setIsClicked(!isClicked);
     setSlide("");
     setSlideOption("");
     setBg("opacity-80");
+    queryClient.invalidateQueries({ queryKey: ["optionInfo"] });
   }
   function handleClose() {
     setSlide("invisible");
@@ -33,7 +39,7 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
     <>
       <div className={optionsButtons} onClick={slideHandler}>
         <div className={styles.options}>
-          <div>{props.options}</div>
+          <div>{props.optionListName}</div>
           <div>
             <ChevronRightIcon className="h-6 w-6" />
           </div>
@@ -46,7 +52,7 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
         isBgShow={bg}
         onHide={handleClose}
         itemId={props.itemId}
-        options={props.options}
+        optionListName={props.optionListName}
       />
     </>
   );

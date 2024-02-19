@@ -98,12 +98,19 @@
 
 .addItemWrap {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   height: auto;
   position: fixed;
   bottom: 1.5rem;
-  /* z-index: 1; */
+}
+
+.quantityWrap {
+  background-color: rgba(0, 0, 0, 0.33);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 .addItemContent {
@@ -124,4 +131,13 @@
 
 .optionsTitle {
   background-color: lightgrey;
+}
+
+.count {
+  border-radius: 20rem;
+  display: flex;
+  justify-content: center;
+  width: 10rem;
+  background-color: slategrey;
+  font-size: x-large;
 }

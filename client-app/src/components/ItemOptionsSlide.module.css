@@ -29,3 +29,14 @@
   font-size: larger;
   color: black;
 }
+
+.optionsButtonsClicked {
+  border-radius: 15px;
+  background-color: white;
+  opacity: 0.3;
+  width: auto;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

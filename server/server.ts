@@ -17,7 +17,7 @@ import {
 } from "./controller/AuthController";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { ShopController } from "./controller/ShopController";
-import { ShopService } from "./services/shopService";
+import { ShopService } from "./services/ShopService";
 import { ItemPageController } from "./controller/ItemPageController";
 import { ItemPageService } from "./services/ItemPageService";
 import { OptionSlideService } from "./services/OptionSlideService";
@@ -53,6 +53,7 @@ app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
+app.use("/initialState", itemPageController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
