@@ -15,7 +15,7 @@ export class UserAuthController {
     if (result.flag) {
       res.json({ message: result.message, token: result.token });
     } else {
-      res.status(400).json(result.message);
+      res.status(400).json({message: result.message});
     }
   };
 
@@ -86,8 +86,8 @@ export class UserAuthController {
 export class BusinessAuthController {
   router = express.Router();
   public constructor(private businessAuthService: BusinessAuthService) {
-    this.router.post("/businessLogin", this.businessLogin);
-    this.router.post("/businessRegister", this.businessRegister);
+    this.router.post("/BusinessLogin", this.businessLogin);
+    this.router.post("/BusinessRegister", this.businessRegister);
   }
   businessLogin = async (req: Request, res: Response) => {
     let { username, password } = req.body;

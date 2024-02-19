@@ -1,31 +1,29 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
+import { RootState } from "../store";
 
 type item = {}
 
 type cartType = {
-  shop: string | undefined;
-  itemList: Array<item> | undefined;
-
+  pickupTime: string  
+  
 };
 
 const initialState: cartType = {
-  shop: JSON.parse(localStorage.getItem("shoppingCart")as string) || undefined,
-  itemList: JSON.parse(localStorage.getItem("shoppingCart")as string) || undefined,
+  pickupTime: ""
 };
 
 export const shoppingCartSlice = createSlice({
   name: "shoppingCart",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      state.shop = action.payload;
-    },
-    clearCart: (state, action: PayloadAction<string>) => {
-
+    changePickupTime: (state, action: PayloadAction<string>) => {
+      state.pickupTime = action.payload
+      console.log("redux pickup time", state.pickupTime)
     }
   },
 });
 
-export const { login } = shoppingCartSlice.actions;
+export const { changePickupTime } = shoppingCartSlice.actions;
 
 export default shoppingCartSlice.reducer;

@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { login } from "../../slices/authSlice";
 import { AppDispatch } from "../../store";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const source = "http://localhost:8100";
 
@@ -24,11 +24,15 @@ export async function postLogin(username: string, password: string) {
     localStorage.setItem("token", resp.token);
 
     return true;
-  } else return false;
+  } else {
+    console.log(resp.message)
+    return false
+  };
 }
 
 export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
 
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
@@ -46,8 +50,9 @@ export default function LoginPage() {
       let decoded: { user_id: number; username: string } = jwtDecode(
         localStorage.getItem("token")!
       );
-      dispatch(login(decoded.username));
-    }
+      dispatch(login({user: decoded.username, user_id: decoded.user_id}));
+      navigate("/main")
+    } 
   };
 
   return (

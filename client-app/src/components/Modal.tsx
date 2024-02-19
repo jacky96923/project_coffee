@@ -1,74 +1,76 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../store';
+import moment from 'moment';
+import { changePickupTime } from '../slices/shoppingCartSlice';
+
 
 type pickupModalProps = {
   show: boolean,
   onClose: () => void
 }
 
+type ConfirmClearCartModalProps = {
+  show: boolean,
+  onClose: () => void,
+  onDelete: () => void
+}
+
 export function PickupModal(props: pickupModalProps) {
-  const [pickupTime, setPickupTime] = useState("10:00")
-  const shoppingCart = JSON.parse(localStorage.getItem("shoppingCart")as string)
-  const onSelectTimeHandler = (e: ChangeEvent<HTMLSelectElement>) =>{
+  const dispatch = useDispatch<AppDispatch>()
+  const [pickupTime, setPickupTime] = useState("")
+  const [pickupTimeList, setPickupTimeList] = useState([] as string[])
+
+  useEffect(()=>{
+    const defaultPickupTime = moment().add(10, "m").format("HH:mm")
+    let timeList = []
+    for (let i = 0; i < 10; i++) {
+      const newTime = moment(defaultPickupTime, "HH:mm").add(i * 15, "m").format("HH:mm")
+      timeList.push(newTime)
+    }
+    //console.log("in effect", timeList)
+    setPickupTime(defaultPickupTime)
+    //console.log("Pickup Time", pickupTime)
+    dispatch(changePickupTime(defaultPickupTime))
+    setPickupTimeList(timeList)
+  }, [])
+
+  //console.log("out of effect", pickupTimeList)
+
+  const onSelectTimeHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     setPickupTime(e.target.value);
-    //shoppingCart.pickupTime = pickupTime
-    //localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart))
+    // console.log(pickupTime) // no change before render?
+    dispatch(changePickupTime(e.target.value))
     props.onClose();
   }
+
   return (
     <>
-      <dialog id="my_modal_1" className={props.show === true? "modal modal-open":"modal"}>
+      <dialog id="my_modal_1" className={props.show === true ? "modal modal-open" : "modal"}>
         <div className="modal-box w-11/12 max-w-xs">
           <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={props.onClose}>✕</button>
           <h3 className="font-bold text-lg">自取時間</h3>
-          <select className="modal-action select w-full max-w-sm" defaultValue={pickupTime} onChange={(e)=>onSelectTimeHandler(e)}>
-            <option value="10:00">10:00</option>
-            <option value="10:15">10:15</option>
-            <option value="10:30">10:30</option>
-            <option value="10:45">10:45</option>
-            <option value="11:00">11:00</option>
-            <option value="11:15">11:15</option>
-            <option value="11:30">11:30</option>
-            <option value="11:45">11:45</option>
-            <option value="12:00">12:00</option>
+          <select className="modal-action select w-full max-w-sm" defaultValue={pickupTime} onChange={(e) => onSelectTimeHandler(e)}>
+            {pickupTimeList.map((pickupTime, index) => <option key={index} value={pickupTime}>{pickupTime}</option>)}
+
           </select>
         </div>
-          {/* <Modal.Footer>
-            <Button color="gray" onClick={props.onClose}>I accept</Button>
-            <Button color="gray" onClick={props.onClose}>
-              Decline
-            </Button>
-          </Modal.Footer> */}
       </dialog>
     </>
   );
 }
 
-// export default function Modal(open: boolean, onClose: ()=>void, children: string) {
-//   return (
-//     // backdrop
-//     <div
-//       onClick={onClose}
-//       className={`
-//         fixed inset-0 flex justify-center items-center transition-colors
-//         ${open ? "visible bg-black/20" : "invisible"}
-//       `}
-//     >
-//       {/* modal */}
-//       <div
-//         onClick={(e) => e.stopPropagation()}
-//         className={`
-//           bg-white rounded-xl shadow p-6 transition-all
-//           ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
-//         `}
-//       >
-//         <button
-//           onClick={onClose}
-//           className="absolute top-2 right-2 p-1 rounded-lg text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600"
-//         >
+export function ConfirmClearCartModal(props: ConfirmClearCartModalProps) {
 
-//         </button>
-//         {children}
-//       </div>
-//     </div>
-//   )
-// }
+  return (
+    <>
+      <dialog id="my_modal_1" className={props.show === true ? "modal modal-open" : "modal"}>
+        <div className="modal-box w-11/12 max-w-xs">
+          <h6>確認清空購物車嗎?</h6>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>取消</button>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onDelete}>確認</button>
+        </div>
+      </dialog>
+    </>
+  );
+}
