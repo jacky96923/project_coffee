@@ -23,11 +23,8 @@ import MyPage from "./Pages/myPage/MyPage";
 import Receipt from "./Pages/receipt/ReceiptPage";
 import AllReceipt from "./Pages/receipt/AllReceiptPage";
 import ItemPage from "./Pages/items/itemPage";
-<<<<<<< HEAD
-import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
-=======
 import { AuthGuard } from "./AuthGuard";
->>>>>>> fa3255fd94835628f5aa7dbf6940d4d7c3907ea9
+import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -36,22 +33,12 @@ function App() {
       <Router>
         <div className="App ">
           <Routes>
-            <Route
-              path="/"
-              element={<Navigate to="/main"></Navigate>}
-            />
-            <Route
-              path="/client-login"
-              element={<ClientLoginPage />}
-            />
-            <Route
-              path="/client-register"
-              element={<ClientRegisterPage />}
-            />
-            <Route path="/main" element={<ClientMainPage/>}/>
+            <Route path="/" element={<Navigate to="/main"></Navigate>} />
+            <Route path="/client-login" element={<ClientLoginPage />} />
+            <Route path="/client-register" element={<ClientRegisterPage />} />
+            <Route path="/main" element={<ClientMainPage />} />
             <Route path="/shopSelection" element={<ShopSelection />} />
             <Route path="/myReward" element={<MyReward />} />
-            
 
             <Route
               path="/productSelection/:shopId"
@@ -63,7 +50,7 @@ function App() {
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/CommentSummary" element={<CommentSummary />} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
-            <Route element={<AuthGuard/>}>
+            <Route element={<AuthGuard />}>
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/receipt/temp" element={<Receipt />} />
               <Route path="/receipt/all" element={<AllReceipt />} />
