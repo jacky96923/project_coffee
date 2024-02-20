@@ -43,8 +43,6 @@ export default function ItemPage() {
         }>;
       } = Getalloptions(id!);
 
-  console.log("alloptions", allOptions);
-
   useEffect(() => {
     console.log("check running");
     if (typeof allOptions !== "string") {
@@ -95,6 +93,8 @@ export default function ItemPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [cupSize, setCupSize] = useState("小杯");
+  const [selectedSize, setSelectedSize] = useState("小杯");
+  const [selectedList, setSelectedList] = useState<string[]>([]);
   const [selectedSizeId, setSelectedSizeId] = useState(id);
   const [price, setPrice] = useState(
     typeof items === "string"
@@ -112,23 +112,14 @@ export default function ItemPage() {
   //dispatch inital state
 
   function sizeHandler(size: string) {
-    setCupSize(size);
+    setSelectedSize(size);
     if (typeof items !== "string") {
       const selectedItem = items.itemInfo.find((item) => item.size === size);
       if (selectedItem) {
         setPrice(selectedItem.price);
         //update id based on size change
         setSelectedSizeId(String(selectedItem.id));
-        dispatch(
-          // itemInfo({
-          //   id: parseInt(selectedSizeId!),
-          //   name: selectedItem.name,
-          //   shopName: selectedItem.shopName,
-          //   address: selectedItem.address,
-          // }),
-          //dispatch()
-          cupPrice({ price: selectedItem.price })
-        );
+        dispatch(cupPrice({ price: selectedItem.price }));
       }
     }
   }
@@ -136,7 +127,6 @@ export default function ItemPage() {
   const getOptionsPrice = useSelector(
     (state: RootState) => state.itemPage.item.optionList
   );
-  console.log("check option price", getOptionsPrice);
   let totalOptionPrice = 0;
   getOptionsPrice.forEach((option) => {
     if (option.option.price !== null) {
@@ -161,6 +151,16 @@ export default function ItemPage() {
   useEffect(() => {
     dispatch(updateSubTotal(subtotal));
   }, [subtotal]);
+
+  const getSelectedOption = useSelector(
+    (state: RootState) => state.itemPage.item.optionList
+  );
+  useEffect(() => {
+    getSelectedOption.forEach((option) => {
+      let list = [option.option.option_name];
+      setSelectedList(list);
+    });
+  }, [getSelectedOption]);
 
   return (
     <>
@@ -206,7 +206,11 @@ export default function ItemPage() {
                         : items.itemInfo.map((entry) => (
                             <button
                               onClick={() => sizeHandler(entry.size)}
-                              className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown"
+                              className={`btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown${
+                                selectedSize === entry.size
+                                  ? styles.selectedSize
+                                  : ""
+                              }`}
                             >
                               <div className={styles.buttonText}>
                                 {entry.size}
@@ -231,6 +235,7 @@ export default function ItemPage() {
                     <ItemPageOptions
                       optionListName={entry.option_list_name}
                       itemId={selectedSizeId!}
+                      selectedList={selectedList}
                     />
                   ))
                 : "No Option data"}

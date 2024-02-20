@@ -3,10 +3,13 @@ import styles from "./ItemPageOptions.module.css";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import ItemOptionSlide from "./ItemOptionsSlide";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 type ItemPageOptionsProps = {
   itemId: string;
   optionListName: string;
+  selectedList: string[];
 };
 
 export default function ItemPageOptions(props: ItemPageOptionsProps) {
@@ -40,6 +43,11 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
       <div className={optionsButtons} onClick={slideHandler}>
         <div className={styles.options}>
           <div>{props.optionListName}</div>
+          {props.selectedList.map((selectedOption, index) => (
+            <div key={index} className={styles.optionButton}>
+              {selectedOption}
+            </div>
+          ))}
           <div>
             <ChevronRightIcon className="h-6 w-6" />
           </div>
