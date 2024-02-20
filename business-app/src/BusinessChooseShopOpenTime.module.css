@@ -1,4 +1,4 @@
-.button-container {
+.buttonContainer {
   position: relative;
   padding-top: 5px;
   display: flex;
@@ -9,10 +9,10 @@ justify-content: space-evenly;
 justify-content: space-evenly;
 }
 
-h1 {
+/* h1 {
   font-size: 24px; /* Adjust the font size as needed */
-  padding-bottom: 3rem;
-}
+  /* padding-bottom: 3rem;
+} */
 .top{
   padding-top: 1rem;
 }
