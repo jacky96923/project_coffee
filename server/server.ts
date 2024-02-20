@@ -13,7 +13,8 @@ import {
   BusinessAuthController,
   UserAuthController,
 } from "./controller/AuthController";
-import { BusinessAuthService, UserAuthService } from "./services/AuthService";
+
+// Client-app
 import { ShopController } from "./controller/ShopController";
 import { ShopService } from "./services/ShopService";
 import { ItemPageController } from "./controller/ItemPageController";
@@ -26,6 +27,11 @@ import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 import { StripeService } from "./services/StripeService";
 import { StripeController } from "./controller/StripeController";
+
+// Business-app
+import { BusinessAuthService, UserAuthService } from "./services/AuthService";
+import { MenuPreviewController } from "./controller/MenuPreviewController";
+import { MenuPreviewService } from "./services/MenuPreviewServices";
 
 // Database Connection Setup
 const knexConfig = require("./knexfile");
@@ -51,6 +57,9 @@ const optionSlideController = new OptionSlideController(optionSlideService);
 const menuIdService = new MenuIdService(knex);
 const menuController = new MenuController(menuIdService);
 
+const menuPreviewService = new MenuPreviewService(knex);
+const menuPreviewController = new MenuPreviewController(menuPreviewService);
+
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
@@ -64,6 +73,7 @@ app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
+app.use("/menuPreviews", menuPreviewController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
