@@ -134,7 +134,7 @@ export default function ShoppingCartPage() {
     // 1. check if there is user login (isLoggedIn guard solved)
 
     // 2. if yes, create req.body for checkout fetch
-    const user_id = useSelector((state: RootState) => state.auth.user_id);
+    // const user_id = useSelector((state: RootState) => state.auth.user_id);
     const checkoutData = { user_id: user_id, cart: itemListWithKey };
     console.log("checkoutData", checkoutData);
     // 3. fetch to get the url for checkout
