@@ -9,6 +9,7 @@ import { RootState } from "../store";
 type ItemPageOptionsProps = {
   itemId: string;
   optionListName: string;
+  selectedOption: string
 };
 
 export default function ItemPageOptions(props: ItemPageOptionsProps) {
@@ -17,20 +18,18 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const [slide, setSlide] = useState("invisible");
   const [slideOptions, setSlideOption] = useState("translate-y-full");
   const [bg, setBg] = useState("opacity-0");
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedIndex, setSelectedIndex] = useState("");
+  // const [selected, setSelected] = useState<string[]>([]);
 
   console.log("optionPage", props.itemId);
 
-  function slideHandler(e: any) {
+  function slideHandler() {
     setIsClicked(!isClicked);
     setSlide("");
     setSlideOption("");
     setBg("opacity-80");
     queryClient.invalidateQueries({ queryKey: ["optionInfo"] });
-    setSelectedIndex(e.target);
-    console.log("check event", e.target);
   }
+
   function handleClose() {
     setSlide("invisible");
     setSlideOption("translate-y-full");
@@ -40,34 +39,32 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const optionsButtons = isClicked
     ? styles.optionsButtonsClicked
     : styles.optionsButtons;
+//
+  // const getSelectedOption = useSelector(
+  //   (state: RootState) => state.itemPage.item.optionList
+  // );
+  // console.log("getSelected default", getSelectedOption);
+  
+  // useEffect(() => {
+  //   let displayOption: string[] = [];
+  //   getSelectedOption.forEach((entry) => {
+  //     displayOption.push(entry.option.option_name);
+  //   });
+  //   console.log("displayOption", displayOption)
+  //   setSelected(displayOption);
+  //   console.log("ItemPageOptions Selected", selected);
+  // }, [getSelectedOption]);
+  // console.log("selected outside useEffect", selected)
 
-  const getSelectedOption = useSelector(
-    (state: RootState) => state.itemPage.item.optionList
-  );
-  console.log("getSelected", getSelectedOption);
-  useEffect(() => {
-    let displayOption: string[] = [];
-    getSelectedOption.forEach((option) => {
-      displayOption.push(option.option.option_name);
-      setSelected(displayOption);
-    });
-    console.log("ItemPageOPtions Selected", selected);
-  }, [getSelectedOption]);
-
+//
   return (
     <>
-      <div className={optionsButtons} onClick={(e) => slideHandler(e)}>
+      <div className={optionsButtons} onClick={() => slideHandler()}>
         <div className={styles.options}>
           <div>{props.optionListName}</div>
-          {selected.map(
-            (selectedOption, index) =>
-              selectedOption === props.optionListName && (
-                <div key={index} className={styles.optionButton}>
-                  {selectedOption}
-                </div>
-              )
-          )}
-          <div>
+          
+          <div className="flex font-bold">
+            <p>{props.selectedOption}</p>
             <ChevronRightIcon className="h-6 w-6" />
           </div>
         </div>

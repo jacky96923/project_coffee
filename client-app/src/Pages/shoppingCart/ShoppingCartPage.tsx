@@ -176,15 +176,13 @@ export default function ShoppingCartPage() {
       </div>
       {/* shopping cart & buttons for edit cart */}
       <div className="overflow-y-auto h-1/3">
-        {Array.isArray(cart) && cart.length > 0
-          ? cart.map((item) => (
+        {cart.map((item) => (
               <ShoppingCartItem
                 key={item.key}
                 item={item}
                 onDelete={() => onDeleteItemHandler(item.key)}
               />
-            ))
-          : ""}
+            ))}
       </div>
       <div className="border-b border-slate-700">
         <button

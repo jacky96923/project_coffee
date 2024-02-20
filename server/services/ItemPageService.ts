@@ -59,7 +59,7 @@ export class ItemPageService {
         "item.price as price"
       )
       .join("shops", "shops.id", "=", "item.shop_id")
-      .where("item.id", 2);
+      .where("item.id", itemId);
 
     let optionState = await this.knex("item")
       .select("option_list.name as optionListName")
