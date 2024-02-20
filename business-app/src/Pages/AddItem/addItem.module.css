@@ -1,0 +1,19 @@
+.Allcontent {
+  border: black solid 1px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+}
+
+.content {
+  border: black solid 1px;
+  width: 10rem;
+  height: 10rem;
+}
+
+.navBarContainer {
+  border: black solid 1px;
+  width: fit-content;
+  height: fit-content;
+}
