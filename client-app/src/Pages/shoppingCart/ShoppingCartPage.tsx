@@ -14,54 +14,53 @@ export default function ShoppingCartPage() {
   const navigate = useNavigate();
 
   // set fake data
-  useEffect(() => {
-    localStorage.setItem(
-      "shoppingCart",
-      JSON.stringify({
-        shopName: "Blue Bottle Coffee",
-        shopAddress: "中環擺花街38號地舖及1樓",
-        itemList: [
-          {
-            itemId: 234,
-            name: "朱古力咖啡",
-            item_photo: "",
-            size: "小杯",
-            price: 25,
-            optionList: [
-              { 凍: null },
-              { 特選咖啡豆: 10 },
-              { 不加奶油: null },
-              { 燕麥奶: 5 },
-              { 正常糖: null },
-            ],
-            quantity: 2,
-            subTotal: 80,
-          },
-          {
-            itemId: 234,
-            name: "朱古力咖啡",
-            item_photo: "",
-            size: "小杯",
-            price: 25,
-            optionList: [
-              { 凍: null },
-              { 特選咖啡豆: 10 },
-              { 不加奶油: null },
-              { 豆奶: null },
-              { 正常糖: null },
-            ],
-            quantity: 1,
-            subTotal: 35,
-          },
-        ],
-      })
-    );
-  }, []);
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "shoppingCart",
+  //     JSON.stringify({
+  //       shopName: "Blue Bottle Coffee",
+  //       shopAddress: "中環擺花街38號地舖及1樓",
+  //       itemList: [
+  //         {
+  //           itemId: 234,
+  //           name: "朱古力咖啡",
+  //           item_photo: "",
+  //           size: "小杯",
+  //           price: 25,
+  //           optionList: [
+  //             { 凍: null },
+  //             { 特選咖啡豆: 10 },
+  //             { 不加奶油: null },
+  //             { 燕麥奶: 5 },
+  //             { 正常糖: null },
+  //           ],
+  //           quantity: 2,
+  //           subTotal: 80,
+  //         },
+  //         {
+  //           itemId: 234,
+  //           name: "朱古力咖啡",
+  //           item_photo: "",
+  //           size: "小杯",
+  //           price: 25,
+  //           optionList: [
+  //             { 凍: null },
+  //             { 特選咖啡豆: 10 },
+  //             { 不加奶油: null },
+  //             { 豆奶: null },
+  //             { 正常糖: null },
+  //           ],
+  //           quantity: 1,
+  //           subTotal: 35,
+  //         },
+  //       ],
+  //     })
+  //   );
+  // }, []);
 
   // All data received for this page
   const user_id = useSelector((state: RootState) => state.auth.user_id);
-  let shoppingCartPage =
-    JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
+  let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
   console.log("shoppingCartPage", shoppingCartPage);
 
   // Shop Info

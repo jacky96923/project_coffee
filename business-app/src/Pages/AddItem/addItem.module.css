@@ -1,0 +1,11 @@
+.content {
+  border: black solid 1px;
+  width: 10rem;
+  height: 10rem;
+}
+
+.navBarContainer {
+  border: black solid 1px;
+  width: fit-content;
+  height: fit-content;
+}

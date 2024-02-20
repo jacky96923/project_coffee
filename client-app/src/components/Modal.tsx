@@ -10,6 +10,11 @@ type pickupModalProps = {
   onClose: () => void
 }
 
+type NoShoppingCartModalProps = {
+  show: boolean,
+  onClose: () => void
+}
+
 type ConfirmClearCartModalProps = {
   show: boolean,
   onClose: () => void,
@@ -69,6 +74,21 @@ export function ConfirmClearCartModal(props: ConfirmClearCartModalProps) {
           <h6>確認清空購物車嗎?</h6>
           <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>取消</button>
           <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onDelete}>確認</button>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+export function NoShoppingCartModal(props: NoShoppingCartModalProps) {
+
+  return (
+    <>
+      <dialog id="my_modal_1" className={props.show === true ? "modal modal-open" : "modal"}>
+        <div className="modal-box w-11/12 max-w-xs">
+          <h6>你的購物車還沒有商品</h6>
+          <p>請先選擇店舖及將商品加入購物車</p>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>確認</button>
         </div>
       </dialog>
     </>

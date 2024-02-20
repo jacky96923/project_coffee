@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import { Getalloptions, GetItemInfo } from "../../hooks/ItemPageAPI";
-import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
@@ -98,12 +97,16 @@ export default function ItemPage() {
   const [price, setPrice] = useState(
     typeof items === "string"
       ? ""
-      : items.itemInfo.find((item) => item.size === cupSize)?.price
+      : items.itemInfo.length > 1
+      ? items.itemInfo.find((item) => item.size === cupSize)?.price
+      : items.itemInfo[0].price
   );
   useEffect(() => {
     if (typeof items !== "string") {
       setPrice(
-        items.itemInfo.find((item) => item.size === cupSize)?.price || ""
+        items.itemInfo.length > 1
+          ? items.itemInfo.find((item) => item.size === cupSize)?.price || ""
+          : items.itemInfo[0].price
       );
     }
   }, [items, cupSize]);
@@ -154,7 +157,7 @@ export default function ItemPage() {
   const handleAddToCart = () => {
     dispatch(itemCheckOut());
     // Navigate to the shopping cart page
-    navigate("/shopping-cart");
+    navigate("/shoppingCart");
   };
 
   return (

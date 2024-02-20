@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
+import Sidebar from "../../component/Sidebar";
 
 import { FaEdit } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
