@@ -172,7 +172,7 @@ export const itemPageSlice = createSlice({
       }
       localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
       let checkout = JSON.parse(localStorage.getItem("shoppingCart") || "null");
-      console.log("check checkout", checkout);
+      console.log("redux check checkout", checkout);
     },
   },
 });
