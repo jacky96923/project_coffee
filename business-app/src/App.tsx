@@ -10,6 +10,7 @@ import BusinessWelcome from "./BusinessWelcomePage"; // Corrected import
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import MenuPreview from "./Pages/MenuPreview/MenuPreview";
+import AddItem from "./Pages/AddItem/AddItem";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -39,6 +40,7 @@ function App() {
             element={<BusinessChooseShopOpenTime />}
           />
           <Route path="/BusinessWelcome" element={<BusinessWelcome />} />{" "}
+          <Route path="/addItem" element={<AddItem />} />
           {/* Corrected route path */}
         </Routes>
       </div>
