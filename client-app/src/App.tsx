@@ -51,17 +51,16 @@ function App() {
           <Route path="/shopping-cart" element={<ShoppingCartPage />} />
         </Route>
 
-            <Route element={<AuthGuard />}>
-              <Route path="/myPage" element={<MyPage />} />
-              <Route path="/receipt/temp" element={<Receipt />} />
-              <Route path="/receipt/all" element={<AllReceipt />} />
-              {/* <Route path='/checkout-success' element={<Home />} />
-              <Route path='/checkout-cancel' element={<AboutPage />} /> */}
-            </Route>
-          </Routes>
-        </div>
-      </Router>
-    </>
+        <Route element={<AuthGuard />}>
+          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/receipt/temp" element={<Receipt />} />
+          <Route path="/receipt/all" element={<AllReceipt />} />
+          {/* <Route path='/checkout-success' element={<Home />} />
+          <Route path='/checkout-cancel' element={<AboutPage />} /> */}
+        </Route>
+      </Routes>
+    </div>
+  </Router>
   );
 }
 
