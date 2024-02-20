@@ -60,11 +60,12 @@ export class ItemPageService {
       )
       .join("shops", "shops.id", "=", "item.shop_id")
       .where("item.id", 2);
+
     let optionState = await this.knex("item")
       .select("option_list.name as optionListName")
       .select(
         this.knex.raw(
-          "json_agg(json_build_object('option_name', custom_option.name, 'price', custom_option.price)) as options"
+          "json_agg(json_build_object('option_name', custom_option.name, 'price', custom_option.price)ORDER BY custom_option.id) as options"
         )
       )
       .join("item_type_relation", "item_type_relation.item_id", "=", "item.id")
