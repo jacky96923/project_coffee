@@ -58,7 +58,7 @@ export default function ItemPage() {
           address: allOptions.itemState[0].address,
           id: allOptions.itemState[0].id,
           name: allOptions.itemState[0].name,
-          item_photo: allOptions.itemState[0].size,
+          item_photo: allOptions.itemState[0].item_photo,
           size: allOptions.itemState[0].size,
           price: allOptions.itemState[0].price,
           optionList: firstValues.map((option) => ({

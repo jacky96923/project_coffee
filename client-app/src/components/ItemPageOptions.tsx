@@ -18,15 +18,18 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const [slideOptions, setSlideOption] = useState("translate-y-full");
   const [bg, setBg] = useState("opacity-0");
   const [selected, setSelected] = useState<string[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState("");
 
   console.log("optionPage", props.itemId);
 
-  function slideHandler() {
+  function slideHandler(e: any) {
     setIsClicked(!isClicked);
     setSlide("");
     setSlideOption("");
     setBg("opacity-80");
     queryClient.invalidateQueries({ queryKey: ["optionInfo"] });
+    setSelectedIndex(e.target);
+    console.log("check event", e.target);
   }
   function handleClose() {
     setSlide("invisible");
@@ -43,8 +46,9 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   );
   console.log("getSelected", getSelectedOption);
   useEffect(() => {
+    let displayOption: string[] = [];
     getSelectedOption.forEach((option) => {
-      let displayOption = [option.option.option_name];
+      displayOption.push(option.option.option_name);
       setSelected(displayOption);
     });
     console.log("ItemPageOPtions Selected", selected);
@@ -52,14 +56,17 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
 
   return (
     <>
-      <div className={optionsButtons} onClick={slideHandler}>
+      <div className={optionsButtons} onClick={(e) => slideHandler(e)}>
         <div className={styles.options}>
           <div>{props.optionListName}</div>
-          {selected.map((selectedOption, index) => (
-            <div key={index} className={styles.optionButton}>
-              {selectedOption}
-            </div>
-          ))}
+          {selected.map(
+            (selectedOption, index) =>
+              selectedOption === props.optionListName && (
+                <div key={index} className={styles.optionButton}>
+                  {selectedOption}
+                </div>
+              )
+          )}
           <div>
             <ChevronRightIcon className="h-6 w-6" />
           </div>
