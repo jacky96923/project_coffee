@@ -60,13 +60,12 @@ export default function ShoppingCartPage() {
 
   // All data received for this page
   const user_id = useSelector((state: RootState) => state.auth.user_id);
-  let shoppingCartPage =
-    JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
+  let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
   console.log("shoppingCartPage", shoppingCartPage);
 
   // Shop Info
   const shopName = shoppingCartPage?.shopName;
-  const shopAddress = shoppingCartPage?.shopAddress;
+  const shopAddress = shoppingCartPage?.address;
 
   // Shopping Cart Info & Utils
   // const [key, setKey] = useState(shoppingCartPage?.itemList.length)
@@ -256,8 +255,7 @@ export default function ShoppingCartPage() {
           onClick={onCheckoutHandler}
         >
           付款
-        </button>{" "}
-        color not working
+        </button>
       </div>
     </div>
   );

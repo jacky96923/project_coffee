@@ -32,7 +32,7 @@ export default function ShopSelectionList() {
           shopItem.length > 0 ? (
             shopItem.map((shop) => (
               <li key={shop.id} className="">
-                <Link to={`/ProductSelection/${shop.id}`}>
+                <Link to={`/menu/${shop.id}`}>
                   <div
                     style={{
                       display: "grid",
