@@ -9,6 +9,7 @@
     "data": "knex migrate:rollback && knex migrate:latest && knex seed:run"
   },
   "dependencies": {
+    "@types/stripe": "^14.17.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",

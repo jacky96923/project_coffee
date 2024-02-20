@@ -32,10 +32,10 @@ const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
 // Stripe Setup
-const stripeService = new StripeService(knex);
-const stripeController = new StripeController(stripeService);
+// const stripeService = new StripeService(knex);
+// const stripeController = new StripeController(stripeService);
 
-app.use("/stripe", stripeController.router);
+// app.use("/stripe", stripeController.rowuter);
 
 // Controller and Service Instantiation
 const userAuthService = new UserAuthService(knex);

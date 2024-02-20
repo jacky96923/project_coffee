@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox, Input, Button } from "@material-tailwind/react";
-import "./BusinessChooseShopOpenTime.css";
+import styles from "./BusinessChooseShopOpenTime.module.css";
 
 export function BusinessChooseShopOpenTime() {
   const weekdays = [
@@ -108,10 +108,10 @@ export function BusinessChooseShopOpenTime() {
   };
 
   return (
-    <div className="top">
+    <div className={styles.top}>
       <h1>開店時間</h1>
 
-      <div className="flex">
+      <div className={styles.flex}>
         <div className="flex-1">
           <h1>平日</h1>
           {[0, 1, 2, 3, 4].map((weekdayIndex, index) => (
@@ -216,7 +216,7 @@ export function BusinessChooseShopOpenTime() {
           ))}
         </div>
       </div>
-      <div className="button-container">
+      <div className={styles.buttonContainer}>
         <Button size="lg" placeholder={undefined}>
           上一步
         </Button>

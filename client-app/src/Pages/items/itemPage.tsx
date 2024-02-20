@@ -58,7 +58,7 @@ export default function ItemPage() {
           address: allOptions.itemState[0].address,
           id: allOptions.itemState[0].id,
           name: allOptions.itemState[0].name,
-          item_photo: allOptions.itemState[0].size,
+          item_photo: allOptions.itemState[0].item_photo,
           size: allOptions.itemState[0].size,
           price: allOptions.itemState[0].price,
           optionList: firstValues.map((option) => ({
@@ -98,12 +98,16 @@ export default function ItemPage() {
   const [price, setPrice] = useState(
     typeof items === "string"
       ? ""
-      : items.itemInfo.find((item) => item.size === cupSize)?.price
+      : items.itemInfo.length > 1
+      ? items.itemInfo.find((item) => item.size === cupSize)?.price
+      : items.itemInfo[0].price
   );
   useEffect(() => {
     if (typeof items !== "string") {
       setPrice(
-        items.itemInfo.find((item) => item.size === cupSize)?.price || ""
+        items.itemInfo.length > 1
+          ? items.itemInfo.find((item) => item.size === cupSize)?.price || ""
+          : items.itemInfo[0].price
       );
     }
   }, [items, cupSize]);

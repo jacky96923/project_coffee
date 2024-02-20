@@ -34,7 +34,12 @@ export default function CategoryButton() {
         {category.map((item: any, id: number) => {
           return (
             <div className="ml-2 block w-35 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
-              <button className="m-2 ">{item.name}</button>
+              <button
+                className="text-xl               // onClick={onMenuHandler}
+"
+              >
+                {item.name}
+              </button>
             </div>
           );
         })}
