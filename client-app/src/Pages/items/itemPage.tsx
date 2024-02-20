@@ -94,7 +94,6 @@ export default function ItemPage() {
   const dispatch = useDispatch<AppDispatch>();
   const [cupSize, setCupSize] = useState("小杯");
   const [selectedSize, setSelectedSize] = useState("小杯");
-  const [selectedList, setSelectedList] = useState<string[]>([]);
   const [selectedSizeId, setSelectedSizeId] = useState(id);
   const [price, setPrice] = useState(
     typeof items === "string"
@@ -152,15 +151,11 @@ export default function ItemPage() {
     dispatch(updateSubTotal(subtotal));
   }, [subtotal]);
 
-  const getSelectedOption = useSelector(
-    (state: RootState) => state.itemPage.item.optionList
-  );
-  useEffect(() => {
-    getSelectedOption.forEach((option) => {
-      let list = [option.option.option_name];
-      setSelectedList(list);
-    });
-  }, [getSelectedOption]);
+  const handleAddToCart = () => {
+    dispatch(itemCheckOut());
+    // Navigate to the shopping cart page
+    navigate("/shopping-cart");
+  };
 
   return (
     <>
@@ -228,14 +223,16 @@ export default function ItemPage() {
               <div className={styles.optionsTitle}>
                 <div className={styles.itemh2}>自訂選項</div>
               </div>
+
               {typeof items === "string"
                 ? ""
                 : items.optionList.length > 0
-                ? items.optionList.map((entry) => (
+                ? items.optionList.map((entry, index) => (
                     <ItemPageOptions
+                      key={index}
                       optionListName={entry.option_list_name}
                       itemId={selectedSizeId!}
-                      selectedList={selectedList}
+                      // Pass the selected option at the same index
                     />
                   ))
                 : "No Option data"}
@@ -260,7 +257,7 @@ export default function ItemPage() {
               </div>
               <button
                 className="btn rounded-full  bg-yellow-900 px-28"
-                onClick={() => dispatch(itemCheckOut())}
+                onClick={handleAddToCart}
               >
                 <div className={styles.addItemContent}>
                   <div className="text-white">加入購物車</div>

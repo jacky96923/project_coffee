@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ItemPageOptions.module.css";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import ItemOptionSlide from "./ItemOptionsSlide";
@@ -9,7 +9,6 @@ import { RootState } from "../store";
 type ItemPageOptionsProps = {
   itemId: string;
   optionListName: string;
-  selectedList: string[];
 };
 
 export default function ItemPageOptions(props: ItemPageOptionsProps) {
@@ -18,6 +17,7 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const [slide, setSlide] = useState("invisible");
   const [slideOptions, setSlideOption] = useState("translate-y-full");
   const [bg, setBg] = useState("opacity-0");
+  const [selected, setSelected] = useState<string[]>([]);
 
   console.log("optionPage", props.itemId);
 
@@ -38,12 +38,24 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
     ? styles.optionsButtonsClicked
     : styles.optionsButtons;
 
+  const getSelectedOption = useSelector(
+    (state: RootState) => state.itemPage.item.optionList
+  );
+  console.log("getSelected", getSelectedOption);
+  useEffect(() => {
+    getSelectedOption.forEach((option) => {
+      let displayOption = [option.option.option_name];
+      setSelected(displayOption);
+    });
+    console.log("ItemPageOPtions Selected", selected);
+  }, [getSelectedOption]);
+
   return (
     <>
       <div className={optionsButtons} onClick={slideHandler}>
         <div className={styles.options}>
           <div>{props.optionListName}</div>
-          {props.selectedList.map((selectedOption, index) => (
+          {selected.map((selectedOption, index) => (
             <div key={index} className={styles.optionButton}>
               {selectedOption}
             </div>
