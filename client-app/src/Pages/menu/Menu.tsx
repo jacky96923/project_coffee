@@ -9,7 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { GetMenuPage } from "../../hooks/dataAPI";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductSelection() {
+export default function Menu() {
   const navigate = useNavigate();
 
   const url = window.location.pathname;

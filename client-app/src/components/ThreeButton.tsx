@@ -26,7 +26,7 @@ export default function ThreeButton() {
         </div>
         <div className="mybooking">
           <h3>
-            <Link to="/shopSelection" className="nav-link">
+            <Link to="/receipt/all" className="nav-link">
               <BriefcaseIcon className="w-14" />
               <div className="w-14 text-sm	">我的訂單</div>
             </Link>
