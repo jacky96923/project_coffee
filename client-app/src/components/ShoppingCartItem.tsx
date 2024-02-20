@@ -7,7 +7,7 @@ export type ItemProps = {
   item_photo: string;
   size: string;
   price: number;
-  optionList: Array<{ [key: string]: number | null }>;
+  optionList: Array<{ optionListName: string, option: {option_name: string, price: number | null}}>;
   quantity: number;
   subTotal: number;
 }
@@ -37,10 +37,10 @@ export default function ShoppingCartItem(props: ShoppingCartProps) {
           <span className="font-bold mb-2 text-md">${props.item.price}</span>
         </div>
         <div className="font-bold text-xs">
-          {props.item.optionList.map((option, idx) => (
+          {props.item.optionList.map((entry, idx) => (
             <div key={idx} className="flex justify-between">
-              <span>{Object.keys(option)[0]}</span>
-              <span>{option[Object.keys(option)[0]] !== null ? "+$" + option[Object.keys(option)[0]] : ""}</span>
+              <span>{entry.option.option_name}</span>
+              <span>{entry.option.price !== null ? "+$" + entry.option.price : ""}</span>
             </div>
           )
           )}

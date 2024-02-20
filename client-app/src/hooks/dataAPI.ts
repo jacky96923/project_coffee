@@ -17,7 +17,7 @@ export function GetShopDisplaying() {
   });
   if (isLoading || isFetching) return "Data is coming";
   if (error) {
-    return "Error occured";
+    return "Error occurred";
   }
   if (!data) {
     return [];

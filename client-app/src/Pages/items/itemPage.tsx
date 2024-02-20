@@ -43,7 +43,7 @@ export default function ItemPage() {
       } = Getalloptions(id!);
 
   useEffect(() => {
-    console.log("check running");
+    //console.log("check running");
     if (typeof allOptions !== "string") {
       const firstValues = allOptions.optionState.map((optionItem) => {
         const firstOptionList = optionItem.optionListName;
@@ -94,6 +94,7 @@ export default function ItemPage() {
   const [cupSize, setCupSize] = useState("小杯");
   const [selectedSize, setSelectedSize] = useState("小杯");
   const [selectedSizeId, setSelectedSizeId] = useState(id);
+  const [selectedOptions, setSelectedOptions] = useState<{optionListName: string, optionName: string}[]>([]);
   const [price, setPrice] = useState(
     typeof items === "string"
       ? ""
@@ -110,9 +111,23 @@ export default function ItemPage() {
       );
     }
   }, [items, cupSize]);
-
-  //dispatch inital state
-
+//
+  const getSelectedOption = useSelector(
+    (state: RootState) => state.itemPage.item.optionList
+  );
+  console.log("getSelected default", getSelectedOption);
+  
+  useEffect(() => {
+    let displayOption: {optionListName: string, optionName: string}[] = [];
+    getSelectedOption.forEach((entry) => {
+      displayOption.push({optionListName: entry.optionListName, optionName: entry.option.option_name});
+    });
+    console.log("displayOption", displayOption)
+    setSelectedOptions(displayOption);
+    console.log("ItemPageOptions Selected", selectedOptions);
+  }, [getSelectedOption]);
+  console.log("selected outside useEffect", selectedOptions)
+//
   function sizeHandler(size: string) {
     setSelectedSize(size);
     if (typeof items !== "string") {
@@ -234,6 +249,7 @@ export default function ItemPage() {
                     <ItemPageOptions
                       key={index}
                       optionListName={entry.option_list_name}
+                      selectedOption={selectedOptions.find((option)=>option.optionListName===entry.option_list_name)?.optionName || ""}
                       itemId={selectedSizeId!}
                       // Pass the selected option at the same index
                     />
