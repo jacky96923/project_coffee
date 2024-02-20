@@ -1,8 +1,6 @@
 // Imports and Middleware Setup
 import cors from "cors";
 import express from "express";
-import Stripe from "stripe";
-import bodyParser from "body-parser";
 
 const app = express();
 

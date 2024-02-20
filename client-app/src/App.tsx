@@ -29,38 +29,36 @@ import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
   return (
-    <>
-      <Router>
-        <div className="App ">
-          <Routes>
-            <Route path="/" element={<Navigate to="/main"></Navigate>} />
-            <Route path="/client-login" element={<ClientLoginPage />} />
-            <Route path="/client-register" element={<ClientRegisterPage />} />
-            <Route path="/main" element={<ClientMainPage />} />
-            <Route path="/shopSelection" element={<ShopSelection />} />
-            <Route path="/myReward" element={<MyReward />} />
+  <Router>
+    <div className="App ">
+      <Routes>
+        <Route path="/" element={<Navigate to="/main"></Navigate>} />
+        <Route path="/client-login" element={<ClientLoginPage />} />
+        <Route path="/client-register" element={<ClientRegisterPage />} />
+        <Route path="/main" element={<ClientMainPage />} />
+        <Route path="/shopSelection" element={<ShopSelection />} />
+        <Route path="/myReward" element={<MyReward />} />
+        <Route
+          path="/productSelection/:shopId"
+          element={<ProductSelection />}
+        />
+        <Route path="/itemPage/:id" element={<ItemPage />} />
+        <Route path="/CheckoutCancel" element={<CheckoutCancel />} />
+        <Route path="/CommentPage" element={<CommentPage />} />
+        <Route path="/CommentSummary" element={<CommentSummary />} />
+        <Route path="/shopping-cart" element={<ShoppingCartPage />} />
 
-            <Route
-              path="/productSelection/:shopId"
-              element={<ProductSelection />}
-            />
-            <Route path="/itemPage/:id" element={<ItemPage />} />
-            <Route path="/CheckoutCancel" element={<CheckoutCancel />} />
-
-            <Route path="/CommentPage" element={<CommentPage />} />
-            <Route path="/CommentSummary" element={<CommentSummary />} />
-            <Route path="/shopping-cart" element={<ShoppingCartPage />} />
-            <Route element={<AuthGuard />}>
-              <Route path="/myPage" element={<MyPage />} />
-              <Route path="/receipt/temp" element={<Receipt />} />
-              <Route path="/receipt/all" element={<AllReceipt />} />
-              {/* <Route path='/checkout-success' element={<Home />} />
+        <Route element={<AuthGuard />}>
+          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/receipt/temp" element={<Receipt />} />
+          <Route path="/receipt/all" element={<AllReceipt />} />
+          {/* <Route path='/checkout-success' element={<Home />} />
               <Route path='/checkout-cancel' element={<AboutPage />} /> */}
-            </Route>
-          </Routes>
-        </div>
-      </Router>
-    </>
+        </Route>
+
+      </Routes>
+    </div>
+  </Router>  
   );
 }
 
