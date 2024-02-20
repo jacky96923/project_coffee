@@ -3,7 +3,7 @@ import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 export default function Search() {
   return (
     <>
-      <div className="flex justify-center  ">
+      <div className="flex justify-center w-5/6 mx-auto">
         <input
           type="text"
           placeholder="咖啡店名稱"

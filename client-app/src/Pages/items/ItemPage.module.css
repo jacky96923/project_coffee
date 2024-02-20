@@ -8,9 +8,10 @@
 .backButton {
   background-color: black;
   opacity: 0.33;
-  position: sticky;
+  /* position: sticky;
   top: 0.5rem;
-  z-index: 3;
+  z-index: 3; */
+  margin-top: 0.5rem;
   margin-left: 0.5rem;
 }
 

@@ -48,7 +48,7 @@ function App() {
         <Route path="/commentPage" element={<CommentPage />} />
         <Route path="/commentSummary" element={<CommentSummary />} />
         <Route element={<CartGuard/>}>
-          <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+          <Route path="/shoppingCart" element={<ShoppingCartPage />} />
         </Route>
 
         <Route element={<AuthGuard />}>
