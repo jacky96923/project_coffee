@@ -9,6 +9,7 @@ import { BusinessChooseShopOpenTime } from "./BusinessChooseShopOpenTime";
 import BusinessWelcome from "./BusinessWelcomePage"; // Corrected import
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
+import MenuPreview from "./Pages/MenuPreview/MenuPreview";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -18,15 +19,27 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Navigate to="/BusinessLogin" />} />
-          <Route 
-            path="/BusinessLogin" 
-            element={user ? <Navigate replace to="/login-success" /> : <BusinessLoginPage />}
+          <Route
+            path="/BusinessLogin"
+            element={
+              user ? (
+                <Navigate replace to="/login-success" />
+              ) : (
+                <BusinessLoginPage />
+              )
+            }
           />
-          <Route path="/login-success" element={<LoginokPage />} /> {/* Define the route for login success */}
+          <Route path="/login-success" element={<LoginokPage />} />{" "}
+          <Route path="/MenuPreview" element={<MenuPreview />} />
+          {/* Define the route for login success */}
           <Route path="/BusinessRegister" element={<BusinessRegisterPage />} />
           <Route path="/BusinessLocation" element={<BusinessLocationPage />} />
-          <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} />
-          <Route path="/BusinessWelcome" element={<BusinessWelcome />} /> {/* Corrected route path */}
+          <Route
+            path="/ShopOpenTime"
+            element={<BusinessChooseShopOpenTime />}
+          />
+          <Route path="/BusinessWelcome" element={<BusinessWelcome />} />{" "}
+          {/* Corrected route path */}
         </Routes>
       </div>
     </>
