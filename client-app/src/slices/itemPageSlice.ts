@@ -73,21 +73,6 @@ export const itemPageSlice = createSlice({
       state.item.optionList = optionList;
     },
 
-    // itemInfo: (
-    //   state: ItemCheckOutState,
-    //   action: PayloadAction<{
-    //     id: number;
-    //     name: string;
-    //     shopName: string;
-    //     address: string;
-    //   }>
-    // ) => {
-    //   const { id, name, shopName, address } = action.payload;
-    //   state.item.id = id;
-    //   state.item.name = name;
-    //   state.shopName = shopName;
-    //   state.address = address;
-    // },
     cupPrice: (
       state: ItemCheckOutState,
       action: PayloadAction<{ price: number }>

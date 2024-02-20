@@ -43,8 +43,6 @@ export default function ItemPage() {
         }>;
       } = Getalloptions(id!);
 
-  console.log("alloptions", allOptions);
-
   useEffect(() => {
     console.log("check running");
     if (typeof allOptions !== "string") {
@@ -95,6 +93,7 @@ export default function ItemPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [cupSize, setCupSize] = useState("小杯");
+  const [selectedSize, setSelectedSize] = useState("小杯");
   const [selectedSizeId, setSelectedSizeId] = useState(id);
   const [price, setPrice] = useState(
     typeof items === "string"
@@ -112,23 +111,14 @@ export default function ItemPage() {
   //dispatch inital state
 
   function sizeHandler(size: string) {
-    setCupSize(size);
+    setSelectedSize(size);
     if (typeof items !== "string") {
       const selectedItem = items.itemInfo.find((item) => item.size === size);
       if (selectedItem) {
         setPrice(selectedItem.price);
         //update id based on size change
         setSelectedSizeId(String(selectedItem.id));
-        dispatch(
-          // itemInfo({
-          //   id: parseInt(selectedSizeId!),
-          //   name: selectedItem.name,
-          //   shopName: selectedItem.shopName,
-          //   address: selectedItem.address,
-          // }),
-          //dispatch()
-          cupPrice({ price: selectedItem.price })
-        );
+        dispatch(cupPrice({ price: selectedItem.price }));
       }
     }
   }
@@ -136,7 +126,6 @@ export default function ItemPage() {
   const getOptionsPrice = useSelector(
     (state: RootState) => state.itemPage.item.optionList
   );
-  console.log("check option price", getOptionsPrice);
   let totalOptionPrice = 0;
   getOptionsPrice.forEach((option) => {
     if (option.option.price !== null) {
@@ -161,6 +150,12 @@ export default function ItemPage() {
   useEffect(() => {
     dispatch(updateSubTotal(subtotal));
   }, [subtotal]);
+
+  const handleAddToCart = () => {
+    dispatch(itemCheckOut());
+    // Navigate to the shopping cart page
+    navigate("/shopping-cart");
+  };
 
   return (
     <>
@@ -206,7 +201,11 @@ export default function ItemPage() {
                         : items.itemInfo.map((entry) => (
                             <button
                               onClick={() => sizeHandler(entry.size)}
-                              className="btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown"
+                              className={`btn btn-warning bg-gradient-to-r from-light-brown to-dark-brown${
+                                selectedSize === entry.size
+                                  ? styles.selectedSize
+                                  : ""
+                              }`}
                             >
                               <div className={styles.buttonText}>
                                 {entry.size}
@@ -224,13 +223,16 @@ export default function ItemPage() {
               <div className={styles.optionsTitle}>
                 <div className={styles.itemh2}>自訂選項</div>
               </div>
+
               {typeof items === "string"
                 ? ""
                 : items.optionList.length > 0
-                ? items.optionList.map((entry) => (
+                ? items.optionList.map((entry, index) => (
                     <ItemPageOptions
+                      key={index}
                       optionListName={entry.option_list_name}
                       itemId={selectedSizeId!}
+                      // Pass the selected option at the same index
                     />
                   ))
                 : "No Option data"}
@@ -255,7 +257,7 @@ export default function ItemPage() {
               </div>
               <button
                 className="btn rounded-full  bg-yellow-900 px-28"
-                onClick={() => dispatch(itemCheckOut())}
+                onClick={handleAddToCart}
               >
                 <div className={styles.addItemContent}>
                   <div className="text-white">加入購物車</div>
