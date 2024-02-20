@@ -97,9 +97,16 @@ export default function BusinessLoginPage() {
                 </div>
               </div>
               <div>
-              <Link to="/business-location"
+              <Link to="/BusinessLocation"
                   type="submit"
+                 
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  style={{ 
+                    backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
+                    borderColor: "transparent"
+                  }}
+                  onMouseOver={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #B07A4E, #4A2416)")}
+                  onMouseOut={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #CB8A58, #562B1A)")}
                 >
                   下一步
                 </Link>
