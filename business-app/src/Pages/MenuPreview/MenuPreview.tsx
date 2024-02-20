@@ -57,7 +57,8 @@ const MainContent = () => {
         <div className="Cat flex flex-wrap">
           {category.map((cat: any, id: number) => {
             return (
-              <div className="m-5 flex justify-center w-40 h-16 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white ">
+              // m-5 flex justify-center w-40 h-16 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white
+              <div className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
                 <button className="text-xl">{cat.name}</button>
                 <FaEdit className="m-3 size-7" />
               </div>

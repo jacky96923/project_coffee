@@ -11,7 +11,7 @@ import { BiSolidFoodMenu } from "react-icons/bi";
 export default function Sidebar() {
   return (
     <>
-      <div className="sidebar bg-black text-white w-60 h-screen">
+      <div className="sidebar bg-white text-black w-60 h-screen shadow">
         {/* Sidebar content */}
         <div className="flex flex-col items-center justify-between p-4">
           <img
@@ -21,7 +21,7 @@ export default function Sidebar() {
           />
           <span className="text-2xl font-bold">Project Coffee</span>
         </div>
-        <ul className="flex flex-col items-center justify-center py-4">
+        <ul className="flex flex-col items-center justify-center py-4 ">
           <li className="p-4 hover:bg-gray-700 text-center">
             <div className="flex">
               <FaHome className="size-6" />
