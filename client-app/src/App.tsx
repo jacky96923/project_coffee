@@ -25,6 +25,7 @@ import AllReceipt from "./Pages/receipt/AllReceiptPage";
 import ItemPage from "./Pages/items/itemPage";
 import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
+import MenuPreview from "./Pages/MenuPreview - Business/MenuPreview";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
@@ -50,6 +51,9 @@ function App() {
             <Route path="/CommentPage" element={<CommentPage />} />
             <Route path="/CommentSummary" element={<CommentSummary />} />
             <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+
+            <Route path="/MenuPreview" element={<MenuPreview />} />
+
             <Route element={<AuthGuard />}>
               <Route path="/myPage" element={<MyPage />} />
               <Route path="/receipt/temp" element={<Receipt />} />
