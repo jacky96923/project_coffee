@@ -7,7 +7,7 @@ import ShoppingCartItem, { ItemProps } from "../../components/ShoppingCartItem";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 export default function ShoppingCartPage() {
   // const dispatch = useDispatch<AppDispatch>()
@@ -59,6 +59,7 @@ export default function ShoppingCartPage() {
   }, []);
 
   // All data received for this page
+  const user_id = useSelector((state: RootState) => state.auth.user_id);
   let shoppingCartPage =
     JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
   console.log("shoppingCartPage", shoppingCartPage);
@@ -256,7 +257,7 @@ export default function ShoppingCartPage() {
         >
           付款
         </button>{" "}
-        {/*color not working*/}
+        color not working
       </div>
     </div>
   );

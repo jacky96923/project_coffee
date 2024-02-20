@@ -4,7 +4,7 @@ const source = "http://localhost:8100";
 
 export function GetOptionInfo(itemId: string, option: string) {
   const { isLoading, error, data, isFetching } = useQuery({
-    queryKey: ["optionInfo"],
+    queryKey: ["optionInfo", itemId, option],
     queryFn: async () => {
       const res = await fetch(`${source}/itemPage/${itemId}/${option}`, {
         headers: {

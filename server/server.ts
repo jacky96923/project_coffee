@@ -1,8 +1,6 @@
 // Imports and Middleware Setup
 import cors from "cors";
 import express from "express";
-import Stripe from "stripe";
-import bodyParser from "body-parser";
 
 const app = express();
 
@@ -65,6 +63,7 @@ app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
+app.use("/initialState", itemPageController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

@@ -31,9 +31,7 @@ export class StripeController {
         case "payment_intent.succeeded":
           const paymentIntentSucceeded = event.data.object;
           console.log(paymentIntentSucceeded.metadata);
-            // await client.query(
-            // `UPDATE transactions SET status = 'completed',stripe_id = '${paymentIntentSucceeded.id}' WHERE id = ${paymentIntentSucceeded.metadata.transaction_id}`
-            // );
+          
           this.stripeService.completeTransaction(paymentIntentSucceeded)
 
           break;
@@ -53,7 +51,7 @@ export class StripeController {
     // 1. details of all orders stored in an array
     // 2. userid --- should check whether there is a valid token before sending request
     console.log("check req.body", req.body);
-    let {user_id, orders} = req.body
+    let {user_id, cart} = req.body
     
     let createTransactionResult: any = await this.stripeService.createTransaction(user_id)
   
@@ -62,31 +60,17 @@ export class StripeController {
 
     let line_items = [];
   
-    for (let entry of orders) {
-      // let queryProductResult = await client.query(
-      //   "SELECT name,price from products WHERE id = $1",
-      //   [entry.product_id]
-      // );
-      
+    for (let entry of cart) {
       await this.stripeService.createOrder(transaction_id, entry)
-      // await client.query(
-      //   "INSERT INTO transaction_details (transaction_id,product_id,unit_price,quantity) VALUES ($1,$2,$3,$4)",
-      //   [
-      //     transaction_id,
-      //     entry.product_id,
-      //     queryProductResult.rows[0].price,
-      //     entry.quantity,
-      //   ]
-      // );
   
       let item = {
         price_data: {
           currency: "hkd",
           product_data: {
             name: entry.name,
-            optionList: entry.optionList
+            // optionList: entry.optionList
           },
-          unit_amount: entry.subTotal * 100,
+          unit_amount: entry.subTotal/entry.quantity * 100,
         },
         quantity: entry.quantity,
       };
