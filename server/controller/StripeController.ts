@@ -1,7 +1,10 @@
 import express, { Request, Response } from "express";
 import { StripeService } from "../services/StripeService";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import Stripe from "stripe";
+
+dotenv.config()
 
 if (!process.env.STRIPE_SECRET || !process.env.STRIPE_ENDPOINT) {
     throw Error("you have to fill in STRIPE_SECRET and STRIPE_ENDPOINT .env file");
@@ -15,7 +18,7 @@ export class StripeController {
   router = express.Router();
   public constructor(private stripeService: StripeService) {
     this.router.post("/webhook", bodyParser.raw({ type: "application/json" }), this.postWebhook);
-    this.router.post("/create-checkout-session", this.getCheckout)
+    this.router.post("/create-checkout-session",express.json(),this.getCheckout)
   }
 
   postWebhook = async (req: Request, res: Response) => {

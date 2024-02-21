@@ -50,6 +50,7 @@ export class ItemPageService {
   async getInitalState(itemId: number) {
     let itemState = await this.knex("item")
       .select(
+        "shops.id as shopId",
         "shops.shop_name as shopName",
         "shops.address as address",
         "item.id as id",

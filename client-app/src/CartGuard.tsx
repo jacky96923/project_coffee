@@ -10,7 +10,6 @@ export function CartGuard(){
     const [cartAccess, setCartAccess] = useState(false)
     const [noShoppingCartModal, setNoShoppingCartModal] = useState(true)
     useEffect(()=>{
-    console.log("cartAccess before checking", cartAccess)
     let shoppingCartPageData = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
     if (shoppingCartPageData !== undefined){
       setCartAccess(true)

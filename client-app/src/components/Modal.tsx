@@ -71,6 +71,7 @@ export function ConfirmClearCartModal(props: ConfirmClearCartModalProps) {
     <>
       <dialog id="my_modal_1" className={props.show === true ? "modal modal-open" : "modal"}>
         <div className="modal-box w-11/12 max-w-xs">
+          <h6>清空購物車後需重新選擇商店及商品</h6>
           <h6>確認清空購物車嗎?</h6>
           <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>取消</button>
           <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onDelete}>確認</button>

@@ -8,6 +8,7 @@ import ShoppingCartItem, { ItemProps } from "../../components/ShoppingCartItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
+import BottomNavBar from "../../components/BottomNavBar";
 
 export default function ShoppingCartPage() {
   // const dispatch = useDispatch<AppDispatch>()
@@ -64,10 +65,11 @@ export default function ShoppingCartPage() {
   console.log("shoppingCartPage", shoppingCartPage);
 
   // Shop Info
+  const shopId = shoppingCartPage?.shopId;
   const shopName = shoppingCartPage?.shopName;
   const shopAddress = shoppingCartPage?.address;
 
-  // Shopping Cart Info & Utils
+  // State for Shopping Cart Info 
   // const [key, setKey] = useState(shoppingCartPage?.itemList.length)
   const itemListWithKey = shoppingCartPage?.itemList.map(
     (item: ItemProps, idx: number) => {
@@ -102,18 +104,22 @@ export default function ShoppingCartPage() {
   }, [total, discountedTotal]);
 
   const onDeleteItemHandler = (key: number) => {
-    const itemToDeleteIndex = shoppingCartPage.itemList.findIndex(
-      (item: ItemProps) => item.key === key
-    );
-    shoppingCartPage.itemList.splice(itemToDeleteIndex, 1);
-    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCartPage));
-    setCart(shoppingCartPage.itemList);
-    setTotal(0);
-    setDiscountedTotal(0);
+    if (shoppingCartPage.itemList.length>1){
+      const itemToDeleteIndex = shoppingCartPage.itemList.findIndex(
+        (item: ItemProps) => item.key === key
+      );
+      shoppingCartPage.itemList.splice(itemToDeleteIndex, 1);
+      localStorage.setItem("shoppingCart", JSON.stringify(shoppingCartPage));
+      setCart(shoppingCartPage.itemList);
+      setTotal(0);
+      setDiscountedTotal(0);
+    } else {
+      onSafeClearCartHandler()
+    }
   };
 
   const onMenuHandler = () => {
-    navigate("/");
+    navigate(`/menu/${shopId}`);
   };
 
   const onSafeClearCartHandler = () => {
@@ -121,12 +127,15 @@ export default function ShoppingCartPage() {
   };
 
   const onClearCartHandler = () => {
-    shoppingCartPage.itemList = [];
-    localStorage.setItem("shoppingCart", JSON.stringify(shoppingCartPage));
-    setCart(shoppingCartPage.itemList);
-    setTotal(0);
-    setDiscountedTotal(0);
+    // shoppingCartPage.itemList = [];
+    // localStorage.setItem("shoppingCart", JSON.stringify(shoppingCartPage));
+    // setCart(shoppingCartPage.itemList);
+    // setTotal(0);
+    // setDiscountedTotal(0);
+    // setSafeClearCartModal(false);
+    localStorage.removeItem("shoppingCart")
     setSafeClearCartModal(false);
+    navigate("/shopSelection")
   };
 
   const onCheckoutHandler = async () => {
@@ -136,7 +145,7 @@ export default function ShoppingCartPage() {
     const checkoutData = { user_id: user_id, cart: itemListWithKey };
     console.log("checkoutData", checkoutData);
     // 3. fetch to get the url for checkout
-    let result = await fetch("/create-checkout-session", {
+    let result = await fetch("http://localhost:8100/stripe/create-checkout-session", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -150,6 +159,9 @@ export default function ShoppingCartPage() {
 
       // Fetch the session URL from the response
       const { url } = await result.json();
+
+      // Clear shopping cart in localStorage
+      localStorage.removeItem("shoppingCart")
 
       // Redirect the user to the Stripe Checkout page
       window.location.href = url;
@@ -254,6 +266,7 @@ export default function ShoppingCartPage() {
           付款
         </button>
       </div>
+      {/* <BottomNavBar/> */}
     </div>
   );
 }
