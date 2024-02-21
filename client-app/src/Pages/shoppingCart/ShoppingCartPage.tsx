@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./ShoppingCartPage.module.css";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { ConfirmClearCartModal, PickupModal } from "../../components/Modal";
+import { ConfirmClearCartModal, NoUserLoginModal, PickupModal } from "../../components/Modal";
 import ShoppingCartItem, { ItemProps } from "../../components/ShoppingCartItem";
 
 import { useSelector } from "react-redux";
@@ -87,11 +87,12 @@ export default function ShoppingCartPage() {
     (state: RootState) => state.shoppingCart.pickupTime
   );
 
-  // State for bill
+  // State for bill and checkout
   // const [discount, setDiscount] = useState(false)
   // const [rewardPoint, setRewardPoint] = useState(false)
   const [total, setTotal] = useState(0);
   const [discountedTotal, setDiscountedTotal] = useState(0);
+  const [noUserLoginModal, setNoUserLoginModal] = useState(false)
 
   //
   useEffect(() => {
@@ -139,32 +140,36 @@ export default function ShoppingCartPage() {
   };
 
   const onCheckoutHandler = async () => {
-    // 1. check if there is user login (isLoggedIn guard solved)
-
-    // 2. if yes, create req.body for checkout fetch
-    const checkoutData = { user_id: user_id, cart: itemListWithKey };
-    console.log("checkoutData", checkoutData);
-    // 3. fetch to get the url for checkout
-    let result = await fetch("http://localhost:8100/stripe/create-checkout-session", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-      body: JSON.stringify(checkoutData),
-    });
-    // 4. direct to the url in question
-    if (result.ok) {
-      console.log("Request sent successfully");
-
-      // Fetch the session URL from the response
-      const { url } = await result.json();
-
-      // Clear shopping cart in localStorage
-      localStorage.removeItem("shoppingCart")
-
-      // Redirect the user to the Stripe Checkout page
-      window.location.href = url;
+    // 1. check if there is user login 
+    if (localStorage.getItem("token")===null){
+      setNoUserLoginModal(true)
+    } else {
+      // 2. if yes, create req.body for checkout fetch
+      const checkoutData = { shop_id: shopId , user_id: user_id, cart: itemListWithKey, pickupTime: pickupTime, total: total };
+      console.log("checkoutData", checkoutData);
+      console.log("cart in checkout", checkoutData.cart)
+      // 3. fetch to get the url for checkout
+      let result = await fetch("http://localhost:8100/stripe/create-checkout-session", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(checkoutData),
+      });
+      // 4. direct to the url in question
+      if (result.ok) {
+        console.log("Request sent successfully");
+  
+        // Fetch the session URL from the response
+        const { url } = await result.json();
+  
+        // Clear shopping cart in localStorage
+        localStorage.removeItem("shoppingCart")
+  
+        // Redirect the user to the Stripe Checkout page
+        window.location.href = url;
+      }
     }
   };
 
@@ -172,15 +177,21 @@ export default function ShoppingCartPage() {
     setPickupModal(true);
   };
 
+  const onLoginHandler = () => {
+    navigate("/client-login")
+  }
+
   return (
     <div className={styles.container}>
       {/* header */}
       <div className="flex border-b border-slate-700">
-        <ChevronLeftIcon
-          onClick={() => navigate(-1)}
-          className="h-6 w-6 mr-2 self-center cursor-pointer"
-        />
-        <div>
+        <button
+          onClick={() => navigate(`/menu/${shopId}`)}
+          className={`self-center btn btn-circle btn-sm`}
+        >
+          <ChevronLeftIcon className="h-5 w-5 text-black" />
+        </button>
+        <div className="ml-3">
           <h4 className="font-bold text-2xl">我的購物車</h4>
           <h6>{shopName}</h6>
           <p>{shopAddress}</p>
@@ -265,6 +276,7 @@ export default function ShoppingCartPage() {
         >
           付款
         </button>
+        <NoUserLoginModal show={noUserLoginModal} onClose={()=>setNoUserLoginModal(false)} onLogin={onLoginHandler}/>
       </div>
       {/* <BottomNavBar/> */}
     </div>

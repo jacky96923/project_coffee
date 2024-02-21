@@ -131,7 +131,7 @@ export const itemPageSlice = createSlice({
         shopName: string;
         address: string;
         itemList: {
-          id: number;
+          item_id: number;
           name: string;
           item_photo: string;
           size: string;
@@ -150,7 +150,7 @@ export const itemPageSlice = createSlice({
         shoppingCart.shopName = state.shopName;
         shoppingCart.address = state.address;
         shoppingCart.itemList.push({
-          id: state.item.id,
+          item_id: state.item.id,
           name: state.item.name,
           item_photo: state.item.item_photo,
           size: state.item.size,
@@ -166,7 +166,7 @@ export const itemPageSlice = createSlice({
           address: state.address,
           itemList: [
             {
-              id: state.item.id,
+              item_id: state.item.id,
               name: state.item.name,
               item_photo: state.item.item_photo,
               size: state.item.size,

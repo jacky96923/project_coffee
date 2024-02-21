@@ -9,6 +9,17 @@ export function CartGuard(){
     const navigate = useNavigate()
     const [cartAccess, setCartAccess] = useState(false)
     const [noShoppingCartModal, setNoShoppingCartModal] = useState(true)
+
+    const onMainHandler = () => {
+        setNoShoppingCartModal(false);
+        navigate("/")
+    }
+
+    const onBackwardHandler = () => {
+        setNoShoppingCartModal(false);
+        navigate(-1)
+    }
+
     useEffect(()=>{
     let shoppingCartPageData = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
     if (shoppingCartPageData !== undefined){
@@ -21,8 +32,7 @@ export function CartGuard(){
     if(cartAccess){
         return <Outlet/>;
     } else {
-        return (<><NoShoppingCartModal show={noShoppingCartModal} onClose={()=>{setNoShoppingCartModal(false);}}/>
-        {noShoppingCartModal? "":navigate(-1)}</>
+        return (<><NoShoppingCartModal show={noShoppingCartModal} onMain={onMainHandler} onBackward={onBackwardHandler}/></>
     )}
 }
 

@@ -12,7 +12,7 @@ export default function ShopSelection() {
     <div className="relative overflow-hidden bg-white m-9">
       <div className="flex">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className={`self-center btn btn-circle btn-sm`}
         >
           <ChevronLeftIcon className="h-5 w-5 text-black" />

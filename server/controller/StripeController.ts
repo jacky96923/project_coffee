@@ -54,9 +54,10 @@ export class StripeController {
     // 1. details of all orders stored in an array
     // 2. userid --- should check whether there is a valid token before sending request
     console.log("check req.body", req.body);
-    let {user_id, cart} = req.body
+    let {shop_id, user_id, cart, pickupTime, total} = req.body
+
     
-    let createTransactionResult: any = await this.stripeService.createTransaction(user_id)
+    let createTransactionResult: any = await this.stripeService.createTransaction(user_id, shop_id, pickupTime, total)
   
     let transaction_id = createTransactionResult[0].id;
     console.log("check transaction_id", transaction_id);
@@ -64,7 +65,7 @@ export class StripeController {
     let line_items = [];
   
     for (let entry of cart) {
-      await this.stripeService.createOrder(transaction_id, entry)
+      await this.stripeService.createOrder(shop_id, transaction_id, entry)
   
       let item = {
         price_data: {
@@ -91,7 +92,7 @@ export class StripeController {
       line_items: line_items,
       mode: "payment",
       success_url: `http://localhost:3000/receipt/temp`, // port need to take care
-      cancel_url: `http://localhost:3000/shopping-cart`, // port need to take care 
+      cancel_url: `http://localhost:3000/shoppingCart`, // port need to take care 
       payment_intent_data: {
         metadata: metadata,
       },

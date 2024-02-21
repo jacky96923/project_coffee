@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { NoShoppingCartModal } from "./Modal";
+import { Link, useNavigate } from "react-router-dom";
+import { NoShoppingCartModal, NoUserLoginModal } from "./Modal";
 
 export default function BottomNavBar() {
-  // const [cartAccess, setCartAccess] = useState(false)
-  // const [noShoppingCartModal, setNoShoppingCartModal] = useState(false)
-  // useEffect(()=>{
-  //   let shoppingCartPageData = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
-  //   if (shoppingCartPageData !== undefined){
-  //     setCartAccess(true)
-  //   }
-  // }, [cartAccess])
+  const navigate = useNavigate()
+  let shoppingCartPageData = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
+  let menuId = 0
+  if (shoppingCartPageData){
+    menuId = shoppingCartPageData.shopId
+  }
   
+  const [noUserLoginModal, setNoUserLoginModal] = useState(false)
+  const onNavHandler = (e:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (localStorage.getItem("token")===null){
+      e.preventDefault()
+      setNoUserLoginModal(true)
+    }
+  }
+  const onLoginHandler = () => {
+    navigate("/client-login")
+  }
+
   return (
     <div className="fixed bottom-0 left-0 right-0 w-full h-auto bg-gray-200 border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
       <div className=" justify-around flex m-3">
@@ -34,7 +43,7 @@ export default function BottomNavBar() {
             </span>{" "}
           </button>
         </Link>
-        <Link to="/order">
+        <Link to={shoppingCartPageData?`/menu/${menuId}`:"/shopSelection"}>
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -54,7 +63,7 @@ export default function BottomNavBar() {
             </span>{" "}
           </button>
         </Link>
-        {/*cartAccess? */}
+
         <Link to="/shoppingCart">
           <button
             type="button"
@@ -80,33 +89,7 @@ export default function BottomNavBar() {
             </span>{" "}
           </button>
         </Link>
-        {/* : <>
-        <button onClick={()=>setNoShoppingCartModal(true)}
-            type="button"
-            className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
-          >
-            <svg
-              className="w-5 h-5 mb-2 text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 12.25V1m0 11.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M4 19v-2.25m6-13.5V1m0 2.25a2.25 2.25 0 0 0 0 4.5m0-4.5a2.25 2.25 0 0 1 0 4.5M10 19V7.75m6 4.5V1m0 11.25a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5ZM16 19v-2"
-              />
-            </svg>
-            <span className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">
-              購物車
-            </span>
-          </button>
-          <NoShoppingCartModal show={noShoppingCartModal} onClose={()=>setNoShoppingCartModal(false)}/>
-          </> */}
-        <Link to="/myPage">
+        <Link onClick={(e)=>onNavHandler(e)} to="/myPage">
           <button
             type="button"
             className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
@@ -126,6 +109,7 @@ export default function BottomNavBar() {
           </button>
         </Link>
       </div>
+      <NoUserLoginModal show={noUserLoginModal} onClose={()=>setNoUserLoginModal(false)} onLogin={onLoginHandler}/>
     </div>
   );
 }
