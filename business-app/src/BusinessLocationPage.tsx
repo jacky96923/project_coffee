@@ -3,13 +3,37 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import ProjectCoffeeImage from './Project Coffee.png';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 
 export default function BusinessLocation() {
   const [selectedOption, setSelectedOption] = useState('請選擇地區');
+  const [addressText, setAddressText] = useState('');
+  const [formValid, setFormValid] = useState(false); // State to track form validity
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleMenuClick = (option: React.SetStateAction<string>) => {
     setSelectedOption(option);
+    setFormValid(addressText.trim() !== ''); // Check form validity when option is selected
+
   };
+
+  const handleAddressChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setAddressText(e.target.value);
+    setFormValid(e.target.value !== ''); // Check form validity when address is changed
+  };
+
+  const handleNextButtonClick = () => {
+    if (!selectedOption || selectedOption === '請選擇地區') { // Check if an area is selected
+      alert('Please choose an area first.');
+    } else if (!addressText.trim()) { // Check if address is entered
+      alert('Please enter your address.');
+    } else { // Navigate only if both area and address are selected
+      const fullAddress = `${selectedOption} ${addressText}`;
+      console.log("Full Address:", fullAddress);
+      navigate('/BusinessWelcome'); // Navigate to the "/BusinessWelcome" page
+    }
+  };
+  
 
   return (
     <>
@@ -103,23 +127,26 @@ export default function BusinessLocation() {
                   <input
                     id="address"
                     name="address"
-                    type="address"
+                    type="text"
                     autoComplete="address"
-                    required 
+                    required
+                    value={addressText}
+                    onChange={handleAddressChange}
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
               <div>
                 <button
-                  type="submit"
+                  type="button"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  style={{ 
+                  style={{
                     backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
                     borderColor: "transparent"
                   }}
                   onMouseOver={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #B07A4E, #4A2416)")}
                   onMouseOut={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #CB8A58, #562B1A)")}
+                  onClick={handleNextButtonClick}
                 >
                   下一步
                 </button>
