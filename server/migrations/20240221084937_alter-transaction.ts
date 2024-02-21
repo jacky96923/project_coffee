@@ -11,8 +11,8 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
     return knex.schema.alterTable("transaction", (table)=>{
-        table.time("order_time").notNullable();
-        table.time("pickup_time").notNullable();
+        table.time("order_time");
+        table.time("pickup_time");
     })
 }
 

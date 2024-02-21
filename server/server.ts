@@ -44,9 +44,11 @@ import { CommentService } from "./services/CommentService";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
+import { ReceiptService } from "./services/ReceiptService";
+import { ReceiptController } from "./controller/ReceiptController";
 
 
-// Controller and Service Instantiation
+// Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
 const userAuthController = new UserAuthController(userAuthService);
 const businessAuthService = new BusinessAuthService(knex);
@@ -59,7 +61,10 @@ const optionSlideService = new OptionSlideService(knex);
 const optionSlideController = new OptionSlideController(optionSlideService);
 const menuIdService = new MenuIdService(knex);
 const menuController = new MenuController(menuIdService);
+const receiptService = new ReceiptService(knex);
+const receiptController = new ReceiptController(receiptService)
 
+// Controller and Service Instantiation (Client)
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
 
@@ -67,15 +72,18 @@ const menuPreviewController = new MenuPreviewController(menuPreviewService);
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
-// Route Setup
+// Route Setup (Client)
 app.use("/auth", userAuthController.router);
 app.use("/auth", businessAuthController.router);
 app.use("/shops", shopController.router);
 app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
+app.use("/receipt", receiptController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
+
+// Route Setup (Business)
 app.use("/menuPreviews", menuPreviewController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));

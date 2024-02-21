@@ -37,9 +37,9 @@ export class StripeService {
 
     async createOrder(shop_id: number, transaction_id: number, order: {item_id: number, optionList: any,subTotal: number, quantity: number}){
         try {
-            let orderEntry = await this.knex("order").insert({transaction_id: transaction_id, item_id: order.item_id, sub_total: order.subTotal, quantity: order.quantity}).returning("id")
+            let orderEntry = await this.knex("order_entry").insert({transaction_id: transaction_id, item_id: order.item_id, sub_total: order.subTotal, quantity: order.quantity}).returning("id")
             console.log("create order with id", orderEntry[0].id)
-            let orderDetail = await this.knex("order_detail").insert({order_id: orderEntry[0].id, item_id: order.item_id}).returning("id")
+            let orderDetail = await this.knex("order_detail").insert({order_entry_id: orderEntry[0].id, item_id: order.item_id}).returning("id")
             for (let entry of order.optionList){
                 let customOptionId = await this.knex("custom_option").select("id").where({name: entry.option.option_name, price: entry.option.price, shop_id: shop_id})
                 console.log("customOptionId", customOptionId)
