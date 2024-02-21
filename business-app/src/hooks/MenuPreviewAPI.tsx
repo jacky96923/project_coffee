@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 const source = "http://localhost:8100";
 
-export default function GetMenuPreview(id: number) {
+export function GetMenuPreview(id: number) {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["menuPreview"],
     queryFn: async () => {
@@ -15,7 +15,7 @@ export default function GetMenuPreview(id: number) {
         }),
       });
       const resp = await res.json();
-      return resp.data;
+      return resp;
     },
   });
   if (isLoading || isFetching) return "Data is coming";

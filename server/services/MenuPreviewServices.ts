@@ -16,7 +16,7 @@ export class MenuPreviewService {
 
       //   console.log("categoryIdList", categoryIdList);
 
-      let categoryNameList = [];
+      let categoryNameIconList = [];
       for (let categoryId of categoryIdList) {
         let categoryName = await this.knex
           .select("category.name", "category.icon")
@@ -30,8 +30,9 @@ export class MenuPreviewService {
           .where("category.id", categoryId.category_id);
         // console.log("categoryName", categoryName);
 
-        categoryNameList.push(categoryName);
+        categoryNameIconList.push(categoryName[0]);
       }
+      // console.log("categoryNameIconList", categoryNameIconList);
 
       let itemList = [];
       for (let categoryId of categoryIdList) {
@@ -56,12 +57,13 @@ export class MenuPreviewService {
             this.where("item.size", "小杯").orWhereNull("item.size");
           })
           .where("category.id", categoryId.category_id);
-        console.log("itemsInformation", itemsInformation);
+        // console.log("itemsInformation", itemsInformation);
 
         itemList.push(itemsInformation);
       }
+      // console.log("itemList", itemList);
 
-      return [categoryIdList, categoryNameList, itemList];
+      return [categoryNameIconList, itemList];
     } catch (error) {
       console.log(error);
       return false;
