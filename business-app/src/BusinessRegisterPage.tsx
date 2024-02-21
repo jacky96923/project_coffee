@@ -17,15 +17,23 @@ export default function BusinessLoginPage() {
   };
 
   // Form submission handler
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('密碼與確認密碼不相符！');
-    } else {
-      // Passwords match, navigate to /BusinessLocation
-      navigate('/BusinessLocation');
-    }
-  };
+// Form submission handler
+const handleSubmit = (e: { preventDefault: () => void; }) => {
+  e.preventDefault();
+  const shopName = (document.getElementById('shopName') as HTMLInputElement).value;
+  const Telnum = (document.getElementById('Telnum') as HTMLInputElement).value;
+  const password = (document.getElementById('password') as HTMLInputElement).value;
+
+  if (password !== confirmPassword) {
+    alert('密碼與確認密碼不相符！');
+  } else {
+    // Passwords match, log out the values and navigate to /BusinessLocation
+    console.log('Shop Name: ' + shopName + ', Tel: ' + Telnum + ', Password: ' + password);
+
+    navigate('/BusinessLocation');
+  }
+};
+
 
   return (
     <>
