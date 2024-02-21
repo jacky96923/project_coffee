@@ -28,6 +28,7 @@ export default function ItemPage() {
     | {
         optionList: any;
         itemState: Array<{
+          shopId: number;
           shopName: string;
           address: string;
           id: number;
@@ -53,6 +54,7 @@ export default function ItemPage() {
       });
       dispatch(
         setInitialItems({
+          shopId: allOptions.itemState[0].shopId,
           shopName: allOptions.itemState[0].shopName,
           address: allOptions.itemState[0].address,
           id: allOptions.itemState[0].id,

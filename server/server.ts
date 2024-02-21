@@ -1,14 +1,27 @@
 // Imports and Middleware Setup
 import cors from "cors";
 import express from "express";
+import Knex from "knex";
+
+// Database Connection Setup
+const knexConfig = require("./knexfile");
+const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
+
 
 const app = express();
 
 app.use(cors());
+import { StripeService } from "./services/StripeService";
+import { StripeController } from "./controller/StripeController";
+// Stripe Setup
+const stripeService = new StripeService(knex);
+const stripeController = new StripeController(stripeService);
+
+app.use("/stripe", stripeController.router);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-import Knex from "knex";
 import {
   BusinessAuthController,
   UserAuthController,
@@ -25,23 +38,13 @@ import { MenuIdService } from "./services/MenuService";
 import { MenuController } from "./controller/MenuController";
 import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
-import { StripeService } from "./services/StripeService";
-import { StripeController } from "./controller/StripeController";
+
 
 // Business-app
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
 
-// Database Connection Setup
-const knexConfig = require("./knexfile");
-const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
-
-// Stripe Setup
-// const stripeService = new StripeService(knex);
-// const stripeController = new StripeController(stripeService);
-
-// app.use("/stripe", stripeController.rowuter);
 
 // Controller and Service Instantiation
 const userAuthService = new UserAuthService(knex);

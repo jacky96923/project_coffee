@@ -4,7 +4,7 @@ const source = "http://localhost:8100";
 
 export default function Checkout(itemId: string) {
     const { isLoading, error, data, isFetching } = useQuery({
-        queryKey: ["itemInfo"],
+        queryKey: ["checkout"],
         queryFn: async () => {
             const res = await fetch(`${source}/stripe/create`, {
                 headers: {
@@ -12,7 +12,7 @@ export default function Checkout(itemId: string) {
                 },
             });
             const result = await res.json();
-            console.log("-------newAPI---------", result);
+            console.log("-------checkoutAPI---------", result);
             return result;
         },
     });
