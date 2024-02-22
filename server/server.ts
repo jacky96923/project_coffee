@@ -74,7 +74,7 @@ const commentsController = new CommentsController(commentService);
 
 // Route Setup (Client)
 app.use("/auth", userAuthController.router);
-app.use("/auth", businessAuthController.router);
+
 app.use("/shops", shopController.router);
 app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
@@ -84,7 +84,8 @@ app.use("/comments", commentsController.router); // Mount CommentsController's r
 app.use("/initialState", itemPageController.router);
 
 // Route Setup (Business)
-app.use("/menuPreviews", menuPreviewController.router);
+app.use("/business/menuPreviews", menuPreviewController.router);
+app.use("/business/auth", businessAuthController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
