@@ -12,7 +12,14 @@ type pickupModalProps = {
 
 type NoShoppingCartModalProps = {
   show: boolean,
-  onClose: () => void
+  onMain: () => void,
+  onBackward: () => void
+}
+
+type NoUserLoginModalProps = {
+  show: boolean,
+  onClose: () => void,
+  onLogin: () => void
 }
 
 type ConfirmClearCartModalProps = {
@@ -89,7 +96,23 @@ export function NoShoppingCartModal(props: NoShoppingCartModalProps) {
         <div className="modal-box w-11/12 max-w-xs">
           <h6>你的購物車還沒有商品</h6>
           <p>請先選擇店舖及將商品加入購物車</p>
-          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>確認</button>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onBackward}>返回上一頁</button>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onMain}>返回主頁</button>
+        </div>
+      </dialog>
+    </>
+  );
+}
+
+export function NoUserLoginModal (props: NoUserLoginModalProps) {
+
+  return (
+    <>
+      <dialog id="my_modal_1" className={props.show === true ? "modal modal-open" : "modal"}>
+        <div className="modal-box w-11/12 max-w-xs">
+          <h6>你還未登入</h6>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onClose}>返回</button>
+          <button className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost" onClick={props.onLogin}>登入</button>
         </div>
       </dialog>
     </>

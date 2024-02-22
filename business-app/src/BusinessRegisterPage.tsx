@@ -1,39 +1,46 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for programmatic navigation
+import { useNavigate } from 'react-router-dom';
 
 export default function BusinessLoginPage() {
+  const [shopName, setShopName] = useState('');
+  const [Telnum, setTelnum] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
-  // Handler for password input change
+  const handleShopNameChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setShopName(e.target.value);
+  };
+
+  const handleTelnumChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setTelnum(e.target.value);
+  };
+
   const handlePasswordChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setPassword(e.target.value);
   };
 
-  // Handler for confirm password input change
   const handleConfirmPasswordChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setConfirmPassword(e.target.value);
   };
 
-  // Form submission handler
-// Form submission handler
-const handleSubmit = (e: { preventDefault: () => void; }) => {
-  e.preventDefault();
-  const shopName = (document.getElementById('shopName') as HTMLInputElement).value;
-  const Telnum = (document.getElementById('Telnum') as HTMLInputElement).value;
-  const password = (document.getElementById('password') as HTMLInputElement).value;
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('密碼與確認密碼不相符！');
+    } else {
+      // Save form data to local storage
+      const formData = {
+        shopName,
+        Telnum,
+        password
+      };
+      localStorage.setItem('registrationData', JSON.stringify(formData));
 
-  if (password !== confirmPassword) {
-    alert('密碼與確認密碼不相符！');
-  } else {
-    // Passwords match, log out the values and navigate to /BusinessLocation
-    console.log('Shop Name: ' + shopName + ', Tel: ' + Telnum + ', Password: ' + password);
-
-    navigate('/BusinessLocation');
-  }
-};
-
+      // Navigate to the next page
+      navigate('/BusinessLocation');
+    }
+  };
 
   return (
     <>
@@ -47,7 +54,6 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              {/* Shop Name Input */}
               <label htmlFor="shopName" className="block text-sm font-medium leading-6 text-gray-900">
                 店舖名稱
               </label>
@@ -58,13 +64,14 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   type="text"
                   autoComplete="shop-name"
                   required
+                  value={shopName}
+                  onChange={handleShopNameChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div>
-              {/* Telephone Number Input */}
               <label htmlFor="Telnum" className="block text-sm font-medium leading-6 text-gray-900">
                 聯繫電話
               </label>
@@ -75,13 +82,14 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   type="text"
                   autoComplete="off"
                   required
+                  value={Telnum}
+                  onChange={handleTelnumChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
 
             <div>
-              {/* Password Input */}
               <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                 密碼
               </label>
@@ -100,7 +108,6 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
             </div>
 
             <div>
-              {/* Confirm Password Input */}
               <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
                 確認密碼
               </label>
@@ -119,7 +126,6 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
             </div>
 
             <div>
-              {/* Submission Button */}
               <button
                 type="submit"
                 className="w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

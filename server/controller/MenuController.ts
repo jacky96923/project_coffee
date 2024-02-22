@@ -84,7 +84,7 @@ export class MenuController {
           }[];
         }
       }
-      console.log("categoryItem", categoryItem);
+      //console.log("categoryItem", categoryItem);
       categoryItemList.push(categoryItem);
     }
     // console.log("categoryItemList", categoryItemList);

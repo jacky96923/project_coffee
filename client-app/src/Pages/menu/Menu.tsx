@@ -84,7 +84,7 @@ export default function Menu() {
         <div className="flex justify-around">
           <div className="flex">
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/shopSelection")}
               className={`self-center btn btn-circle btn-sm`}
             >
               <ChevronLeftIcon className="h-5 w-5 text-black" />
@@ -181,7 +181,7 @@ export default function Menu() {
           : ""}
 
         <div className="flex justify-center m-10 bg-black text-white rounded-xl fixed bottom-0 left-0 right-0 h-auto">
-          <button className="m-3" onClick={() => navigate("/shopping-cart")}>
+          <button className="m-3" onClick={() => navigate("/shoppingCart")}>
             檢視購物車
           </button>
         </div>

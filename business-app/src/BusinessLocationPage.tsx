@@ -3,37 +3,42 @@ import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import classNames from 'classnames';
 import ProjectCoffeeImage from './Project Coffee.png';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate } from 'react-router-dom';
 
 export default function BusinessLocation() {
   const [selectedOption, setSelectedOption] = useState('請選擇地區');
   const [addressText, setAddressText] = useState('');
-  const [formValid, setFormValid] = useState(false); // State to track form validity
-  const navigate = useNavigate(); // Initialize navigate function
+  const [formValid, setFormValid] = useState(false);
+  const navigate = useNavigate();
 
   const handleMenuClick = (option: React.SetStateAction<string>) => {
     setSelectedOption(option);
-    setFormValid(addressText.trim() !== ''); // Check form validity when option is selected
-
+    setFormValid(addressText.trim() !== '');
   };
 
   const handleAddressChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
     setAddressText(e.target.value);
-    setFormValid(e.target.value !== ''); // Check form validity when address is changed
+    setFormValid(e.target.value !== '');
   };
 
   const handleNextButtonClick = () => {
-    if (!selectedOption || selectedOption === '請選擇地區') { // Check if an area is selected
+    if (!selectedOption || selectedOption === '請選擇地區') {
       alert('Please choose an area first.');
-    } else if (!addressText.trim()) { // Check if address is entered
+    } else if (!addressText.trim()) {
       alert('Please enter your address.');
-    } else { // Navigate only if both area and address are selected
-      const fullAddress = `${selectedOption} ${addressText}`;
+    } else {
+      const fullAddress = {
+        area: selectedOption,
+        address: addressText
+      };
       console.log("Full Address:", fullAddress);
-      navigate('/BusinessWelcome'); // Navigate to the "/BusinessWelcome" page
+
+      // Convert to JSON and store in local storage
+      localStorage.setItem('fullAddress', JSON.stringify(fullAddress));
+
+      navigate('/BusinessWelcome');
     }
   };
-  
 
   return (
     <>
