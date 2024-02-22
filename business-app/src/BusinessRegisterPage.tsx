@@ -1,44 +1,70 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Root } from "postcss";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AppDispatch, RootState } from "./store";
+import { part_one_data } from "./slices/RegSlice";
 
 export default function BusinessLoginPage() {
-  const [shopName, setShopName] = useState('');
-  const [Telnum, setTelnum] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const login_name = useSelector((state: RootState) => state.reg.login_name);
+  const contact_no = useSelector((state: RootState) => state.reg.contact_no);
+  const login_password = useSelector((state: RootState) => state.reg.login_password);
+
+  const [shopName, setShopName] = useState(login_name);
+  const [Telnum, setTelnum] = useState<number|undefined>(contact_no);
+  const [password, setPassword] = useState(login_password);
+  const [confirmPassword, setConfirmPassword] = useState(login_password);
+
+  
   const navigate = useNavigate();
 
-  const handleShopNameChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+
+
+
+  const handleShopNameChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setShopName(e.target.value);
   };
 
-  const handleTelnumChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setTelnum(e.target.value);
+  const handleTelnumChange = (e: {
+    target: any;
+  }) => {
+    setTelnum(parseInt(e.target.value));
   };
 
-  const handlePasswordChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handlePasswordChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setPassword(e.target.value);
   };
 
-  const handleConfirmPasswordChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleConfirmPasswordChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert('密碼與確認密碼不相符！');
+      alert("密碼與確認密碼不相符！");
     } else {
       // Save form data to local storage
       const formData = {
         shopName,
         Telnum,
-        password
+        password,
       };
-      localStorage.setItem('registrationData', JSON.stringify(formData));
+
+      // localStorage.setItem("registrationData", JSON.stringify(formData));
+
+      dispatch(part_one_data({ login_name: shopName, contact_no: Telnum!, login_password: password }));
 
       // Navigate to the next page
-      navigate('/BusinessLocation');
+      navigate("/BusinessLocation");
     }
   };
 
@@ -54,8 +80,11 @@ export default function BusinessLoginPage() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="shopName" className="block text-sm font-medium leading-6 text-gray-900">
-                店舖名稱
+              <label
+                htmlFor="shopName"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                店舖登入名稱
               </label>
               <div className="mt-2">
                 <input
@@ -72,7 +101,10 @@ export default function BusinessLoginPage() {
             </div>
 
             <div>
-              <label htmlFor="Telnum" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="Telnum"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 聯繫電話
               </label>
               <div className="mt-2">
@@ -90,7 +122,10 @@ export default function BusinessLoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 密碼
               </label>
               <div className="mt-2">
@@ -108,7 +143,10 @@ export default function BusinessLoginPage() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 確認密碼
               </label>
               <div className="mt-2">
@@ -129,12 +167,19 @@ export default function BusinessLoginPage() {
               <button
                 type="submit"
                 className="w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                style={{ 
-                  backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
-                  borderColor: "transparent"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to right, #CB8A58, #562B1A)",
+                  borderColor: "transparent",
                 }}
-                onMouseOver={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #B07A4E, #4A2416)")}
-                onMouseOut={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #CB8A58, #562B1A)")}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.backgroundImage =
+                    "linear-gradient(to right, #B07A4E, #4A2416)")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.backgroundImage =
+                    "linear-gradient(to right, #CB8A58, #562B1A)")
+                }
               >
                 下一步
               </button>
