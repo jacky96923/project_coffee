@@ -7,7 +7,6 @@ import Knex from "knex";
 const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
-
 const app = express();
 
 app.use(cors());
@@ -39,12 +38,12 @@ import { MenuController } from "./controller/MenuController";
 import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 
-
 // Business-app
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
-
+import { DialogAddItemController } from "./controller/DialogAddItemController";
+import { DialogAddItemService } from "./services/DialogAddItemService";
 
 // Controller and Service Instantiation
 const userAuthService = new UserAuthService(knex);
@@ -63,6 +62,11 @@ const menuController = new MenuController(menuIdService);
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
 
+const dialogAddItemService = new DialogAddItemService(knex);
+const dialogAddItemController = new DialogAddItemController(
+  dialogAddItemService
+);
+
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
@@ -77,6 +81,7 @@ app.use("/menus", menuController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
+app.use("/category", dialogAddItemController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
