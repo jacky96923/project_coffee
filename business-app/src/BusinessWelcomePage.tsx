@@ -1,43 +1,82 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import type { AppDispatch, RootState } from "./store"; // Adjust the import path to your store configuration
+import { useNavigate } from "react-router-dom";
 
 const BusinessWelcome: React.FC = () => {
-  const handleClick = () => {
-    // Retrieve existing data from local storage
-    const fullAddressString = localStorage.getItem("fullAddress");
-    const registrationDataString = localStorage.getItem("registrationData");
+  const area = useSelector((state: RootState) => state.reg.area);
+  const district = useSelector((state: RootState) => state.reg.district);
+  const address = useSelector((state: RootState) => state.reg.address);
+  const login_name = useSelector((state: RootState) => state.reg.login_name);
+  const contact_no = useSelector((state: RootState) => state.reg.contact_no);
+  const shop_name = useSelector((state: RootState) => state.reg.shop_name);
+  const password = useSelector((state: RootState) => state.reg.login_password);
 
-    // Parse retrieved data if it exists
-    const fullAddress = fullAddressString ? JSON.parse(fullAddressString) : {};
-    const registrationData = registrationDataString ? JSON.parse(registrationDataString) : {};
 
-    // Merge data
-    const mergedData = {
-      ...fullAddress,
-      ...registrationData,
-    };
+  const navigate = useNavigate();
 
-    // Update local storage with merged data
-    localStorage.setItem("mergedData", JSON.stringify(mergedData));
-
-    // For demonstration, you can log the merged data
-    console.log("Merged Data:", mergedData);
+  const handleClick = async () => {
+    try {
+      const response = await fetch("http://localhost:8100/businessRegister/info", {
+        method: "POST", // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Specify content type header
+        },
+        body: JSON.stringify({
+          login_name: login_name,
+          login_password: password,
+          contact_no: contact_no,
+          area: area,
+          district: district,
+          address: address,
+        })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json(); // Assuming the server responds with JSON
+      
+      console.log(data); // Log the response data to the console
+    } catch (error) {
+      console.error('Fetch error:', error); // Log any error to the console
+    }
   };
 
   return (
     <div style={{ marginTop: "100px" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        {" "}
-        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>歡迎加入！</h1>
+        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>確認輸入資料</h1>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>您的註冊資料</h1>
+      </div>
+      <div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ fontSize: "24px", paddingBottom: "1rem" }}>
+       
+          <h3>登入名稱：{login_name}</h3>
+          <h3>店舖名稱名稱：{shop_name}</h3>
+           <h3>登入密碼：{password}</h3> 
+            <h3>聯絡電話：{contact_no}</h3>
+            <h3>地域：{area}</h3>
+            <h3>分區：{district}</h3>
+            <h3>地址：{address}</h3>
+          </div>
+        </div>
       </div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>
+        <h1 style={{ fontSize: "24px", paddingBottom: "1rem" }}>
           按註冊進入商家版面設置餐單！
         </h1>
       </div>
+      <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <button
           type="submit"
-          className="group relative w-35 flex justify-center mt-4 mr-2 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex  w-64  justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
           style={{
             backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
             borderColor: "transparent",
@@ -50,11 +89,33 @@ const BusinessWelcome: React.FC = () => {
             (e.currentTarget.style.backgroundImage =
               "linear-gradient(to right, #CB8A58, #562B1A)")
           }
-          onClick={handleClick} // Call handleClick when the button is clicked
+          onClick={handleClick}
         >
           註冊
         </button>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+        <button
+          type="button"
+          className="flex w-64  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+          style={{
+            backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
+            borderColor: "transparent",
+          }}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundImage =
+              "linear-gradient(to right, #B07A4E, #4A2416)")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundImage =
+              "linear-gradient(to right, #CB8A58, #562B1A)")
+          }
+          onClick={() => navigate(-1)}
+        >
+          上一步
+        </button>
       </div>
+    </div>
     </div>
   );
 };

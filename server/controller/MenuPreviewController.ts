@@ -58,6 +58,7 @@ export class MenuPreviewController {
         itemsInformation: [],
       };
       const [categoryNameIconList, itemsInformation] = result;
+      console.log("categoryNameIconList", categoryNameIconList);
 
       let i = 0;
       for (let category of categoryNameIconList) {
@@ -69,7 +70,7 @@ export class MenuPreviewController {
           i++;
         } else {
           menuCategoryItem.category.categoryName = category.name;
-          menuCategoryItem.category.categoryIcon = category.icon;
+          // menuCategoryItem.category.categoryIcon = category.icon;
 
           if (itemsInformation[i] && itemsInformation[i].length > 0) {
             // lack classification

@@ -3,8 +3,12 @@ import Sidebar from "../../component/Sidebar";
 
 import { FaEdit } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetMenuPreview } from "../../hooks/MenuPreviewAPI";
+import DialogEditCategory from "../../component/DialogEditCategory";
+import DialogAddCategory from "../../component/DialogAddCategory";
 
 // Header component
 const Header = () => {
@@ -20,16 +24,6 @@ const Header = () => {
 
 // Main content component
 const MainContent = () => {
-  //   const [category, setCategory]: any = useState([]);
-  //   const [item, setItem]: any = useState([]);
-  //   useEffect(() => {
-  //     setCategory(categorySample);
-  //     setItem(itemSample);
-  //   }, []);
-
-  // const url = window.location.pathname;
-  // console.log(url.charAt(url.length - 1));
-
   const queryClient = useQueryClient();
   const menuCategoryItem: {
     category: {
@@ -47,7 +41,6 @@ const MainContent = () => {
     }[];
   } = GetMenuPreview(1);
   // parseInt(url.charAt(url.length - 1))
-  console.log("menuCategoryItem", menuCategoryItem);
 
   const menuPreview = useMutation({
     mutationFn: async () => {},
@@ -58,6 +51,33 @@ const MainContent = () => {
       }),
   });
 
+  // CatAdd State
+  const [catAdd, setCatAdd] = useState(false);
+  const CatAddClick = () => {
+    setCatAdd(true);
+  };
+  const CatAddDialogClose = () => {
+    setCatAdd(false);
+  };
+
+  // catEdit State
+  const [catEdit, setCatEdit] = useState(false);
+  const CatEditClick = () => {
+    setCatEdit(true);
+  };
+  const CatEditDialogClose = () => {
+    setCatEdit(false);
+  };
+
+  // itemAdd State
+  const [itemAdd, setItemAdd] = useState(false);
+  const itemAddClick = () => {
+    setItemAdd(true);
+  };
+  const ItemAddDialogClose = () => {
+    setItemAdd(false);
+  };
+
   return (
     <div className="main-content m-2 ">
       {/* Main content */}
@@ -66,33 +86,49 @@ const MainContent = () => {
       </div>
       <div className="content flex">
         <div className="Type m-6">
+          {/* 類別 */}
           <div className="flex">
             <div className="p-3 w-30 m-5 text-2xl font-bold ">類別</div>
-            <IoIosAddCircle className="size-12  " />
+            <button onClick={CatAddClick}>
+              <IoIosAddCircle className="size-12  " />
+              {catAdd && <DialogAddCategory onClose={CatAddDialogClose} />}
+            </button>
           </div>
 
+          {/* 產品 */}
           <div className="flex">
             <div className="p-3 w-30 m-5 text-2xl font-bold ">產品</div>
-            <IoIosAddCircle className="size-12" />
+            <div>
+              <button onClick={itemAddClick}>
+                <IoIosAddCircle className="size-12  " />
+              </button>
+            </div>
           </div>
         </div>
 
+        {/* Cat Button */}
         <div className="cats + items">
           {Array.isArray(menuCategoryItem) ? (
             menuCategoryItem.length > 0 ? (
               menuCategoryItem.map((cat) => (
                 <div className="">
                   <div className="flex">
-                    {/* All Category Button*/}
                     <div className="Cat flex flex-wrap">
                       <div className="flex justify-around p-3 w-30 m-5 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white">
                         <button className="text-xl">
                           {cat.category.categoryName}
                         </button>
-                        <FaEdit className="m-3 size-7" />
+                        <button onClick={CatEditClick}>
+                          <FaEdit className="m-3 size-7" />
+                          {catEdit && (
+                            <DialogEditCategory onClose={CatEditDialogClose} />
+                          )}
+                        </button>
                       </div>
                     </div>
                   </div>
+
+                  {/* All items */}
                   {typeof menuCategoryItem !== "string"
                     ? cat.itemsInformation.map((item: any) => (
                         <div className="flex">
@@ -120,7 +156,7 @@ const MainContent = () => {
                                   ${item.price}
                                 </span>
                               </div>
-                              <FaEdit className="m-3 size-7 absolute top-0 right-1" />
+                              <IoClose className="m-3 size-7 absolute top-0 right-1" />
                             </div>
                           </div>
                         </div>

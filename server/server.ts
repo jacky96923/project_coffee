@@ -7,7 +7,6 @@ import Knex from "knex";
 const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
-
 const app = express();
 
 app.use(cors());
@@ -39,11 +38,12 @@ import { MenuController } from "./controller/MenuController";
 import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 
-
 // Business-app
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
+import { DialogAddItemController } from "./controller/DialogAddItemController";
+import { DialogAddItemService } from "./services/DialogAddItemService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
 
@@ -62,11 +62,16 @@ const optionSlideController = new OptionSlideController(optionSlideService);
 const menuIdService = new MenuIdService(knex);
 const menuController = new MenuController(menuIdService);
 const receiptService = new ReceiptService(knex);
-const receiptController = new ReceiptController(receiptService)
+const receiptController = new ReceiptController(receiptService);
 
 // Controller and Service Instantiation (Client)
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
+
+const dialogAddItemService = new DialogAddItemService(knex);
+const dialogAddItemController = new DialogAddItemController(
+  dialogAddItemService
+);
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
@@ -74,7 +79,7 @@ const commentsController = new CommentsController(commentService);
 
 // Route Setup (Client)
 app.use("/auth", userAuthController.router);
-app.use("/auth", businessAuthController.router);
+
 app.use("/shops", shopController.router);
 app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
@@ -82,9 +87,13 @@ app.use("/menus", menuController.router);
 app.use("/receipt", receiptController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
+app.use("/menuPreviews", menuPreviewController.router);
+app.use("/category", dialogAddItemController.router);
 
 // Route Setup (Business)
-app.use("/menuPreviews", menuPreviewController.router);
+app.use("/business/menuPreviews", menuPreviewController.router);
+app.use("/business/auth", businessAuthController.router);
+app.use("/businessRegister", businessAuthController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

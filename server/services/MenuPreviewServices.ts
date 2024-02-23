@@ -14,7 +14,7 @@ export class MenuPreviewService {
         .join("shops", "shops.id", "menu.shop_id")
         .where("shops.id", shopId);
 
-      //   console.log("categoryIdList", categoryIdList);
+      console.log("categoryIdList", categoryIdList);
 
       let categoryNameIconList = [];
       for (let categoryId of categoryIdList) {
@@ -32,7 +32,7 @@ export class MenuPreviewService {
 
         categoryNameIconList.push(categoryName[0]);
       }
-      // console.log("categoryNameIconList", categoryNameIconList);
+      //console.log("categoryNameIconList", categoryNameIconList);
 
       let itemList = [];
       for (let categoryId of categoryIdList) {
