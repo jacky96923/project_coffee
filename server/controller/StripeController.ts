@@ -3,6 +3,7 @@ import { StripeService } from "../services/StripeService";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import Stripe from "stripe";
+import { isLoggedIn } from "../utils/guard";
 
 dotenv.config()
 
@@ -18,7 +19,7 @@ export class StripeController {
   router = express.Router();
   public constructor(private stripeService: StripeService) {
     this.router.post("/webhook", bodyParser.raw({ type: "application/json" }), this.postWebhook);
-    this.router.post("/create-checkout-session",express.json(),this.getCheckout)
+    this.router.post("/create-checkout-session",express.json(), isLoggedIn, this.getCheckout)
   }
 
   postWebhook = async (req: Request, res: Response) => {
@@ -99,6 +100,6 @@ export class StripeController {
     });
   
     if (session.url) res.json({ url: session.url });
-    else res.json({ url: "http://localhost:3000/shopping-cart" });
+    else res.json({ url: "http://localhost:3000/shoppingCart" });
   }
 }

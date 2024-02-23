@@ -1,6 +1,8 @@
 // Imports and Middleware Setup
 import cors from "cors";
 import express from "express";
+import http from "http";
+import { Server as SocketIO } from "socket.io";
 import Knex from "knex";
 
 // Database Connection Setup
@@ -8,6 +10,12 @@ const knexConfig = require("./knexfile");
 const knex = Knex(knexConfig[process.env.NODE_ENV || "development"]);
 
 const app = express();
+const server = new http.Server(app);
+const io = new SocketIO(server, {
+  cors: {
+    origin: ["http://localhost:3000", "http://localhost:3001"]
+  }
+});
 
 app.use(cors());
 import { StripeService } from "./services/StripeService";
@@ -99,6 +107,6 @@ app.get("/hi", (req, res) => res.send("hi"));
 
 // Starting the Server
 const PORT = 8100;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`App running at http://localhost:${PORT}`);
 });

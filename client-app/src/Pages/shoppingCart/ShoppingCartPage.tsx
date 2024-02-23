@@ -58,7 +58,6 @@ export default function ShoppingCartPage() {
   // }, []);
 
   // All data received for this page
-  const user_id = useSelector((state: RootState) => state.auth.user_id);
   let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
   console.log("shoppingCartPage", shoppingCartPage);
 
@@ -143,7 +142,7 @@ export default function ShoppingCartPage() {
       setNoUserLoginModal(true)
     } else {
       // 2. if yes, create req.body for checkout fetch
-      const checkoutData = { shop_id: shopId , user_id: user_id, cart: itemListWithKey, pickupTime: pickupTime, total: total };
+      const checkoutData = { shop_id: shopId , cart: itemListWithKey, pickupTime: pickupTime, total: total };
       console.log("checkoutData", checkoutData);
       console.log("cart in checkout", checkoutData.cart)
       // 3. fetch to get the url for checkout
