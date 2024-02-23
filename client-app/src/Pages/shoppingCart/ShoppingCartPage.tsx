@@ -8,7 +8,6 @@ import ShoppingCartItem, { ItemProps } from "../../components/ShoppingCartItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
-import BottomNavBar from "../../components/BottomNavBar";
 
 export default function ShoppingCartPage() {
   const navigate = useNavigate();
@@ -277,7 +276,6 @@ export default function ShoppingCartPage() {
         </button>
         <NoUserLoginModal show={noUserLoginModal} onClose={()=>setNoUserLoginModal(false)} onLogin={onLoginHandler}/>
       </div>
-      {/* <BottomNavBar/> */}
     </div>
   );
 }

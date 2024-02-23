@@ -11,7 +11,7 @@ export default function MainPage() {
   return (
     <div className="relative overflow-hidden bg-white m-9">
       <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl m-2">
-        早晨, {username}
+        歡迎{username? ", "+username:""}!
       </h1>
       <Search />
       <h2 className=" m-3 text-2xl font-bold tracking-tight ">今日最抵 -</h2>
@@ -19,7 +19,6 @@ export default function MainPage() {
         <Carousels />
       </div>
       <MainThreeButton />
-      <MainBottomNavBar />
       <h1 className="flex justify-center m-8 border p-3 rounded-2xl		 ">
         最新消息
       </h1>

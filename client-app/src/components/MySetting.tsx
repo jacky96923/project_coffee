@@ -2,12 +2,15 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { logout } from "../slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const MySetting = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
   const onLogoutHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    //dispatch(logout)
+    dispatch(logout())
+    navigate("/")
   }
   return (
     <div>

@@ -131,7 +131,7 @@ export default function Menu() {
 
         {typeof result !== "string"
           ? result.categoryItemList.map((cat) => (
-              <>
+              <div id={cat.categoryName}>
                 <hr />
                 <div className="m-5 font-bold">{cat.categoryName}</div>
                 <div>
@@ -176,15 +176,15 @@ export default function Menu() {
                     );
                   })}
                 </div>
-              </>
+              </div>
             ))
           : ""}
 
-        <div className="flex justify-center m-10 bg-black text-white rounded-xl fixed bottom-0 left-0 right-0 h-auto">
+        {/* <div className="flex justify-center m-10 bg-black text-white rounded-xl fixed bottom-0 left-0 right-0 h-auto">
           <button className="m-3" onClick={() => navigate("/shoppingCart")}>
             檢視購物車
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -21,6 +21,7 @@ export class ReceiptService {
         "transaction.shop_id"
       )
       .where("transaction.user_id", userId)
+      .where("transaction.payment_status", "completed")
       .orderBy("transaction.id", "desc")
 
     console.log("result(no comment) in service", result)

@@ -26,12 +26,13 @@ import ItemPage from "./Pages/items/itemPage";
 import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
+import BottomNavBar from "./components/BottomNavBar";
 
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
   return (
   <Router>
-    <div className="App ">
+    <div className="App mb-20">
       <Routes>
         <Route path="/" element={<Navigate to="/main"></Navigate>} />
         <Route path="/client-login" element={<ClientLoginPage />} />
@@ -44,22 +45,23 @@ function App() {
           element={<Menu />}
         />
         <Route path="/itemPage/:id" element={<ItemPage />} />
-        <Route path="/checkoutCancel" element={<CheckoutCancel />} />
-        <Route path="/comment/:transactionId" element={<CommentPage />} />
-        <Route path="/commentSummary" element={<CommentSummary />} />
+        {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
         <Route element={<CartGuard/>}>
           <Route path="/shoppingCart" element={<ShoppingCartPage />} />
         </Route>
 
         <Route element={<AuthGuard />}>
           <Route path="/myPage" element={<MyPage />} />
-          <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/receipt/all" element={<AllReceipt />} />
+          <Route path="/receipt/:transactionId" element={<Receipt />} />
+          <Route path="/comment/:transactionId" element={<CommentPage />} />
+          <Route path="/commentSummary" element={<CommentSummary />} />
           {/* <Route path='/checkout-success' element={<Home />} />
           <Route path='/checkout-cancel' element={<AboutPage />} /> */}
         </Route>
       </Routes>
     </div>
+    <BottomNavBar/>
   </Router>
   );
 }

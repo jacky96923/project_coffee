@@ -1,7 +1,6 @@
 import React from "react";
 import Search from "../../components/Search";
 
-import MainBottomNavBar from "../../components/BottomNavBar";
 import ShopDisplaying from "../../components/shopDisplaying";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
@@ -31,7 +30,6 @@ export default function ShopSelection() {
       <br />
       <br />
       <ShopDisplaying />
-      <MainBottomNavBar />
     </div>
   );
 }

@@ -56,9 +56,9 @@ export function CommentPage() {
         throw new Error("Network response was not ok");
       } else {
         console.log("Submission successful!");
-        navigate('/CommentSummary');
         localStorage.removeItem("commentingShop")
         localStorage.removeItem("shopId")
+        navigate('/CommentSummary');
       }
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);

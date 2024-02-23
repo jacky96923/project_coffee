@@ -38,7 +38,6 @@ export default function MyReward() {
         </div>
         <MyCoupon />
       </div>
-      <MainBottomNavBar />
     </>
   );
 }
