@@ -1,5 +1,4 @@
-import { Root } from "postcss";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "./store";
@@ -7,21 +6,27 @@ import { part_one_data } from "./slices/RegSlice";
 
 export default function BusinessLoginPage() {
   const login_name = useSelector((state: RootState) => state.reg.login_name);
+  const shop_name = useSelector((state: RootState) => state.reg.shop_name);
   const contact_no = useSelector((state: RootState) => state.reg.contact_no);
-  const login_password = useSelector((state: RootState) => state.reg.login_password);
+  const login_password = useSelector(
+    (state: RootState) => state.reg.login_password
+  );
 
-  const [shopName, setShopName] = useState(login_name);
-  const [Telnum, setTelnum] = useState<number|undefined>(contact_no);
+  const [loginName, setLoginName] = useState(login_name);
+  const [shopName, setShopName] = useState(shop_name);
+  const [Telnum, setTelnum] = useState<string>(contact_no ? contact_no.toString() : "");
   const [password, setPassword] = useState(login_password);
   const [confirmPassword, setConfirmPassword] = useState(login_password);
 
-  
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
-
-
+  const handleLoginNameChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setLoginName(e.target.value);
+  };
 
   const handleShopNameChange = (e: {
     target: { value: React.SetStateAction<string> };
@@ -29,10 +34,8 @@ export default function BusinessLoginPage() {
     setShopName(e.target.value);
   };
 
-  const handleTelnumChange = (e: {
-    target: any;
-  }) => {
-    setTelnum(parseInt(e.target.value));
+  const handleTelnumChange = (e: { target: any }) => {
+    setTelnum(e.target.value);
   };
 
   const handlePasswordChange = (e: {
@@ -46,11 +49,12 @@ export default function BusinessLoginPage() {
   }) => {
     setConfirmPassword(e.target.value);
   };
+
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("密碼與確認密碼不相符！");
-    } else if (!Telnum || isNaN(Telnum) || Telnum.toString().length !== 8) {
+    } else if (!Telnum || isNaN(parseInt(Telnum)) || Telnum.length !== 8) {
       alert("請輸入有效的八位電話號碼。");
     } else {
       // Save form data to local storage
@@ -59,16 +63,20 @@ export default function BusinessLoginPage() {
         Telnum,
         password,
       };
-  
-      // localStorage.setItem("registrationData", JSON.stringify(formData));
-  
-      dispatch(part_one_data({ login_name: shopName, contact_no: Telnum!, login_password: password }));
-  
+
+      dispatch(
+        part_one_data({
+          login_name: loginName,
+          shop_name: shopName,
+          contact_no: parseInt(Telnum),
+          login_password: password,
+        })
+      );
+
       // Navigate to the next page
       navigate("/BusinessLocation");
     }
   };
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -85,7 +93,28 @@ export default function BusinessLoginPage() {
                 htmlFor="shopName"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                店舖登入名稱
+                登入名稱
+              </label>
+              <div className="mt-2">
+                <input
+                  id="LoginName"
+                  name="LoginName"
+                  type="text"
+                  autoComplete="LoginName"
+                  required
+                  value={loginName}
+                  onChange={handleLoginNameChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="shopName"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                店舖名稱
               </label>
               <div className="mt-2">
                 <input

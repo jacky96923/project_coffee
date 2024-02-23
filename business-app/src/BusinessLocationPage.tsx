@@ -23,13 +23,13 @@ export default function BusinessLocation() {
   const [selectedOptionId, setSelectedOptionId] = useState<number>(0); // Initializing with 0 as an example
 
   const [addressText, setAddressText] = useState(address);
-  const [districtText, setdistrictText] = useState(address);
+  const [districtText, setdistrictText] = useState(district);
   const [formValid, setFormValid] = useState(false);
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
-  // Define the weekdays arrays outside of the function
+ 
   const HKArea = ["中西區", "灣仔區", "東區", "南區"];
 
   const KWArea = ["深水埗區", "油尖旺區", "九龍城區", "黃大仙區", "觀塘區"];
@@ -69,6 +69,7 @@ export default function BusinessLocation() {
 
   const handleDistrictClick = (option: React.SetStateAction<string>) => {
     setSelectedDistrictOption(option);
+    
     setFormValid(addressText.trim() !== "");
   };
 
@@ -76,6 +77,7 @@ export default function BusinessLocation() {
     target: { value: React.SetStateAction<string> };
   }) => {
     setAddressText(e.target.value);
+  
     setFormValid(e.target.value !== "");
   };
 
@@ -206,12 +208,12 @@ export default function BusinessLocation() {
                   <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
                       {selectedOptionId === 1
-                        ? HKArea.map((day, index) => (
+                        ? HKArea.map((HKArea, index) => (
                             <Menu.Item key={index}>
                               {({ active }) => (
                                 <button
                                   type="button"
-                                  onClick={() => handleDistrictClick(day)}
+                                  onClick={() => handleDistrictClick(HKArea)}
                                   className={classNames(
                                     active
                                       ? "bg-gray-100 text-gray-900"
@@ -219,18 +221,18 @@ export default function BusinessLocation() {
                                     "block px-4 py-2 text-sm"
                                   )}
                                 >
-                                  {day}
+                                  {HKArea}
                                 </button>
                               )}
                             </Menu.Item>
                           ))
                         : selectedOptionId === 2
-                        ? KWArea.map((day, index) => (
+                        ? KWArea.map((KWArea, index) => (
                             <Menu.Item key={index}>
                               {({ active }) => (
                                 <button
                                   type="button"
-                                  onClick={() => handleDistrictClick(day)}
+                                  onClick={() => handleDistrictClick(KWArea)}
                                   className={classNames(
                                     active
                                       ? "bg-gray-100 text-gray-900"
@@ -238,17 +240,17 @@ export default function BusinessLocation() {
                                     "block px-4 py-2 text-sm"
                                   )}
                                 >
-                                  {day}
+                                  {KWArea}
                                 </button>
                               )}
                             </Menu.Item>
                           ))
-                        : NTArea.map((day, index) => (
+                        : NTArea.map((NTArea, index) => (
                             <Menu.Item key={index}>
                               {({ active }) => (
                                 <button
                                   type="button"
-                                  onClick={() => handleDistrictClick(day)}
+                                  onClick={() => handleDistrictClick(NTArea)}
                                   className={classNames(
                                     active
                                       ? "bg-gray-100 text-gray-900"
@@ -256,7 +258,7 @@ export default function BusinessLocation() {
                                     "block px-4 py-2 text-sm"
                                   )}
                                 >
-                                  {day}
+                                  {NTArea}
                                 </button>
                               )}
                             </Menu.Item>

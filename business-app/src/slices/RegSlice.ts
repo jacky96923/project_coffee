@@ -1,38 +1,26 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
-
 type RegisterDataType = {
+
+  login_name: string;
+  shop_name: string;
+  login_password: string;
+  contact_no: number | undefined;
   area: string;
   district?: string;
   address: string;
-  login_name: string;
-  contact_no: number | undefined;
-  login_password: string;
 };
 
-// Async thunk for sending data to the server
-// export const sendDataToServer = createAsyncThunk(
-//   "data/sendToServer",
-//   async (data, { rejectWithValue }) => {
-//     try {
-//       const response = await axios.post("/YOUR_API_ENDPOINT_HERE", data);
-//       return response.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.response.data);
-//     }
-//   }
-// );
 
 const initialState: RegisterDataType = {
+  login_name: "",
+  shop_name: "",
+  login_password: "",
+  contact_no: undefined,
   area: "",
   district: "",
   address: "",
-  login_name: "",
-  contact_no: undefined,
-  login_password: "",
 };
 
 const dataSlice = createSlice({
@@ -43,13 +31,16 @@ const dataSlice = createSlice({
       state,
       action: PayloadAction<{
         login_name: string;
+        shop_name: string;  
         contact_no: number;
         login_password: string;
       }>
     ) => {
       state.login_name = action.payload.login_name;
-      state.contact_no = action.payload.contact_no;
+      state.shop_name = action.payload.shop_name;
       state.login_password = action.payload.login_password;
+      state.contact_no = action.payload.contact_no;
+   
     },
     part_two_data: (
       state,
@@ -65,17 +56,7 @@ const dataSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // builder
-    //   .addCase(sendDataToServer.pending, (state) => {
-    //     state.status = "loading";
-    //   })
-    //   .addCase(sendDataToServer.fulfilled, (state, action) => {
-    //     state.status = "succeeded";
-    //   })
-    //   .addCase(sendDataToServer.rejected, (state, action) => {
-    //     state.status = "failed";
-    //     state.error = action.payload as null;
-    //   });
+
   },
 });
 

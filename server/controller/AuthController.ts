@@ -88,6 +88,8 @@ export class BusinessAuthController {
   public constructor(private businessAuthService: BusinessAuthService) {
     this.router.post("/BusinessLogin", this.businessLogin);
     this.router.post("/BusinessRegister", this.businessRegister);
+    this.router.post("/info", this.businessRegister);
+
   }
   businessLogin = async (req: Request, res: Response) => {
     let { username, password } = req.body;
@@ -104,10 +106,22 @@ export class BusinessAuthController {
   };
   async businessRegister(req: Request, res: Response) {
     try {
-      // Q1: if method is used rather than property of function, how can the router work?
-      // Q2: store info of different pages in localstorage, then assemble them in 1 form
-      // register according to the form?
-      // Q3: should email be used as username for login? (validation issue)
-    } catch (error) {}
-  }
-}
+      // Extracting data sent from the client
+      const { login_name, login_password, contact_no, area, district, address } = req.body;
+  
+      // Here you can process the received data as needed
+      // For now, let's just send it back as part of the response
+      res.status(200).json({
+        
+        login_name,
+        login_password,
+        contact_no,
+        area,
+        district,
+        address
+      });
+    } catch (error) {
+      // In case of any errors during the registration process, return a server error
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }}

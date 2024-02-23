@@ -47,6 +47,7 @@ import { DialogAddItemService } from "./services/DialogAddItemService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
 
+
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
 const userAuthController = new UserAuthController(userAuthService);
@@ -92,6 +93,7 @@ app.use("/category", dialogAddItemController.router);
 // Route Setup (Business)
 app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
+app.use("/businessRegister", businessAuthController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
