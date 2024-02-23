@@ -20,6 +20,7 @@ const initialState: RegisterDataType = {
   contact_no: undefined,
   area: "",
   district: "",
+  // district: { id: 0, name: "" },
   address: "",
 };
 
