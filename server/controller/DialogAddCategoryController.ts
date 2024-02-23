@@ -1,10 +1,10 @@
 import express from "express";
 import { Request, Response } from "express";
-import { DialogAddItemService } from "../services/DialogAddItemService";
+import { DialogAddCategoryService } from "../services/DialogAddCategoryService";
 
-export class DialogAddItemController {
+export class DialogAddCategoryController {
   router = express.Router();
-  constructor(private dialogAddItemService: DialogAddItemService) {
+  constructor(private dialogAddCategoryService: DialogAddCategoryService) {
     this.router.post("/categoryName", this.categoryName);
   }
 
@@ -12,11 +12,11 @@ export class DialogAddItemController {
     let catName = req.body.nameInput;
     let shopId = Number(req.body.shopId);
 
-    let categoryName = await this.dialogAddItemService.postCatName(
+    let categoryName = await this.dialogAddCategoryService.postCatName(
       catName,
       shopId
     );
-    console.log("categoryName", categoryName);
+    // console.log("categoryName", categoryName);
 
     res.status(200).json(categoryName);
   };

@@ -42,8 +42,8 @@ import { CommentService } from "./services/CommentService";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
-import { DialogAddItemController } from "./controller/DialogAddItemController";
-import { DialogAddItemService } from "./services/DialogAddItemService";
+import { DialogAddCategoryController } from "./controller/DialogAddCategoryController";
+import { DialogAddCategoryService } from "./services/DialogAddCategoryService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
 
@@ -67,9 +67,9 @@ const receiptController = new ReceiptController(receiptService);
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
 
-const dialogAddItemService = new DialogAddItemService(knex);
-const dialogAddItemController = new DialogAddItemController(
-  dialogAddItemService
+const dialogAddCategoryService = new DialogAddCategoryService(knex);
+const dialogAddCategoryController = new DialogAddCategoryController(
+  dialogAddCategoryService
 );
 
 // Instantiate CommentService and then CommentsController
@@ -87,7 +87,7 @@ app.use("/receipt", receiptController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
-app.use("/category", dialogAddItemController.router);
+app.use("/category", dialogAddCategoryController.router);
 
 // Route Setup (Business)
 app.use("/business/menuPreviews", menuPreviewController.router);
