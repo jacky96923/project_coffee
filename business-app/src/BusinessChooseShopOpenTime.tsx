@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Checkbox, Input, Button } from "@material-tailwind/react";
 import styles from "./BusinessChooseShopOpenTime.module.css";
-import { useMutation } from 'react-query';
+import { useMutation } from "@tanstack/react-query";
 export function BusinessChooseShopOpenTime() {
   const weekdays = [
     "星期一",
@@ -94,11 +94,11 @@ export function BusinessChooseShopOpenTime() {
         publicHolidays: checkedPHs,
       }),
     });
-  //   const jsonData = JSON.stringify({
-  //     openingTimes: filteredOpeningTimes,
-  //     publicHolidays: checkedPHs,
-  // });
-  // console.log(jsonData);
+    //   const jsonData = JSON.stringify({
+    //     openingTimes: filteredOpeningTimes,
+    //     publicHolidays: checkedPHs,
+    // });
+    // console.log(jsonData);
     // Perform further actions with the checked data
   };
 
@@ -107,7 +107,6 @@ export function BusinessChooseShopOpenTime() {
       time.weekday === weekdays[parseInt(weekday)]
         ? { ...time, [type]: value }
         : time
-        
     );
     setOpeningTimes(newOpeningTimes);
   };

@@ -27,3 +27,20 @@ export function GetMenuPreview(id: number) {
   }
   return data;
 }
+
+export async function EditCategory(updateCatName: string, categoryId: number) {
+  const resNewCat = await fetch(`${source}/menuPreviews/updateCategoryName`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      nameInput: updateCatName,
+      categoryId: categoryId,
+    }),
+  });
+  const result = await resNewCat.json();
+  // console.log("result", result);
+
+  return result.data;
+}
