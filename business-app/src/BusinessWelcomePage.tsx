@@ -29,11 +29,14 @@ const BusinessWelcome: React.FC = () => {
     <div style={{ marginTop: "100px" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>確認輸入資料</h1>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>您的註冊資料</h1>
       </div>
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ fontSize: "24px", paddingBottom: "1rem" }}>
-            <h2>您的註冊資料：</h2>
+       
             <h3>店舖登入名稱：{login_name}</h3>
             <h3>聯絡電話：{contact_no}</h3>
             <h3>地域：{area}</h3>

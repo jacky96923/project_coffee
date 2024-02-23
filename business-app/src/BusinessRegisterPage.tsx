@@ -46,11 +46,12 @@ export default function BusinessLoginPage() {
   }) => {
     setConfirmPassword(e.target.value);
   };
-
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert("密碼與確認密碼不相符！");
+    } else if (!Telnum || isNaN(Telnum) || Telnum.toString().length !== 8) {
+      alert("請輸入有效的八位電話號碼。");
     } else {
       // Save form data to local storage
       const formData = {
@@ -58,11 +59,11 @@ export default function BusinessLoginPage() {
         Telnum,
         password,
       };
-
+  
       // localStorage.setItem("registrationData", JSON.stringify(formData));
-
+  
       dispatch(part_one_data({ login_name: shopName, contact_no: Telnum!, login_password: password }));
-
+  
       // Navigate to the next page
       navigate("/BusinessLocation");
     }
