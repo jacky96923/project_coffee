@@ -7,7 +7,7 @@ const MySetting = () => {
   const dispatch = useDispatch<AppDispatch>()
   const onLogoutHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    // dispatch(logout)
+    //dispatch(logout)
   }
   return (
     <div>

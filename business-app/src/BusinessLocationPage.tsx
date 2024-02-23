@@ -13,79 +13,88 @@ export default function BusinessLocation() {
   const district = useSelector((state: RootState) => state.reg.district);
   const address = useSelector((state: RootState) => state.reg.address);
 
-  const [selectedAreaOption, setSelectedAreaOption] = useState(area || "請選擇地域");
-  const [selectedDistrictOption, setSelectedDistrictOption] = useState(area || "請選擇分區");
+
+
+  const [selectedAreaOption, setSelectedAreaOption] = useState(
+    area || "請選擇地域"
+  );
+  const [selectedDistrictOption, setSelectedDistrictOption] =
+    useState("請選擇分區");
   const [selectedOptionId, setSelectedOptionId] = useState<number>(0); // Initializing with 0 as an example
 
   const [addressText, setAddressText] = useState(address);
+  const [districtText, setdistrictText] = useState(district);
   const [formValid, setFormValid] = useState(false);
   const navigate = useNavigate();
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleAreaClick = (option: React.SetStateAction<string>, id: number) => {
+ 
+  const HKArea = ["中西區", "灣仔區", "東區", "南區"];
+
+  const KWArea = ["深水埗區", "油尖旺區", "九龍城區", "黃大仙區", "觀塘區"];
+
+  const NTArea = [
+    "葵青區",
+    "荃灣區",
+    "元朗區",
+    "屯門區",
+    "離島區",
+    "沙田區",
+    "大埔區",
+    "北區",
+    "西貢區",
+    "落馬洲河套地區",
+  ];
+
+  const handleAreaClick = (
+    option: React.SetStateAction<string>,
+    id: number
+  ) => {
     setSelectedAreaOption(option);
     setSelectedOptionId(id); // Assuming you have a state variable to store the selected option ID
     setFormValid(addressText.trim() !== "");
+
+    // Conditionally set the selectedDistrictOption based on the selected area
+    if (id === 1) {
+      setSelectedDistrictOption("中西區");
+    } else if (id === 2) {
+      setSelectedDistrictOption("深水埗區");
+    } else if (id === 3) {
+      setSelectedDistrictOption("葵青區");
+    } else {
+      setSelectedDistrictOption("請選擇分區");
+    }
   };
+
   const handleDistrictClick = (option: React.SetStateAction<string>) => {
-    setSelectedAreaOption(option);
+    setSelectedDistrictOption(option);
+    
     setFormValid(addressText.trim() !== "");
   };
 
-  const weekdays = [
-    "星期一",
-    "星期二",
-    "星期三",
-    "星期四",
-    "星期五",
-    "星期六",
-    "星期日",
-  ];
-  const weekdays2 = [
-    "星期一",
-    "星期二",
-    "星期三",
-    "星期四",
-    "星期五",
-    "星期六",
-
-  ];
-  const weekdays3 = [
-    "星期一",
-    "星期二",
-    "星期三",
-    "星期四",
-
-    "星期日",
-  ];
   const handleAddressChange = (e: {
     target: { value: React.SetStateAction<string> };
   }) => {
     setAddressText(e.target.value);
+  
     setFormValid(e.target.value !== "");
   };
 
   const handleNextButtonClick = () => {
-    if (!selectedAreaOption || selectedAreaOption === "請選擇地區") {
-      alert("Please choose an area first.");
+    if ( selectedAreaOption === "請選擇地域") {
+      alert("請選擇地域");
+    } else if (selectedDistrictOption === "請選擇分區") {
+      alert("請選擇分區.");
     } else if (!addressText.trim()) {
-      alert("Please enter your address.");
+      alert("請輸入地址.");
     } else {
-      // const fullAddress = {
-      //   area: selectedOption,
-      //   address: addressText,
-      // };
-      // console.log("Full Address:", fullAddress);
-
-      dispatch(part_two_data({ area: selectedAreaOption, address: addressText }));
-
+      dispatch(
+        part_two_data({ area: selectedAreaOption, district: selectedDistrictOption, address: addressText })
+      );
       navigate("/BusinessWelcome");
     }
-
-    
   };
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -106,7 +115,8 @@ export default function BusinessLocation() {
             {" "}
             <div className="flex justify-center mt-6 ">
               <Menu as="div" className="relative inline-block text-left">
-                <Menu.Button className="inline-flex w-32 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              <Menu.Button className="inline-flex w-[400px] justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+
                   {selectedAreaOption}
                   <ChevronDownIcon
                     className="-mr-1 h-5 w-5 text-gray-400"
@@ -128,7 +138,7 @@ export default function BusinessLocation() {
                         {({ active }) => (
                           <button
                             type="button"
-                            onClick={() => handleAreaClick ("香港",1)}
+                            onClick={() => handleAreaClick("香港", 1)}
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -144,7 +154,7 @@ export default function BusinessLocation() {
                         {({ active }) => (
                           <button
                             type="button"
-                            onClick={() => handleAreaClick ("九龍",2)}
+                            onClick={() => handleAreaClick("九龍", 2)}
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -160,7 +170,7 @@ export default function BusinessLocation() {
                         {({ active }) => (
                           <button
                             type="button"
-                            onClick={() =>handleAreaClick ("新界",3)}
+                            onClick={() => handleAreaClick("新界", 3)}
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -176,11 +186,10 @@ export default function BusinessLocation() {
                   </Menu.Items>
                 </Transition>
               </Menu>
-              
             </div>
             <div className="flex justify-center mt-6 ">
-            <Menu as="div" className="relative inline-block text-left">
-                <Menu.Button className="inline-flex w-32 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+              <Menu as="div" className="relative inline-block text-left">
+              <Menu.Button className="inline-flex w-[400px] justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                   {selectedDistrictOption}
                   <ChevronDownIcon
                     className="-mr-1 h-5 w-5 text-gray-400"
@@ -198,61 +207,67 @@ export default function BusinessLocation() {
                 >
                   <Menu.Items className="absolute left-0 z-10 mt-2 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            type="button"
-                            onClick={() => handleDistrictClick ("香港")}
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            香港
-                          </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            type="button"
-                            onClick={() => handleDistrictClick  ("九龍")}
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            九龍
-                          </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            type="button"
-                            onClick={() =>  handleDistrictClick  ("新界")}
-                            className={classNames(
-                              active
-                                ? "bg-gray-100 text-gray-900"
-                                : "text-gray-700",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            新界
-                          </button>
-                        )}
-                      </Menu.Item>
+                      {selectedOptionId === 1
+                        ? HKArea.map((HKArea, index) => (
+                            <Menu.Item key={index}>
+                              {({ active }) => (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDistrictClick(HKArea)}
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  {HKArea}
+                                </button>
+                              )}
+                            </Menu.Item>
+                          ))
+                        : selectedOptionId === 2
+                        ? KWArea.map((KWArea, index) => (
+                            <Menu.Item key={index}>
+                              {({ active }) => (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDistrictClick(KWArea)}
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  {KWArea}
+                                </button>
+                              )}
+                            </Menu.Item>
+                          ))
+                        : NTArea.map((NTArea, index) => (
+                            <Menu.Item key={index}>
+                              {({ active }) => (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDistrictClick(NTArea)}
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  {NTArea}
+                                </button>
+                              )}
+                            </Menu.Item>
+                          ))}
                     </div>
                   </Menu.Items>
                 </Transition>
               </Menu>
-              
-          </div>
-              
+            </div>
           </div>
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form className="space-y-6" action="#" method="POST">

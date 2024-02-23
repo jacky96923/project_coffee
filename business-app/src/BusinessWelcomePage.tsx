@@ -10,31 +10,56 @@ const BusinessWelcome: React.FC = () => {
   const address = useSelector((state: RootState) => state.reg.address);
   const login_name = useSelector((state: RootState) => state.reg.login_name);
   const contact_no = useSelector((state: RootState) => state.reg.contact_no);
-
+  const shop_name = useSelector((state: RootState) => state.reg.shop_name);
   const password = useSelector((state: RootState) => state.reg.login_password);
 
 
   const navigate = useNavigate();
 
-  const handleClick = async() => {
-    await fetch("http://localhost:8100/api/register", {
+  const handleClick = async () => {
+    try {
+      const response = await fetch("http://localhost:8100/businessRegister/info", {
+        method: "POST", // Specify the method
+        headers: {
+          'Content-Type': 'application/json', // Specify content type header
+        },
+        body: JSON.stringify({
+          login_name: login_name,
+          login_password: password,
+          contact_no: contact_no,
+          area: area,
+          district: district,
+          address: address,
+        })
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json(); // Assuming the server responds with JSON
       
-    })
-
-
-
+      console.log(data); // Log the response data to the console
+    } catch (error) {
+      console.error('Fetch error:', error); // Log any error to the console
+    }
   };
 
   return (
     <div style={{ marginTop: "100px" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>確認輸入資料</h1>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>您的註冊資料</h1>
       </div>
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ fontSize: "24px", paddingBottom: "1rem" }}>
-            <h2>您的註冊資料：</h2>
-            <h3>店舖登入名稱：{login_name}</h3>
+       
+          <h3>登入名稱：{login_name}</h3>
+          <h3>店舖名稱名稱：{shop_name}</h3>
+           <h3>登入密碼：{password}</h3> 
             <h3>聯絡電話：{contact_no}</h3>
             <h3>地域：{area}</h3>
             <h3>分區：{district}</h3>
