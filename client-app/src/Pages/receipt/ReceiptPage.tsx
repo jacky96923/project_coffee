@@ -1,27 +1,55 @@
 import { BellIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import styles from "./ReceiptPage.module.css"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BottomNavBar from "../../components/BottomNavBar";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { ReceiptAPI } from "../../hooks/receiptAPI";
 
 export default function Receipt() {
-    const [collected, setCollected] = useState(false)
-    const onCommentHandler = ()=>{
+    const navigate = useNavigate()
+    const { transactionId } = useParams()
+    //console.log(typeof transactionId, transactionId)
+    const receiptData = ReceiptAPI(transactionId as string)
+    console.log("receiptData", receiptData)
+    localStorage.setItem("shopId", JSON.stringify(receiptData?.shopId))
 
+    // const [waitForPickupStatusTimes, setWaitForPickupStatusTimes] = useState(0)
+    // const [collected, setCollected] = useState(false)
+    // useEffect(() => {
+    //     if (receiptData.pickupStatus) {
+    //         setCollected(receiptData?.pickupStatus)
+    //     } else {
+    //         setWaitForPickupStatusTimes(waitForPickupStatusTimes+1)
+    //         console.log("Wait for pickupStatus update", waitForPickupStatusTimes)
+    //     }
+    // }, [waitForPickupStatusTimes])
+    console.log("pickupStatus", receiptData?.pickupStatus)
+
+    // console.log("wtf", receiptData?.orderDetails[0])
+    const onCommentHandler = () => {
+        localStorage.setItem("commentingShop", receiptData?.shopName)
+        navigate(`/comment/${transactionId}`)
     }
     return (
         <div className={styles.container}>
-            <div className="flex justify-between my-5">
+            <div className="flex items-center justify-between my-5">
                 <div className="flex">
-                    <ChevronLeftIcon className="h-6 w-6 mr-2 self-center" />
-                    <h3>訂單收據</h3>
+                    <button
+                        onClick={() => navigate(`/receipt/all`)}
+                        className={`self-center btn btn-circle btn-sm`}
+                    >
+                        <ChevronLeftIcon className="h-5 w-5 text-black" />
+                    </button>                    
+                    <h3 className="self-center ml-3">訂單收據</h3>
                 </div>
                 <BellIcon className="h-6 w-6" />
             </div>
             <div className="flex justify-between">
-                <h3 className="self-center">Blue Bottle Coffee</h3>
+                <h3 className="self-center">{receiptData?.shopName}</h3>
                 <button className="btn">
                     單號
-                    <div className="badge badge-secondary">4001</div>
+                    <div className="badge badge-secondary">{transactionId?.padStart(4, "0")}</div>
                 </button>
             </div>
             <div>
@@ -29,25 +57,25 @@ export default function Receipt() {
                     <li>
                         <div className="flex">
                             <h6 className="font-bold">店舖地址:</h6>
-                            <p>中環擺花街38號地舖及1樓</p>
+                            <p>{receiptData?.shopAddress}</p>
                         </div>
                     </li>
                     <li>
                         <div className="flex">
                             <h6 className="font-bold">下單時間:</h6>
-                            <p>10:02</p>
+                            <p>{receiptData?.orderTime}</p>
                         </div>
                     </li>
                     <li>
                         <div className="flex">
                             <h6 className="font-bold">取餐時間:</h6>
-                            <p>10:30</p>
+                            <p>{receiptData?.pickupTime}</p>
                         </div>
                     </li>
                     <li>
                         <div className="flex">
                             <h6 className="font-bold">付款金額:</h6>
-                            <p>$34</p>
+                            <p>${receiptData?.total}</p>
                         </div>
                     </li>
                     <li>
@@ -57,40 +85,45 @@ export default function Receipt() {
                         </div>
                     </li>
                     <li>
-                        <h6 className="font-bold mx-auto text-red-500 text-lg">未取餐</h6>
+                        <h6 className="font-bold mx-auto text-red-500 text-lg">{receiptData?.pickupStatus ? "已取餐" : "未取餐"}</h6>
                     </li>
-                    {collected === false ? <><li>
-                        <div>
-                            
-                            <p><span className="font-bold">用餐愉快!</span><br/>給予評價/意見可獲額外積分獎賞</p>
-                        </div>
-                    </li><li>
+                    {receiptData?.pickupStatus === false ? 
+                        receiptData?.commented === false? <>
+                        <li>
+                            <div>
+                                <p><span className="font-bold">用餐愉快!</span><br />給予評價/意見可獲額外積分獎賞</p>
+                            </div>
+                        </li>
+                        <li>
                             <button className="font-bold self-center" onClick={onCommentHandler}>立即評價!</button>
-                        </li></>
-                        : ""}
+                        </li>
+                        </>
+                        : <li>
+                            <button className="font-bold self-center">已評價</button>
+                        </li>
+                    :""
+                    }
                 </ul>
                 {/* item menu */}
                 <div className="overflow-x-auto">
                     <table className="table table-zebra table-xs">
-                        {/* head */}
                         <thead>
                             <tr>
                                 <th className="font-bold text-black">購買餐點</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            <tr className="hover">
-                                <td>朱古力咖啡(小)</td>
-                                <td>少甜, 少冰</td>
-                                <td>x1</td>
-                                <td>$34</td>
-                            </tr>
+                            {Array.isArray(receiptData?.orderDetails) ? receiptData.orderDetails.map((order: any) =>
+                                <tr className="hover">
+                                    <td>{order.itemName}{order.itemSize !== null ? '(' + order.itemSize + ')' : ""}</td>
+                                    <td>{order.chosenoptionlist.join(", ")}</td>
+                                    <td>x{order.quantity}</td>
+                                    <td>${order.subTotal}</td>
+                                </tr>) : ""}
                         </tbody>
                     </table>
                 </div>
             </div>
-            <BottomNavBar/>
         </div>
     )
 }

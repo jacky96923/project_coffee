@@ -9,9 +9,9 @@ export class CommentService {
     return this.knex("comment");
   }
 
-  async createComment(comment: { rating: number; description: string })  {
+  async createComment(shopId:number, transactionId: number,rating: number, description: string)  {
     try {
-      let result = await this.table().insert({ rating:comment.rating, description:comment.description }).returning("*");
+      let result = await this.table().insert({ shop_id:shopId, transaction_id:transactionId, rating:rating, description:description }).returning("*");
 
       console.log("result", result);
       return result;

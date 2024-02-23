@@ -91,7 +91,7 @@ export class StripeController {
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
       mode: "payment",
-      success_url: `http://localhost:3000/receipt/temp`, // port need to take care
+      success_url: `http://localhost:3000/receipt/${transaction_id}`, // port need to take care
       cancel_url: `http://localhost:3000/shoppingCart`, // port need to take care 
       payment_intent_data: {
         metadata: metadata,

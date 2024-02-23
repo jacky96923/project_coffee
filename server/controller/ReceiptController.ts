@@ -5,14 +5,14 @@ export class ReceiptController {
   router = express.Router();
   public constructor(private receiptService: ReceiptService) {
     this.router.get("/allReceipts/:userId", this.getAllReceipts);
-    this.router.get("/receipt/:id", this.getReceipt);
+    this.router.get("/:transactionId", this.getReceipt);
   }
 
   getAllReceipts = async (req: Request, res: Response) => {
     const userId = Number(req.params.userId)
     try {
       let allReceipts = await this.receiptService.getAllReceipts(userId);
-      console.log("allReceipts", allReceipts)
+      //console.log("allReceipts", allReceipts)
       return res.json(allReceipts);
     } catch (error) {
       console.log("AllReceipt Error", error);
@@ -20,13 +20,21 @@ export class ReceiptController {
   };
 
   getReceipt = async (req: Request, res: Response) => {
-    let itemId = parseInt(req.params.id);
-    let option = req.params.option;
+    const transactionId = Number(req.params.transactionId)
     try {
-      let optionList = await this.receiptService.getAllReceipts(itemId);
-      return res.json(optionList);
+      let receipt = await this.receiptService.getReceipt(transactionId);
+      let orderDetails = await this.receiptService.getOrderDetails(transactionId)
+      
+      if (receipt && orderDetails){
+        // res.json({receipt, orderDetails}) does not work
+        receipt.orderDetails = orderDetails
+        return res.json(receipt);
+      } else{
+        throw Error("no such receipt")
+      }
     } catch (error) {
-      console.log("slideError", error);
+      console.log(error);
+      return 
     }
   };
 }

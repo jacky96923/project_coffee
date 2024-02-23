@@ -14,11 +14,11 @@ export class CommentsController {
   }
 
   private async createComment(req: express.Request, res: express.Response) {
-    const { rating, description } = req.body;
+    const { shopId, transactionId, rating, description } = req.body;
     console.log("Rating:", rating);
     try {
       // Call the createComment method on the commentService
-      const result = await this.commentService.createComment({ rating, description });
+      const result = await this.commentService.createComment(shopId, transactionId, rating, description);
       res.status(201).json(result);
     } catch (error) {
       console.error("Error creating comment:", error);

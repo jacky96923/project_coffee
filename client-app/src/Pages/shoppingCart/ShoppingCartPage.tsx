@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import BottomNavBar from "../../components/BottomNavBar";
 
 export default function ShoppingCartPage() {
-  // const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate();
 
   // set fake data

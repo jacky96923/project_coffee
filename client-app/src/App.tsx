@@ -45,7 +45,7 @@ function App() {
         />
         <Route path="/itemPage/:id" element={<ItemPage />} />
         <Route path="/checkoutCancel" element={<CheckoutCancel />} />
-        <Route path="/commentPage" element={<CommentPage />} />
+        <Route path="/comment/:transactionId" element={<CommentPage />} />
         <Route path="/commentSummary" element={<CommentSummary />} />
         <Route element={<CartGuard/>}>
           <Route path="/shoppingCart" element={<ShoppingCartPage />} />
@@ -53,7 +53,7 @@ function App() {
 
         <Route element={<AuthGuard />}>
           <Route path="/myPage" element={<MyPage />} />
-          <Route path="/receipt/temp" element={<Receipt />} />
+          <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/receipt/all" element={<AllReceipt />} />
           {/* <Route path='/checkout-success' element={<Home />} />
           <Route path='/checkout-cancel' element={<AboutPage />} /> */}
