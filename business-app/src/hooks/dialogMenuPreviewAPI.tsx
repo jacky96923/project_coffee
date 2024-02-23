@@ -9,7 +9,7 @@ export async function AddCategory(catName: string, shopId: number) {
     body: JSON.stringify({ nameInput: catName, shopId: shopId }),
   });
   const result = await resCat.json();
-  console.log("result", result);
+  // console.log("result", result);
 
   return result.data;
 }

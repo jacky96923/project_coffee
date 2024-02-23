@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../../component/Sidebar";
 
 import { FaEdit } from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
+import { IoIosAddCircle, IoIosCloseCircleOutline } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetMenuPreview } from "../../hooks/MenuPreviewAPI";
 import DialogEditCategory from "../../component/DialogEditCategory";
 import DialogAddCategory from "../../component/DialogAddCategory";
+import DialogDelCategory from "../../component/DailogDelCategory";
 
 // Header component
 const Header = () => {
@@ -24,9 +24,9 @@ const Header = () => {
 
 // Main content component
 const MainContent = () => {
-  const queryClient = useQueryClient();
   const menuCategoryItem: {
     category: {
+      categoryId: number;
       categoryName: string;
       categoryIcon: string;
     };
@@ -42,14 +42,17 @@ const MainContent = () => {
   } = GetMenuPreview(1);
   // parseInt(url.charAt(url.length - 1))
 
-  const menuPreview = useMutation({
-    mutationFn: async () => {},
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: ["menuPreview"],
-        exact: true,
-      }),
-  });
+  // const menuPreview = useMutation({
+  //   mutationFn: async () => {},
+  //   onSuccess: () =>
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["menuPreview"],
+  //       exact: true,
+  //     }),
+  // });
+
+  const [originalCatName, setOriginalCatName] = useState("");
+  const [originalCatId, setOriginalCatId] = useState(NaN);
 
   // CatAdd State
   const [catAdd, setCatAdd] = useState(false);
@@ -62,21 +65,33 @@ const MainContent = () => {
 
   // catEdit State
   const [catEdit, setCatEdit] = useState(false);
-  const CatEditClick = () => {
+  const CatEditClick = (targetCatId: number, targetCatName: string) => {
+    setOriginalCatId(targetCatId);
+    setOriginalCatName(targetCatName);
     setCatEdit(true);
   };
   const CatEditDialogClose = () => {
     setCatEdit(false);
   };
 
+  // catDel State
+  const [catDel, setCatDel] = useState(false);
+  const CatDelClick = (targetCatId: number, targetCatName: string) => {
+    setOriginalCatId(targetCatId);
+    setOriginalCatName(targetCatName);
+    setCatDel(true);
+  };
+  const CatDelDialogClose = () => {
+    setCatDel(false);
+  };
   // itemAdd State
-  const [itemAdd, setItemAdd] = useState(false);
-  const itemAddClick = () => {
-    setItemAdd(true);
-  };
-  const ItemAddDialogClose = () => {
-    setItemAdd(false);
-  };
+  // const [itemAdd, setItemAdd] = useState(false);
+  // const itemAddClick = () => {
+  //   setItemAdd(true);
+  // };
+  // const ItemAddDialogClose = () => {
+  //   setItemAdd(false);
+  // };
 
   return (
     <div className="main-content m-2 ">
@@ -89,9 +104,21 @@ const MainContent = () => {
           {/* 類別 */}
           <div className="flex">
             <div className="p-3 w-30 m-5 text-2xl font-bold ">類別</div>
-            <button onClick={CatAddClick}>
+            <button onClick={() => CatAddClick()}>
               <IoIosAddCircle className="size-12  " />
-              {catAdd && <DialogAddCategory onClose={CatAddDialogClose} />}
+
+              {/* <button
+                            className=""
+                            onClick={() =>
+                              CatEditClick(
+                                cat.category.categoryId,
+                                cat.category.categoryName
+                              )
+                            }
+                          >
+                          </button> */}
+
+              {/* {catAdd && <DialogAddCategory onClose={CatAddDialogClose} />} */}
             </button>
           </div>
 
@@ -99,9 +126,9 @@ const MainContent = () => {
           <div className="flex">
             <div className="p-3 w-30 m-5 text-2xl font-bold ">產品</div>
             <div>
-              <button onClick={itemAddClick}>
-                <IoIosAddCircle className="size-12  " />
-              </button>
+              {/* <button onClick={itemAddClick}> */}
+              <IoIosAddCircle className="size-12  " />
+              {/* </button> */}
             </div>
           </div>
         </div>
@@ -114,16 +141,36 @@ const MainContent = () => {
                 <div className="">
                   <div className="flex">
                     <div className="Cat flex flex-wrap">
-                      <div className="flex justify-around p-3 w-30 m-5 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white">
+                      <div className="flex justify-around  p-3 w-52 m-7 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white item-center">
                         <button className="text-xl">
                           {cat.category.categoryName}
+                          {/* {cat.category.categoryId} */}
                         </button>
-                        <button onClick={CatEditClick}>
-                          <FaEdit className="m-3 size-7" />
-                          {catEdit && (
-                            <DialogEditCategory onClose={CatEditDialogClose} />
-                          )}
-                        </button>
+                        <div className="flex justify-end">
+                          <button
+                            className=""
+                            onClick={() =>
+                              CatEditClick(
+                                cat.category.categoryId,
+                                cat.category.categoryName
+                              )
+                            }
+                          >
+                            <FaEdit className="w-6 h-7" />
+                          </button>
+                          <button
+                            onClick={() =>
+                              CatDelClick(
+                                cat.category.categoryId,
+                                cat.category.categoryName
+                              )
+                            }
+                          >
+                            <div className="ml-2">
+                              <IoIosCloseCircleOutline className=" w-8 h-8" />
+                            </div>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -162,6 +209,30 @@ const MainContent = () => {
                         </div>
                       ))
                     : ""}
+
+                  {
+                    <DialogEditCategory
+                      onClose={CatEditDialogClose}
+                      categoryId={originalCatId}
+                      categoryName={originalCatName}
+                      isShow={catEdit}
+                    />
+                  }
+                  {
+                    <DialogAddCategory
+                      onClose={CatAddDialogClose}
+                      categoryName={originalCatName}
+                      isShow={catAdd}
+                    />
+                  }
+                  {
+                    <DialogDelCategory
+                      onClose={CatDelDialogClose}
+                      categoryId={originalCatId}
+                      categoryName={originalCatName}
+                      isShow={catDel}
+                    />
+                  }
                 </div>
               ))
             ) : (

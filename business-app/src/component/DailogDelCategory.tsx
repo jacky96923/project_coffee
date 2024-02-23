@@ -9,7 +9,7 @@ interface EditDialogProps {
   isShow: boolean;
 }
 
-const DialogEditCategory: React.FC<EditDialogProps> = ({
+const DialogDelCategory: React.FC<EditDialogProps> = ({
   onClose,
   categoryId,
   categoryName,
@@ -28,17 +28,17 @@ const DialogEditCategory: React.FC<EditDialogProps> = ({
   // useSelector
   // const categoryId = 1;
 
-  const queryClient = useQueryClient();
+  //   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: async (data: { updateCatName: string }) =>
-      EditCategory(data.updateCatName, categoryId),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: ["menuPreview"],
-        exact: true,
-      }),
-  });
+  //   const mutation = useMutation({
+  //     mutationFn: async (data: { updateCatName: string }) =>
+  //       EditCategory(data.updateCatName, categoryId),
+  //     onSuccess: () =>
+  //       queryClient.invalidateQueries({
+  //         queryKey: ["menuPreview"],
+  //         exact: true,
+  //       }),
+  //   });
 
   const [editCatInput, setEditCatInput] = useState("");
 
@@ -46,35 +46,28 @@ const DialogEditCategory: React.FC<EditDialogProps> = ({
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
         <div className="bg-white rounded-lg p-6 max-w-md">
-          <h2 className="text-2xl font-bold m-4 text-black	underline underline-offset-8">
-            編輯種類
-          </h2>
+          <h2 className="text-2xl font-bold mb-4 text-black">注意⚠️</h2>
+          <hr />
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="name"
                 className="block text-base	 mb-1  text-black"
               >
-                {categoryName}
+                <p>
+                  您確定要刪除{" "}
+                  <span className="text-red-500">{categoryName}</span>{" "}
+                  嗎？請注意，一旦刪除，將無法撤銷此操作。{" "}
+                </p>
               </label>
-              <input
-                type="text"
-                id="text"
-                className="w-full rounded border-gray-300 px-3 py-2 text-black mt-7"
-                name="updateCatName"
-                value={editCatInput}
-                onChange={(e) => {
-                  setEditCatInput(e.target.value);
-                }}
-              />
             </div>
 
-            <div className="flex justify-end m-7">
+            <div className="flex justify-end ">
               <button
                 type="submit"
                 className="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
-                  mutation.mutate({ updateCatName: editCatInput });
+                  //   mutation.mutate({ updateCatName: editCatInput });
                   setEditCatInput("");
                 }}
               >
@@ -83,7 +76,7 @@ const DialogEditCategory: React.FC<EditDialogProps> = ({
               <button
                 type="button"
                 onClick={handleClose}
-                className="bg-gradient-to-r from-red-900 to-red-700 text-white px-4 py-2 rounded text-xl	m-2"
+                className="bg-gradient-to-r from-red-900 to-red-700 text-white px-4 py-2 rounded text-xl m-2 "
               >
                 取消
               </button>
@@ -97,4 +90,4 @@ const DialogEditCategory: React.FC<EditDialogProps> = ({
   }
 };
 
-export default DialogEditCategory;
+export default DialogDelCategory;

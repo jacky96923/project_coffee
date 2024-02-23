@@ -6,6 +6,7 @@ export class MenuPreviewController {
   router = express.Router();
   constructor(private menuPreviewService: MenuPreviewService) {
     this.router.post("/menuPreview", this.menuPreview);
+    this.router.put("/updateCategoryName", this.updateCategoryName);
   }
 
   menuPreview = async (req: Request, res: Response) => {
@@ -14,6 +15,7 @@ export class MenuPreviewController {
 
     let menuList: {
       category: {
+        categoryId: number;
         categoryName: string;
         categoryIcon: string;
       };
@@ -29,7 +31,8 @@ export class MenuPreviewController {
     }[] = [];
 
     let result = await this.menuPreviewService.getMenuPreview(shopId);
-    // console.log("result", result);
+
+    console.log("result", result);
 
     // menuList = result
     // for (const menus of result) {
@@ -38,6 +41,7 @@ export class MenuPreviewController {
     if (result && result.length === 2) {
       let menuCategoryItem: {
         category: {
+          categoryId: number;
           categoryName: string;
           categoryIcon: string;
         };
@@ -52,13 +56,14 @@ export class MenuPreviewController {
         }[];
       } = {
         category: {
+          categoryId: 0,
           categoryName: "",
           categoryIcon: "",
         },
         itemsInformation: [],
       };
       const [categoryNameIconList, itemsInformation] = result;
-      console.log("categoryNameIconList", categoryNameIconList);
+      // console.log("categoryNameIconList", categoryNameIconList);
 
       let i = 0;
       for (let category of categoryNameIconList) {
@@ -70,6 +75,8 @@ export class MenuPreviewController {
           i++;
         } else {
           menuCategoryItem.category.categoryName = category.name;
+          menuCategoryItem.category.categoryId = category.id;
+
           // menuCategoryItem.category.categoryIcon = category.icon;
 
           if (itemsInformation[i] && itemsInformation[i].length > 0) {
@@ -98,6 +105,7 @@ export class MenuPreviewController {
 
           menuCategoryItem = {
             category: {
+              categoryId: 0,
               categoryName: "",
               categoryIcon: "",
             },
@@ -109,7 +117,23 @@ export class MenuPreviewController {
     //   menuList.push(menuCategoryItem);
     // }
     const finalResult = menuList;
-    console.log("final Result", finalResult);
+    // console.log("final Result", finalResult);
     res.status(200).json(finalResult);
+  };
+
+  updateCategoryName = async (req: Request, res: Response) => {
+    let updateCatName = req.body.nameInput;
+    // let shopId = Number(req.body.shopId);
+    let categoryId = Number(req.body.categoryId);
+    // console.log("updateCatName", updateCatName);
+    // console.log("shopId", shopId);
+
+    let UpdateCategoryName = await this.menuPreviewService.putCatName(
+      updateCatName,
+      categoryId
+    );
+    // console.log("UpdateCategoryName", UpdateCategoryName);
+
+    res.status(200).json(UpdateCategoryName);
   };
 }
