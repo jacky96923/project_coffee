@@ -27,8 +27,12 @@ export function GetPromotionInfo(shopId: number) {
   return data;
 }
 
-export const uploadPhoto = async (formData: FormData, shopId: number) => {
-  const res = await fetch(`${source}/PromotionInfo/uploads/${shopId}`, {
+export const uploadPhoto = async (formData: FormData) => {
+  // console.log("-------API----formData:");
+  // formData.forEach((value, key) => {
+  //   console.log(key, value);
+  // });
+  const res = await fetch(`${source}/PromotionInfo/uploads`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -38,30 +42,3 @@ export const uploadPhoto = async (formData: FormData, shopId: number) => {
 
   return await res.json();
 };
-
-// export function UploadPromotionInfo(formData: FormData) {
-//   const { isLoading, error, data, isFetching } = useQuery({
-//     queryKey: ["uploadPromotionInfo"],
-//     queryFn: async () => {
-//       const res = await fetch(`${source}/PromotionInfo/uploads/${shopId}`, {
-//         method: "POST",
-//         body: formData,
-//       });
-//       const result = await res.json();
-//       console.log("-------PromoInfoUploadSuccess---------", result);
-//       return result;
-//     },
-//   });
-
-//   if (isLoading || isFetching) return "Sending ...";
-
-//   if (error) {
-//     return "Error occured";
-//   }
-
-//   if (!data) {
-//     return "Upload Failed";
-//   }
-
-//   return data;
-// }

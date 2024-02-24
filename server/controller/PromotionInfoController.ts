@@ -10,7 +10,7 @@ export class PromotionInfoController {
   router = express.Router();
   public constructor(private promotionInfoService: PromotionInfoService) {
     this.router.get("/getPromotionInfo/:id", this.getPromotionInfo);
-    this.router.post("/uploads/:id", isLoggedIn, this.uploadPromotionInfo);
+    this.router.post("/uploads", isLoggedIn, this.uploadPromotionInfo);
   }
 
   getPromotionInfo = async (req: Request, res: Response) => {
@@ -29,6 +29,7 @@ export class PromotionInfoController {
 
   uploadPromotionInfo = async (req: Request, res: Response) => {
     const form = new formidable.IncomingForm();
+    console.log("controller Check form", form);
     console.log("business id is ", req.body.user_id);
     let shopId = req.body.user_id;
 
