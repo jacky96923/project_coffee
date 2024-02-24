@@ -91,13 +91,18 @@ const MainContent = () => {
 
   // itemDel State
   const [itemDel, setItemDel] = useState(false);
-  const ItemDelClick = (targetItemId: number, targetItemName: string) => {
+  const ItemDelClick = (
+    targetItemId: number,
+    targetItemName: string,
+    targetCatId: number
+  ) => {
+    setOriginalCatId(targetCatId);
     setOriginalItemId(targetItemId);
     setOriginalItemName(targetItemName);
     setItemDel(true);
   };
   const ItemDelDialogClose = () => {
-    setCatDel(false);
+    setItemDel(false);
   };
 
   // itemAdd State
@@ -122,19 +127,6 @@ const MainContent = () => {
             <div className="p-3 w-30 m-5 text-2xl font-bold ">類別</div>
             <button onClick={() => CatAddClick()}>
               <IoIosAddCircle className="size-12  " />
-
-              {/* <button
-                            className=""
-                            onClick={() =>
-                              CatEditClick(
-                                cat.category.categoryId,
-                                cat.category.categoryName
-                              )
-                            }
-                          >
-                          </button> */}
-
-              {/* {catAdd && <DialogAddCategory onClose={CatAddDialogClose} />} */}
             </button>
           </div>
 
@@ -221,7 +213,13 @@ const MainContent = () => {
                               </div>
 
                               <button
-                                onClick={() => ItemDelClick(item.id, item.name)}
+                                onClick={() =>
+                                  ItemDelClick(
+                                    item.id,
+                                    item.name,
+                                    cat.category.categoryId
+                                  )
+                                }
                               >
                                 <div className="ml-2">
                                   <IoClose className="m-3 size-7 absolute top-0 right-1" />
