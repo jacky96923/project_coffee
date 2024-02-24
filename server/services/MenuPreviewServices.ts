@@ -113,4 +113,16 @@ export class MenuPreviewService {
       return { message: "delete failed" };
     }
   }
+  async deleteItem(itemId: number, categoryId: number) {
+    try {
+      await this.knex.raw(
+        "DELETE FROM category_item_relation WHERE item_id = ? AND category_id = ??",
+        [itemId, categoryId]
+      );
+      return { message: "delete succeed" };
+    } catch (error) {
+      console.log(error);
+      return { message: "delete failed" };
+    }
+  }
 }
