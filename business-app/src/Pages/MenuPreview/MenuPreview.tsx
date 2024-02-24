@@ -8,7 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { GetMenuPreview } from "../../hooks/MenuPreviewAPI";
 import DialogEditCategory from "../../component/DialogEditCategory";
 import DialogAddCategory from "../../component/DialogAddCategory";
-import DialogDelCategory from "../../component/DailogDelCategory";
+import DialogDelCategory from "../../component/DialogDelCategory";
 
 // Header component
 const Header = () => {
@@ -84,6 +84,18 @@ const MainContent = () => {
   const CatDelDialogClose = () => {
     setCatDel(false);
   };
+
+  // itemDel State
+  const [itemDel, setItemDel] = useState(false);
+  const ItemDelClick = (targetCatId: number, targetCatName: string) => {
+    setOriginalCatId(targetCatId);
+    setOriginalCatName(targetCatName);
+    setItemDel(true);
+  };
+  const ItemDelDialogClose = () => {
+    setCatDel(false);
+  };
+
   // itemAdd State
   // const [itemAdd, setItemAdd] = useState(false);
   // const itemAddClick = () => {

@@ -61,9 +61,14 @@ export default function PromotionInfo() {
     }
   };
 
-  // const mutation = useMutation((formData: FormData) => uploadPhoto(formData), {
-  //   onSuccess: () => queryClient.invalidateQueries(["getPromotionInfo"]),
-  // });
+  const mutation = useMutation({
+    mutationFn: async (formData: FormData) => uploadPhoto(formData),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["getPromotionInfo"],
+        exact: true,
+      }),
+  });
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,7 +77,7 @@ export default function PromotionInfo() {
       formData.append("logoFile", logoSelectedFile);
       formData.append("bannerFile", bannerSelectedFile);
       formData.append("description", description);
-      // mutation.mutate(formData);
+      mutation.mutate(formData);
     } else {
       alert("please upload all the files");
     }

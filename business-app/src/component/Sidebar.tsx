@@ -7,8 +7,12 @@ import {
   FaCommentDots,
 } from "react-icons/fa";
 import { BiSolidFoodMenu } from "react-icons/bi";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="sidebar bg-white text-black w-60 h-screen shadow">
@@ -29,7 +33,7 @@ export default function Sidebar() {
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex">
+            <div className="flex" onClick={() => navigate("/AllItem")}>
               <FaCoffee className="size-6" />
               <h3 className="ml-3">所有商品</h3>
             </div>
@@ -47,7 +51,7 @@ export default function Sidebar() {
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex">
+            <div className="flex" onClick={() => navigate("/PromotionInfo")}>
               <FaCog className="size-6" />
               <h3 className="ml-3">推廣資料</h3>
             </div>
