@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../../slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./BusinessLoginPage.module.css";
+import { jwtDecode } from "jwt-decode";
 
 const source = "http://localhost:8100";
 
@@ -46,8 +47,22 @@ export default function BusinessLoginPage() {
     e.preventDefault();
 
     try {
+      // if (result) {
+      //   let decoded: { id: number; username: string, type: string } = jwtDecode(
+      //     localStorage.getItem("token")!
+      //   );
+      //   dispatch(login({user: decoded.username, user_id: decoded.id, type: decoded.type}));
+      //   navigate("/main")
+      // } 
       const data = await postLogin(usernameInput, passwordInput);
-      console.log("Login successful:", data);
+      if (data){
+        console.log("Login successful:", data);
+        let decoded: { id: number; username: string, type: string } = jwtDecode(
+          localStorage.getItem("token")!
+        );
+        dispatch(login({shop: decoded.username, shop_id: decoded.id, type: decoded.type}));
+      //   navigate("/main")
+      }
 
       // Dispatch the login action with the received data
       dispatch(login(data));

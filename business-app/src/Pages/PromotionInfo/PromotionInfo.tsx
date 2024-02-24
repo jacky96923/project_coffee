@@ -12,7 +12,7 @@ export default function PromotionInfo() {
   // let shopID: string;
   const queryClient = useQueryClient();
 
-  const shopId: any = useSelector<RootState>((state) => state.auth.id);
+  const shopId: any = useSelector<RootState>((state) => state.auth.shop_id);
   console.log("check shopID", shopId);
 
   const promotionInfo = GetPromotionInfo(shopId);

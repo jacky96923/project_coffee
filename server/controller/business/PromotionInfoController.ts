@@ -1,10 +1,9 @@
 import express, { Request, Response } from "express";
-import { Upload } from "@aws-sdk/lib-storage";
-import { PromotionInfoService } from "../services/PromotionInfoService";
+import { PromotionInfoService } from "../../services/business/PromotionInfoService";
 import formidable from "formidable";
-import { bucketName, s3 } from "../utils/s3upload";
+import { bucketName, s3 } from "../../utils/s3upload";
 import fs from "fs";
-import { isLoggedIn } from "../utils/guard";
+import { isLoggedIn } from "../../utils/guard";
 
 export class PromotionInfoController {
   router = express.Router();

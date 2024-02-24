@@ -18,8 +18,8 @@ const io = new SocketIO(server, {
 });
 
 app.use(cors());
-import { StripeService } from "./services/StripeService";
-import { StripeController } from "./controller/StripeController";
+import { StripeService } from "./services/client/StripeService";
+import { StripeController } from "./controller/client/StripeController";
 // Stripe Setup
 const stripeService = new StripeService(knex);
 const stripeController = new StripeController(stripeService);
@@ -35,27 +35,29 @@ import {
 } from "./controller/AuthController";
 
 // Client-app
-import { ShopController } from "./controller/ShopController";
-import { ShopService } from "./services/ShopService";
+import { ShopController } from "./controller/client/ShopController";
+import { ShopService } from "./services/client/ShopService";
 import { ItemPageController } from "./controller/client/ItemPageController";
-import { ItemPageService } from "./services/ItemPageService";
-import { OptionSlideService } from "./services/OptionSlideService";
+import { ItemPageService } from "./services/client/ItemPageService";
+import { OptionSlideService } from "./services/client/OptionSlideService";
 import { OptionSlideController } from "./controller/client/OptionSlideController";
-import { MenuIdService } from "./services/MenuService";
+import { MenuIdService } from "./services/client/MenuService";
 import { MenuController } from "./controller/client/MenuController";
-import { CommentsController } from "./controller/CommentsController";
-import { CommentService } from "./services/CommentService";
 
 // Business-app
-import { BusinessAuthService, UserAuthService } from "./services/AuthService";
-import { MenuPreviewController } from "./controller/business/MenuPreviewController";
+import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
-import { PromotionInfoService } from "./services/PromotionInfoService";
-import { PromotionInfoController } from "./controller/PromotionInfoController";
-import { DialogAddCategoryController } from "./controller/DialogAddCategoryController";
-import { DialogAddCategoryService } from "./services/DialogAddCategoryService";
+import { PromotionInfoService } from "./services/business/PromotionInfoService";
+import { PromotionInfoController } from "./controller/business/PromotionInfoController";
+import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
+import { DialogAddCategoryService } from "./services/business/DialogAddCategoryService";
+
+// Both Client & Business
+import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
+import { CommentsController } from "./controller/CommentsController";
+import { CommentService } from "./services/CommentService";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -87,24 +89,22 @@ const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-const promotionInfoService = new PromotionInfoService(knex);
-const promotionInfoController = new PromotionInfoController(
-  promotionInfoService
-);
+// const promotionInfoService = new PromotionInfoService(knex);
+// const promotionInfoController = new PromotionInfoController(promotionInfoService);
 
-// Route Setup
-// Route Setup (Client)
+// Route Setup (Client & Business)
 app.use("/auth", userAuthController.router);
+app.use("/comments", commentsController.router);
 
+// Route Setup (Client)
 app.use("/shops", shopController.router);
 app.use("/itemPage", itemPageController.router);
 app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/receipt", receiptController.router);
-app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
-app.use("/PromotionInfo", promotionInfoController.router);
+// app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 
 // Route Setup (Business)

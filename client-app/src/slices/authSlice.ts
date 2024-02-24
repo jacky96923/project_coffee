@@ -4,10 +4,10 @@ import { jwtDecode } from "jwt-decode";
 type loginType = {
   user: string | undefined;
   user_id: number | undefined;
-  isAuthenticated: boolean
+  isAuthenticated: string | undefined
 };
 
-let decoded: { id: number; username: string } | undefined;
+let decoded: { id: number; username: string; type: string } | undefined;
 if (localStorage.getItem("token")) {
   decoded = jwtDecode(localStorage.getItem("token")!);
 }
@@ -15,18 +15,18 @@ if (localStorage.getItem("token")) {
 const initialState: loginType = {
   user: decoded?.username || undefined,
   user_id: decoded?.id || undefined,
-  isAuthenticated: localStorage.getItem('token') !== null,
+  isAuthenticated: decoded?.type || undefined
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<{user: string, user_id: number}>) => {
-      const {user, user_id} = action.payload;
+    login: (state, action: PayloadAction<{user: string, user_id: number, type: string}>) => {
+      const {user, user_id, type} = action.payload;
       state.user = user
       state.user_id = user_id
-      state.isAuthenticated = true
+      state.isAuthenticated = type
       console.log("user in redux", state.user)
       console.log("userID in redux", state.user_id)
     },
@@ -34,7 +34,7 @@ export const authSlice = createSlice({
       state.user = undefined
       state.user_id = undefined
       localStorage.clear()
-      state.isAuthenticated = false
+      state.isAuthenticated = undefined
     }
   },
 });

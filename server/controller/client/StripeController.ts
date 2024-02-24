@@ -1,9 +1,9 @@
 import express, { Request, Response } from "express";
-import { StripeService } from "../services/StripeService";
+import { StripeService } from "../../services/client/StripeService";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import Stripe from "stripe";
-import { isLoggedIn } from "../utils/guard";
+import { isLoggedIn } from "../../utils/guard";
 
 dotenv.config()
 

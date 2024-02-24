@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox, Input, Button } from "@material-tailwind/react";
-import styles from "./BusinessChooseShopOpenTime.module.css";
+import styles from "./ShopOpenTime.module.css";
 import { useMutation } from "@tanstack/react-query";
 export function BusinessChooseShopOpenTime() {
   const weekdays = [
