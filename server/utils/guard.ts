@@ -10,6 +10,7 @@ const permit = new Bearer({
 type UserType = {
   id: number;
   username: string;
+  type: string;
   password: string;
 };
 
@@ -30,6 +31,7 @@ export function isLoggedIn(req: Request, res: Response, next: NextFunction) {
     );
 
     req.body.user_id = decoded.id;
+    req.body.type = decoded.type;
 
     console.log("Check decoded", decoded);
 

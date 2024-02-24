@@ -32,6 +32,8 @@ import { StripeController } from "./controller/StripeController";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
+import { PromotionInfoService } from "./services/PromotionInfoService";
+import { PromotionInfoController } from "./controller/PromotionInfoController";
 
 // Database Connection Setup
 const knexConfig = require("./knexfile");
@@ -64,6 +66,12 @@ const menuPreviewController = new MenuPreviewController(menuPreviewService);
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
+//ForPromotionInfo
+const promotionInfoService = new PromotionInfoService(knex);
+const promotionInfoController = new PromotionInfoController(
+  promotionInfoService
+);
+
 // Route Setup
 app.use("/auth", userAuthController.router);
 app.use("/auth", businessAuthController.router);
@@ -74,6 +82,7 @@ app.use("/menus", menuController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
+app.use("/PromotionInfo", promotionInfoController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 
