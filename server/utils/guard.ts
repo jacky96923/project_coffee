@@ -24,7 +24,7 @@ export function isLoggedIn(req: Request, res: Response, next: NextFunction) {
     if (!token) {
       throw Error();
     }
-    console.log("hihihihi");
+    console.log("isLoggedIn before decode");
     const decoded: Omit<UserType, "password"> = jwtSimple.decode(
       token,
       jwt.jwtSecret

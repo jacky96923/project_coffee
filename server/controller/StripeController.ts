@@ -1,7 +1,11 @@
 import express, { Request, Response } from "express";
 import { StripeService } from "../services/StripeService";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import Stripe from "stripe";
+import { isLoggedIn } from "../utils/guard";
+
+dotenv.config()
 
 if (!process.env.STRIPE_SECRET || !process.env.STRIPE_ENDPOINT) {
     throw Error("you have to fill in STRIPE_SECRET and STRIPE_ENDPOINT .env file");
@@ -15,7 +19,7 @@ export class StripeController {
   router = express.Router();
   public constructor(private stripeService: StripeService) {
     this.router.post("/webhook", bodyParser.raw({ type: "application/json" }), this.postWebhook);
-    this.router.post("/create-checkout-session", this.getCheckout)
+    this.router.post("/create-checkout-session",express.json(), isLoggedIn, this.getCheckout)
   }
 
   postWebhook = async (req: Request, res: Response) => {
@@ -51,9 +55,10 @@ export class StripeController {
     // 1. details of all orders stored in an array
     // 2. userid --- should check whether there is a valid token before sending request
     console.log("check req.body", req.body);
-    let {user_id, cart} = req.body
+    let {shop_id, user_id, cart, pickupTime, total} = req.body
+
     
-    let createTransactionResult: any = await this.stripeService.createTransaction(user_id)
+    let createTransactionResult: any = await this.stripeService.createTransaction(user_id, shop_id, pickupTime, total)
   
     let transaction_id = createTransactionResult[0].id;
     console.log("check transaction_id", transaction_id);
@@ -61,7 +66,7 @@ export class StripeController {
     let line_items = [];
   
     for (let entry of cart) {
-      await this.stripeService.createOrder(transaction_id, entry)
+      await this.stripeService.createOrder(shop_id, transaction_id, entry)
   
       let item = {
         price_data: {
@@ -87,14 +92,14 @@ export class StripeController {
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
       mode: "payment",
-      success_url: `http://localhost:3000/receipt/temp`, // port need to take care
-      cancel_url: `http://localhost:3000/shopping-cart`, // port need to take care 
+      success_url: `http://localhost:3000/receipt/${transaction_id}`, // port need to take care
+      cancel_url: `http://localhost:3000/shoppingCart`, // port need to take care 
       payment_intent_data: {
         metadata: metadata,
       },
     });
   
     if (session.url) res.json({ url: session.url });
-    else res.json({ url: "http://localhost:3000/shopping-cart" });
+    else res.json({ url: "http://localhost:3000/shoppingCart" });
   }
 }

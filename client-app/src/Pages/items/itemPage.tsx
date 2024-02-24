@@ -28,6 +28,7 @@ export default function ItemPage() {
     | {
         optionList: any;
         itemState: Array<{
+          shopId: number;
           shopName: string;
           address: string;
           id: number;
@@ -48,11 +49,12 @@ export default function ItemPage() {
       const firstValues = allOptions.optionState.map((optionItem) => {
         const firstOptionList = optionItem.optionListName;
         const firstOption = optionItem.options[0];
-        console.log("Check firstOptions", { firstOptionList, firstOption });
+        //console.log("Check firstOptions", { firstOptionList, firstOption });
         return { firstOptionList, firstOption };
       });
       dispatch(
         setInitialItems({
+          shopId: allOptions.itemState[0].shopId,
           shopName: allOptions.itemState[0].shopName,
           address: allOptions.itemState[0].address,
           id: allOptions.itemState[0].id,
@@ -115,18 +117,18 @@ export default function ItemPage() {
   const getSelectedOption = useSelector(
     (state: RootState) => state.itemPage.item.optionList
   );
-  console.log("getSelected default", getSelectedOption);
+  //console.log("getSelected default", getSelectedOption);
   
   useEffect(() => {
     let displayOption: {optionListName: string, optionName: string}[] = [];
     getSelectedOption.forEach((entry) => {
       displayOption.push({optionListName: entry.optionListName, optionName: entry.option.option_name});
     });
-    console.log("displayOption", displayOption)
+    //console.log("displayOption", displayOption)
     setSelectedOptions(displayOption);
-    console.log("ItemPageOptions Selected", selectedOptions);
+    //console.log("ItemPageOptions Selected", selectedOptions);
   }, [getSelectedOption]);
-  console.log("selected outside useEffect", selectedOptions)
+  //console.log("selected outside useEffect", selectedOptions)
 //
   function sizeHandler(size: string) {
     setSelectedSize(size);
@@ -198,7 +200,7 @@ export default function ItemPage() {
           </div>
           <div className={styles.itemCard}>
             <div className={styles.itemDetails}>
-              <div className={styles.itemDiscription}>
+              <div className={styles.itemDescription}>
                 <div className={styles.itemh2}>關於此產品</div>
                 <hr className={styles.divider} />
                 <div className={styles.itemh3}>
@@ -207,7 +209,7 @@ export default function ItemPage() {
                     : items.itemInfo[0].description}
                 </div>
               </div>
-              <div className={styles.itemDiscription}>
+              <div className={styles.itemDescription}>
                 {typeof items === "string" ? (
                   ""
                 ) : items.itemInfo.length > 1 ? (
@@ -275,7 +277,7 @@ export default function ItemPage() {
                 </button>
               </div>
               <button
-                className="btn rounded-full  bg-yellow-900 px-28"
+                className="btn rounded-full bg-yellow-900 px-28"
                 onClick={handleAddToCart}
               >
                 <div className={styles.addItemContent}>

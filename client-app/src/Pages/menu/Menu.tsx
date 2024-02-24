@@ -21,26 +21,27 @@ export default function Menu() {
   const result:
     | string
     | {
-      categoryItemList: {
-        categoryName: string;
-        itemsInformation: {
-          id: number;
-          name: string;
-          item_photo: string;
-          price: number;
-          description: string;
-          shop_id: number;
+        categoryItemList: {
+          categoryName: string;
+          itemsInformation: {
+            id: number;
+            name: string;
+            item_photo: string;
+            price: number;
+            description: string;
+            shop_id: number;
+          }[];
         }[];
-      }[];
-      shopInformation: {
-        data: Array<{
-          id: number;
-          shop_name: string;
-          address: string;
-        }>;
-      };
-    } = GetMenuPage(parseInt(url.charAt(url.length - 1)));
+        shopInformation: {
+          data: Array<{
+            id: number;
+            shop_name: string;
+            address: string;
+          }>;
+        };
+      } = GetMenuPage(parseInt(url.charAt(url.length - 1)));
   console.log("result", result);
+
   let categoryNameList: { categoryName: string }[] = [];
   let itemsInformationList: {
     category: string;
@@ -83,7 +84,7 @@ export default function Menu() {
         <div className="flex justify-around">
           <div className="flex">
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate("/shopSelection")}
               className={`self-center btn btn-circle btn-sm`}
             >
               <ChevronLeftIcon className="h-5 w-5 text-black" />
@@ -92,7 +93,7 @@ export default function Menu() {
             {typeof result === "string"
               ? ""
               : result.shopInformation.data.length > 0
-                ? result.shopInformation.data.map((shop) => (
+              ? result.shopInformation.data.map((shop) => (
                   <div>
                     <div className="m-2 text-sm	font-bold	">
                       <h1>{shop.shop_name}</h1>
@@ -102,7 +103,7 @@ export default function Menu() {
                     </div>
                   </div>
                 ))
-                : "No shop information"}
+              : "No shop information"}
           </div>
           <div className="flex m-2">
             <div className="m-2 ">
@@ -110,11 +111,11 @@ export default function Menu() {
                 評論區
               </span>
             </div>
-            <div>
+            {/* <div>
               <div className="m-2 w-6">
                 <PhoneIcon />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <hr className="mt-3" />
@@ -130,60 +131,62 @@ export default function Menu() {
 
         {typeof result !== "string"
           ? result.categoryItemList.map((cat) => (
-            <>
-              <hr />
-              <div className="m-5 font-bold">{cat.categoryName}</div>
-              <div>
-                {cat.itemsInformation.map((item) => {
-                  const itemPageHandle = () => {
-                    navigate(`/itemPage/${item.id}`);
-                  };
+              <div id={cat.categoryName}>
+                <hr />
+                <div className="m-5 font-bold">{cat.categoryName}</div>
+                <div>
+                  {cat.itemsInformation.map((item) => {
+                    const itemPageHandle = () => {
+                      navigate(`/itemPage/${item.id}`);
+                    };
 
-                  return (
-                    <div
-                      key={item.id}
-                      style={{
-                        display: "grid",
-                        border: "1px solid grey",
-                        margin: "20px",
-                        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-                        borderRadius: "10px",
-                        width: "auto",
-                        height: "10rem",
-                      }}
-                      onClick={itemPageHandle}
-                    >
-                      <div className="flex items-center justify-center m-2">
-                        <img
-                          className="rounded-md w-40 h-32"
-                          src={item.item_photo}
-                          alt={item.name}
-                        />
+                    return (
+                      <div
+                        key={item.id}
+                        style={{
+                          display: "grid",
+                          // border: "1px solid grey",
+                          margin: "20px",
+                          gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                          borderRadius: "10px",
+                          width: "auto",
+                          height: "10rem",
+                          // filter: "drop-shadow(0 0 0.75rem)"
+                        }}
+                        className="shadow-xl"
+                        onClick={itemPageHandle}
+                      >
+                        <div className="flex items-center justify-center m-2">
+                          <img
+                            className="rounded-md w-40 h-32"
+                            src={item.item_photo}
+                            alt={item.name}
+                          />
+                        </div>
+                        <div className="flex flex-col overflow-hidden m-2">
+                          <span className="text-base m-2 font-bold">
+                            {item.name}
+                          </span>
+                          <span className="text-xs m-2 truncate">
+                            {item.description}
+                          </span>
+                          <span className="text-xs m-2 flex justify-end">
+                            ${item.price}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex flex-col overflow-hidden">
-                        <span className="text-base m-2 font-bold">
-                          {item.name}
-                        </span>
-                        <span className="text-xs m-2 truncate">
-                          {item.description}
-                        </span>
-                        <span className="text-xs m-2 flex justify-end">
-                          ${item.price}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </>
-          ))
+            ))
           : ""}
 
-        <div className="flex justify-center m-10 bg-black text-white rounded-xl fixed bottom-0 left-0 right-0 h-auto">
-          <button className="m-3" onClick={() => navigate("/shopping-cart")}>
+        {/* <div className="flex justify-center m-10 bg-black text-white rounded-xl fixed bottom-0 left-0 right-0 h-auto">
+          <button className="m-3" onClick={() => navigate("/shoppingCart")}>
             檢視購物車
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import Search from "../../components/Search";
 
-import MainBottomNavBar from "../../components/BottomNavBar";
 import ShopDisplaying from "../../components/shopDisplaying";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
@@ -12,7 +11,7 @@ export default function ShopSelection() {
     <div className="relative overflow-hidden bg-white m-9">
       <div className="flex">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
           className={`self-center btn btn-circle btn-sm`}
         >
           <ChevronLeftIcon className="h-5 w-5 text-black" />
@@ -31,7 +30,6 @@ export default function ShopSelection() {
       <br />
       <br />
       <ShopDisplaying />
-      <MainBottomNavBar />
     </div>
   );
 }

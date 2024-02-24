@@ -2,9 +2,7 @@ import { Knex } from "knex";
 
 export class MenuPreviewService {
   constructor(private knex: Knex) {}
-  table() {
-    return this.knex("menuPreview");
-  }
+
   async getMenuPreview(shopId: number) {
     try {
       let categoryIdList = await this.knex
@@ -14,12 +12,12 @@ export class MenuPreviewService {
         .join("shops", "shops.id", "menu.shop_id")
         .where("shops.id", shopId);
 
-      //   console.log("categoryIdList", categoryIdList);
+      // console.log("categoryIdList", categoryIdList);
 
-      let categoryNameList = [];
+      let categoryNameIconList = [];
       for (let categoryId of categoryIdList) {
         let categoryName = await this.knex
-          .select("category.name", "category.icon")
+          .select("category.id", "category.name", "category.icon")
           .from("category_active_time")
           .rightOuterJoin(
             "category",
@@ -30,8 +28,9 @@ export class MenuPreviewService {
           .where("category.id", categoryId.category_id);
         // console.log("categoryName", categoryName);
 
-        categoryNameList.push(categoryName);
+        categoryNameIconList.push(categoryName[0]);
       }
+      // console.log("categoryNameIconList", categoryNameIconList);
 
       let itemList = [];
       for (let categoryId of categoryIdList) {
@@ -56,12 +55,25 @@ export class MenuPreviewService {
             this.where("item.size", "小杯").orWhereNull("item.size");
           })
           .where("category.id", categoryId.category_id);
-        console.log("itemsInformation", itemsInformation);
+        // console.log("itemsInformation", itemsInformation);
 
         itemList.push(itemsInformation);
       }
+      // console.log("itemList", itemList);
 
-      return [categoryIdList, categoryNameList, itemList];
+      return [categoryNameIconList, itemList];
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
+  async putCatName(updateCatName: string, categoryId: number) {
+    try {
+      const result = await this.knex("category")
+        .where("category.id", categoryId)
+        .update({ name: updateCatName });
+      return result;
     } catch (error) {
       console.log(error);
       return false;

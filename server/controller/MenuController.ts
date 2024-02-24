@@ -22,7 +22,7 @@ export class MenuController {
   // ------------------------------------------------------------------------------
   categoryItem = async (req: Request, res: Response) => {
     const categoryIdList = req.body.categoryIdList;
-    // const categoryNameList: string[] = [];
+
     const categoryItemList: {
       categoryName: string;
       itemsInformation: {
@@ -38,7 +38,7 @@ export class MenuController {
     for (const category of categoryIdList) {
       const categoryId = category.category_id;
       const result = await this.menuService.getCategoryItem(categoryId);
-      // console.log("result", result);
+      console.log("result", result);
 
       const categoryItem: {
         categoryName: string;
@@ -58,11 +58,10 @@ export class MenuController {
       if (result && result.length === 2) {
         const [categoryName, itemsInformation] = result;
         // console.log("categoryName", categoryName);
-        // console.log(
-        //   "-------------------------------------------------------------------------------"
-        // );
         // console.log("itemsInformation", itemsInformation);
         // console.log("result", result);
+
+        // Take off the duplicate name
         if (
           categoryItemList.find(
             (category) => category.categoryName === categoryName[0].name
@@ -85,7 +84,7 @@ export class MenuController {
           }[];
         }
       }
-      console.log("categoryItem", categoryItem);
+      //console.log("categoryItem", categoryItem);
       categoryItemList.push(categoryItem);
     }
     // console.log("categoryItemList", categoryItemList);

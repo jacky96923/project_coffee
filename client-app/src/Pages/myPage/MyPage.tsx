@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import MainBottomNavBar from "../../components/BottomNavBar";
 import MySetting from "../../components/MySetting";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export default function MyPage() {
+  const userName = useSelector((state:RootState)=>state.auth.user)
   return (
     <>
       <div className="m-8">
@@ -13,11 +16,10 @@ export default function MyPage() {
               <ChevronLeftIcon />
             </div>
           </Link>
-          <div className="m-2 font-bold text-2xl">Mic Wong</div>
+          <div className="m-2 font-bold text-2xl">{userName}</div>
         </div>
         <MySetting />
       </div>
-      <MainBottomNavBar />
     </>
   );
 }

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface ItemCheckOutState {
+  shopId: number;
   shopName: string;
   address: string;
   item: {
@@ -20,6 +21,7 @@ export interface ItemCheckOutState {
 }
 
 export const initialState = {
+  shopId: 0,
   shopName: "",
   address: "",
   item: {
@@ -40,6 +42,7 @@ export const itemPageSlice = createSlice({
     setInitialItems: (
       state: ItemCheckOutState,
       action: PayloadAction<{
+        shopId: number;
         shopName: string;
         address: string;
         id: number;
@@ -54,6 +57,7 @@ export const itemPageSlice = createSlice({
       }>
     ) => {
       const {
+        shopId,
         shopName,
         address,
         id,
@@ -63,6 +67,7 @@ export const itemPageSlice = createSlice({
         price,
         optionList,
       } = action.payload;
+      state.shopId = shopId;
       state.shopName = shopName;
       state.address = address;
       state.item.id = id;
@@ -122,10 +127,11 @@ export const itemPageSlice = createSlice({
 
     itemCheckOut: (state: ItemCheckOutState) => {
       let shoppingCart: {
+        shopId: number;
         shopName: string;
         address: string;
         itemList: {
-          id: number;
+          item_id: number;
           name: string;
           item_photo: string;
           size: string;
@@ -140,10 +146,11 @@ export const itemPageSlice = createSlice({
       } | null = JSON.parse(localStorage.getItem("shoppingCart") || "null");
 
       if (shoppingCart != null) {
+        shoppingCart.shopId = state.shopId;
         shoppingCart.shopName = state.shopName;
         shoppingCart.address = state.address;
         shoppingCart.itemList.push({
-          id: state.item.id,
+          item_id: state.item.id,
           name: state.item.name,
           item_photo: state.item.item_photo,
           size: state.item.size,
@@ -154,11 +161,12 @@ export const itemPageSlice = createSlice({
         });
       } else {
         shoppingCart = {
+          shopId: state.shopId,
           shopName: state.shopName,
           address: state.address,
           itemList: [
             {
-              id: state.item.id,
+              item_id: state.item.id,
               name: state.item.name,
               item_photo: state.item.item_photo,
               size: state.item.size,

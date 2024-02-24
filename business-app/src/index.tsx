@@ -7,19 +7,21 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+
+export const queryClient = new QueryClient();
+
 const rootElement = document.getElementById("root") as HTMLElement; // Non-null assertion here
 const root = ReactDOM.createRoot(rootElement);
 
-export const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
           <App />
-        </BrowserRouter>
-      </Provider>
-    </QueryClientProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

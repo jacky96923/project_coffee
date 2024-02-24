@@ -1,9 +1,16 @@
 import { Textarea } from "@material-tailwind/react";
 import React, { useState, useEffect } from "react";
 import styles from "./CommentPage.module.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export function CommentPage() {
+  const { transactionId } = useParams()
+  const userName = useSelector((state:RootState)=>state.auth.user)
+  const shopName = localStorage.getItem("commentingShop")
+  const shopId = localStorage.getItem("shopId")
   const [comment, setComment] = useState("");
   const [star, setStar] = useState("0");
   const navigate = useNavigate();
@@ -12,12 +19,14 @@ export function CommentPage() {
     setComment(event.target.value);
   };
 
-  const handleRatingChange = (        event: { target: { value: React.SetStateAction<string>; }; }) => {
+  const handleRatingChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setStar(event.target.value);
   };
 
   const crossSubmit = () => {
     navigate('/CommentSummary');
+    localStorage.removeItem("commentingShop")
+    localStorage.removeItem("shopId")
   };
 
   const handleSubmit = async () => {
@@ -26,10 +35,12 @@ export function CommentPage() {
 
     // Save data to local storage
     const formData = {
+      shopId: Number(shopId),
+      transactionId: Number(transactionId),
       rating: star,
       description: comment
     };
-    localStorage.setItem("commentFormData", JSON.stringify(formData));
+    // localStorage.setItem("commentFormData", JSON.stringify(formData));
 
     try {
       // Perform your fetch operation here
@@ -45,6 +56,8 @@ export function CommentPage() {
         throw new Error("Network response was not ok");
       } else {
         console.log("Submission successful!");
+        localStorage.removeItem("commentingShop")
+        localStorage.removeItem("shopId")
         navigate('/CommentSummary');
       }
     } catch (error) {
@@ -53,45 +66,35 @@ export function CommentPage() {
     }
   };
 
-  useEffect(() => {
-    // Retrieve form data from local storage when component mounts
-    const storedFormData = localStorage.getItem("commentFormData");
-    if (storedFormData) {
-      const { rating, description } = JSON.parse(storedFormData);
-      setStar(rating);
-      setComment(description);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Retrieve form data from local storage when component mounts
+  //   const storedFormData = localStorage.getItem("commentFormData");
+  //   if (storedFormData) {
+  //     const { rating, description } = JSON.parse(storedFormData);
+  //     setStar(rating);
+  //     setComment(description);
+  //   }
+  // }, []);
 
   return (
     <div className={styles.container}>
-      <div className="{styles.relative w-[32rem]}">
-        <div className="relative w-[32rem] flex justify-end">
-          <button className="btn btn-circle btn-outline" onClick={crossSubmit}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+      <div>
+        <div className="flex my-5">
+          <button
+            onClick={() => navigate(-1)}
+            className={`self-center btn btn-circle btn-sm ml-2`}
+          >
+            <ChevronLeftIcon className="h-5 w-5 text-black" />
           </button>
         </div>
 
-        <h2>你好，Maggie</h2>
+        <h2>你好，{userName}</h2>
         <h3>您的寶貴意見，是我們不斷進步的動力！</h3>
-        <h4>請為 Blue Bottle Coffee 評分</h4>
+        <h4>請為<span className="font-bold">{shopName}</span>評分</h4>
         <div className="center-content">
           <div className="rating rating-md">
             <input
-               key="0"
+              key="0"
               type="radio"
               name="rating"
               className="hidden"
@@ -115,18 +118,18 @@ export function CommentPage() {
         </div>
 
         <Textarea
-  className="a" // Add this line
-  style={{ paddingTop: "1rem", width: "75%"}}
-  placeholder="請留下你的寶貴意見！"
-  rows={15}
-  onChange={handleCommentChange}
-/>
+          className="a" // Add this line
+          style={{ paddingTop: "1rem", width: "75%" }}
+          placeholder="請留下你的寶貴意見！"
+          rows={15}
+          onChange={handleCommentChange}
+        />
 
 
         <div className="flex flex-col items-center py-1.5  absolute fixed z-0 mx-auto inset-x-0">
-<button className="btn btn-wide" onClick={handleSubmit} style={{ position: "relative" }}>
-  提交
-</button>
+          <button className="btn btn-wide" onClick={handleSubmit} style={{ position: "relative" }}>
+            提交
+          </button>
         </div>
       </div>
     </div>

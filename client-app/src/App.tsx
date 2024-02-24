@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import {
@@ -12,8 +12,8 @@ import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
-import { CommentPage } from "./Pages/Comments/CommentPage";
-import { CommentSummary } from "./Pages/Comments/CommentSummary";
+import { CommentPage } from "./Pages/comments/CommentPage";
+import { CommentSummary } from "./Pages/comments/CommentSummary";
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
@@ -26,12 +26,34 @@ import ItemPage from "./Pages/items/itemPage";
 import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
+import BottomNavBar from "./components/BottomNavBar";
 
 function App() {
-  const user = useSelector<RootState>((state) => state.auth.user);
+  // const hideNavBarRoutes = ['/itemPage/'];
+  // const [currentPath, setCurrentPath] = useState("");
+  // const [shouldHideNavBar, setShouldHideNavBar] = useState(false)
+  // if (currentPath !== window.location.pathname){
+  //   setCurrentPath(window.location.pathname)
+  // }
+  
+  // useEffect(()=>{
+  //   if (hideNavBarRoutes.some(route => {
+  //   if (route.endsWith('/')) {
+  //     return currentPath.startsWith(route);
+  //   } else {
+  //     return currentPath === route;
+  //   }
+  //   })) {
+  //     setShouldHideNavBar(true)
+  //   } else {
+  //     setShouldHideNavBar(false)
+  //   }
+  // }, [currentPath])
+  // console.log("shouldHideNavBar", shouldHideNavBar)
+
   return (
   <Router>
-    <div className="App ">
+    <div className="App mb-20">
       <Routes>
         <Route path="/" element={<Navigate to="/main"></Navigate>} />
         <Route path="/client-login" element={<ClientLoginPage />} />
@@ -44,29 +66,24 @@ function App() {
           element={<Menu />}
         />
         <Route path="/itemPage/:id" element={<ItemPage />} />
-        <Route path="/checkoutCancel" element={<CheckoutCancel />} />
-        <Route path="/commentPage" element={<CommentPage />} />
-        <Route path="/commentSummary" element={<CommentSummary />} />
         <Route element={<CartGuard/>}>
           <Route path="/shoppingCart" element={<ShoppingCartPage />} />
         </Route>
 
         <Route element={<AuthGuard />}>
           <Route path="/myPage" element={<MyPage />} />
-          <Route path="/receipt/temp" element={<Receipt />} />
           <Route path="/receipt/all" element={<AllReceipt />} />
-          {/* <Route path='/checkout-success' element={<Home />} />
-          <Route path='/checkout-cancel' element={<AboutPage />} /> */}
+          <Route path="/receipt/:transactionId" element={<Receipt />} />
+          <Route path="/comment/:transactionId" element={<CommentPage />} />
+          <Route path="/commentSummary" element={<CommentSummary />} />
+          {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
         </Route>
       </Routes>
     </div>
+    {/* {!shouldHideNavBar && <BottomNavBar/>} */}
+    <BottomNavBar/>
   </Router>
   );
 }
-
-// function ProductSelectionWrapper({ match }: any) {
-//   const { shopId } = match.params;
-//   return <ProductSelection shopId={parseInt(shopId)} />;
-// }
 
 export default App;

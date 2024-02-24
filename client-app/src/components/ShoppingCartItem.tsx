@@ -28,12 +28,13 @@ export default function ShoppingCartItem(props: ShoppingCartProps) {
         margin: "20px",
         gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
         borderRadius: "10px",
+        position: "relative"
       }}
     >
       <img className="object-contain" src={props.item.item_photo}></img>
       <div className="flex flex-col m-3">
         <div className="flex justify-between">
-          <h6 className="font-bold mb-2 text-md">{props.item.name}<br /><span className="font-bold text-xs">({props.item.size !== null ? props.item.size : ""})</span></h6>
+          <h6 className="font-bold mb-2 text-md">{props.item.name}<br /><span className="font-bold text-xs">{props.item.size !== null ? "("+props.item.size+")" : ""}</span></h6>
           <span className="font-bold mb-2 text-md">${props.item.price}</span>
         </div>
         <div className="font-bold text-xs">

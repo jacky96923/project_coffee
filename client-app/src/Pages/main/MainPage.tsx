@@ -9,18 +9,19 @@ import Carousels from "../../components/Carousels";
 export default function MainPage() {
   const username = useSelector((state: RootState) => state.auth.user);
   return (
-    <div className="relative overflow-hidden bg-white m-9">
-      <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl m-2">
-        早晨, {username}
-      </h1>
-      <Search />
-      <h2 className=" m-3 text-2xl font-bold tracking-tight ">今日最抵 -</h2>
+    <div className="relative overflow-hidden bg-white mx-9 my-4">
+      <div className="drop-shadow-lg">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl m-2 p-4 bg-slate-200 rounded-lg">
+          歡迎{username? <>, <span className="">{username}</span></>:""}
+        </h1>
+        <Search />
+      </div>
+      <h2 className=" m-3 text-2xl font-bold tracking-tight ">今日最抵</h2>
       <div className="flex justify-center mx-auto ">
         <Carousels />
       </div>
       <MainThreeButton />
-      <MainBottomNavBar />
-      <h1 className="flex justify-center m-8 border p-3 rounded-2xl		 ">
+      <h1 className="text-2xl font-bold m-2 border rounded-2xl		 ">
         最新消息
       </h1>
       <img

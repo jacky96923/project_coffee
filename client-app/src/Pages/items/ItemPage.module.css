@@ -65,7 +65,7 @@
   margin: 1rem;
 }
 
-.itemDiscription {
+.itemDescription {
   width: 100%;
   /* margin: 1rem; */
 }
@@ -108,7 +108,7 @@
   width: 100%;
   height: auto;
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 0;
 }
 
 .quantityWrap {
