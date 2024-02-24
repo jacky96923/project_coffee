@@ -12,8 +12,8 @@ import { useSelector } from "react-redux";
 import MenuPreview from "./Pages/MenuPreview/MenuPreview";
 import AllItem from "./Pages/AllItem/AllItem";
 import PromotionInfo from "./Pages/PromotionInfo/PromotionInfo";
-import { BusinessChooseShopOpenTime } from "./BusinessChooseShopOpenTime";
 import AddItem from "./Pages/AddItem/AddItem";
+import { BusinessChooseShopOpenTime } from "./ShopOpenTime";
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
 

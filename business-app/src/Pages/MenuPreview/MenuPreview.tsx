@@ -9,6 +9,7 @@ import { GetMenuPreview } from "../../hooks/MenuPreviewAPI";
 import DialogEditCategory from "../../component/DialogEditCategory";
 import DialogAddCategory from "../../component/DialogAddCategory";
 import DialogDelCategory from "../../component/DialogDelCategory";
+import DialogDelItem from "../../component/DialogDelItem";
 
 // Header component
 const Header = () => {
@@ -54,6 +55,9 @@ const MainContent = () => {
   const [originalCatName, setOriginalCatName] = useState("");
   const [originalCatId, setOriginalCatId] = useState(NaN);
 
+  const [originalItemName, setOriginalItemName] = useState("");
+  const [originalItemId, setOriginalItemId] = useState(NaN);
+
   // CatAdd State
   const [catAdd, setCatAdd] = useState(false);
   const CatAddClick = () => {
@@ -87,9 +91,9 @@ const MainContent = () => {
 
   // itemDel State
   const [itemDel, setItemDel] = useState(false);
-  const ItemDelClick = (targetCatId: number, targetCatName: string) => {
-    setOriginalCatId(targetCatId);
-    setOriginalCatName(targetCatName);
+  const ItemDelClick = (targetItemId: number, targetItemName: string) => {
+    setOriginalItemId(targetItemId);
+    setOriginalItemName(targetItemName);
     setItemDel(true);
   };
   const ItemDelDialogClose = () => {
@@ -215,7 +219,14 @@ const MainContent = () => {
                                   ${item.price}
                                 </span>
                               </div>
-                              <IoClose className="m-3 size-7 absolute top-0 right-1" />
+
+                              <button
+                                onClick={() => ItemDelClick(item.id, item.name)}
+                              >
+                                <div className="ml-2">
+                                  <IoClose className="m-3 size-7 absolute top-0 right-1" />
+                                </div>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -243,6 +254,16 @@ const MainContent = () => {
                       categoryId={originalCatId}
                       categoryName={originalCatName}
                       isShow={catDel}
+                    />
+                  }
+                  {
+                    <DialogDelItem
+                      onClose={ItemDelDialogClose}
+                      categoryId={originalCatId}
+                      categoryName={originalCatName}
+                      ItemId={originalItemId}
+                      ItemName={originalItemName}
+                      isShow={itemDel}
                     />
                   }
                 </div>

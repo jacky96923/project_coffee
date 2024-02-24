@@ -6,6 +6,9 @@ interface EditDialogProps {
   onClose: () => void;
   categoryId: number;
   categoryName: string;
+  ItemId: number;
+  ItemName: string;
+
   isShow: boolean;
 }
 
@@ -13,6 +16,9 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
   onClose,
   categoryId,
   categoryName,
+  ItemId,
+  ItemName,
+
   isShow,
 }) => {
   const handleSubmit = (e: any) => {
