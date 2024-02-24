@@ -22,6 +22,6 @@
   },
   "include": [
     "src",
-    "src/BusinessLoginPage.tsx"
+    "src/Pages/Login/LoginPage.tsx"
   ]
 }

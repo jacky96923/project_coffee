@@ -111,11 +111,11 @@ export default function Menu() {
                 評論區
               </span>
             </div>
-            <div>
+            {/* <div>
               <div className="m-2 w-6">
                 <PhoneIcon />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <hr className="mt-3" />
@@ -145,13 +145,15 @@ export default function Menu() {
                         key={item.id}
                         style={{
                           display: "grid",
-                          border: "1px solid grey",
+                          // border: "1px solid grey",
                           margin: "20px",
                           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                           borderRadius: "10px",
                           width: "auto",
                           height: "10rem",
+                          // filter: "drop-shadow(0 0 0.75rem)"
                         }}
+                        className="shadow-xl"
                         onClick={itemPageHandle}
                       >
                         <div className="flex items-center justify-center m-2">
@@ -161,7 +163,7 @@ export default function Menu() {
                             alt={item.name}
                           />
                         </div>
-                        <div className="flex flex-col overflow-hidden">
+                        <div className="flex flex-col overflow-hidden m-2">
                           <span className="text-base m-2 font-bold">
                             {item.name}
                           </span>

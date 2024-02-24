@@ -1,18 +1,19 @@
 import React from "react";
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
-import BusinessLoginPage from "./BusinessLoginPage";
-import BusinessRegisterPage from "./BusinessRegisterPage";
-import BusinessLocationPage from "./BusinessLocationPage";
-import LoginokPage from "./LoginokPage"; // Make sure this import is correct
+import BusinessLoginPage from "./Pages/Login/LoginPage";
+import BusinessRegisterPage from "./RegisterPage";
+import BusinessLocationPage from "./LocationPage";
+import LoginokPage from "./Pages/Login/LoginokPage"; // Make sure this import is correct
 
-import BusinessWelcome from "./BusinessWelcomePage"; // Corrected import
+import BusinessWelcome from "./WelcomePage"; // Corrected import
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import MenuPreview from "./Pages/MenuPreview/MenuPreview";
-import AddItem from "./Pages/AddItem/AddItem";
-import BusinessPromotionInfo from "./BusinessPromotionInfo";
+import AllItem from "./Pages/AllItem/AllItem";
+import PromotionInfo from "./Pages/PromotionInfo/PromotionInfo";
 import { BusinessChooseShopOpenTime } from "./BusinessChooseShopOpenTime";
+import AddItem from "./Pages/AddItem/AddItem";
 function App() {
   const user = useSelector<RootState>((state) => state.auth.user);
 
@@ -41,8 +42,9 @@ function App() {
             element={<BusinessChooseShopOpenTime />}
           />
           <Route path="/BusinessWelcome" element={<BusinessWelcome />} />{" "}
-          <Route path="/addItem" element={<AddItem />} />
-          <Route path="/BusinessPromotionInfo" element={<BusinessPromotionInfo />} />
+          <Route path="/AllItem" element={<AllItem />} />
+          <Route path="/AddItem" element={<AddItem />} />
+          <Route path="/PromotionInfo" element={<PromotionInfo />} />
           {/* Corrected route path */}
         </Routes>
       </div>

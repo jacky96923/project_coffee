@@ -15,7 +15,7 @@ export class UserAuthController {
     if (result.flag) {
       res.json({ message: result.message, token: result.token });
     } else {
-      res.status(400).json({message: result.message});
+      res.status(400).json({ message: result.message });
     }
   };
 
@@ -59,12 +59,10 @@ export class UserAuthController {
           .json({ element: "email", error: "This email has been registered" });
       }
       if (checkContactNo) {
-        return res
-          .status(401)
-          .json({
-            element: "contactNo",
-            error: "This contact number has been registered",
-          });
+        return res.status(401).json({
+          element: "contactNo",
+          error: "This contact number has been registered",
+        });
       }
       const result = (await this.userAuthService.userRegister(
         username,

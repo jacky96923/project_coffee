@@ -12,6 +12,7 @@ export const queryClient = new QueryClient();
 
 const rootElement = document.getElementById("root") as HTMLElement; // Non-null assertion here
 const root = ReactDOM.createRoot(rootElement);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

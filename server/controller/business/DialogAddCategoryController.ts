@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
-import { DialogAddCategoryService } from "../services/DialogAddCategoryService";
+import { DialogAddCategoryService } from "../../services/DialogAddCategoryService";
 
 export class DialogAddCategoryController {
   router = express.Router();

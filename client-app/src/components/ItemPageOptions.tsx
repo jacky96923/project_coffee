@@ -20,7 +20,7 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const [bg, setBg] = useState("opacity-0");
   // const [selected, setSelected] = useState<string[]>([]);
 
-  console.log("optionPage", props.itemId);
+  //console.log("optionPage", props.itemId);
 
   function slideHandler() {
     setIsClicked(!isClicked);

@@ -1,6 +1,8 @@
+import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+
 export default function ItemTable() {
   return (
-    <div className="border-2 border-black">
+    <div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -12,11 +14,13 @@ export default function ItemTable() {
               <th>產品類別</th>
               <th>所屬餐單</th>
               <th>狀態</th>
-              <th></th>
+              <th>修改資料</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
+            {/* td is each cell */}
+            {/* th is only each check box */}
             <tr>
               <th>
                 <label>
@@ -34,21 +38,18 @@ export default function ItemTable() {
                     </div>
                   </div>
                   <div>
-                    <div className="font-bold">Hart Hagerty</div>
-                    <div className="text-sm opacity-50">United States</div>
+                    <div className="font-bold">coffee</div>
                   </div>
                 </div>
               </td>
-              <td>
-                Zemlak, Daniel and Leannon
-                <br />
-                <span className="badge badge-ghost badge-sm">
-                  Desktop Support Technician
-                </span>
-              </td>
-              <td>Purple</td>
+              <td>$25</td>
+              <td>牛奶咖啡</td>
+              <td>經典之選</td>
+              <td>供應中</td>
               <th>
-                <button className="btn btn-ghost btn-xs">details</button>
+                <button className="btn btn-ghost btn-s">
+                  <AdjustmentsHorizontalIcon className="h-6 w-6 text-blue-400" />
+                </button>
               </th>
             </tr>
 

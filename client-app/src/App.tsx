@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 import {
@@ -29,7 +29,28 @@ import { CartGuard } from "./CartGuard";
 import BottomNavBar from "./components/BottomNavBar";
 
 function App() {
-  const user = useSelector<RootState>((state) => state.auth.user);
+  // const hideNavBarRoutes = ['/itemPage/'];
+  // const [currentPath, setCurrentPath] = useState("");
+  // const [shouldHideNavBar, setShouldHideNavBar] = useState(false)
+  // if (currentPath !== window.location.pathname){
+  //   setCurrentPath(window.location.pathname)
+  // }
+  
+  // useEffect(()=>{
+  //   if (hideNavBarRoutes.some(route => {
+  //   if (route.endsWith('/')) {
+  //     return currentPath.startsWith(route);
+  //   } else {
+  //     return currentPath === route;
+  //   }
+  //   })) {
+  //     setShouldHideNavBar(true)
+  //   } else {
+  //     setShouldHideNavBar(false)
+  //   }
+  // }, [currentPath])
+  // console.log("shouldHideNavBar", shouldHideNavBar)
+
   return (
   <Router>
     <div className="App mb-20">
@@ -45,7 +66,6 @@ function App() {
           element={<Menu />}
         />
         <Route path="/itemPage/:id" element={<ItemPage />} />
-        {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
         <Route element={<CartGuard/>}>
           <Route path="/shoppingCart" element={<ShoppingCartPage />} />
         </Route>
@@ -56,19 +76,14 @@ function App() {
           <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/comment/:transactionId" element={<CommentPage />} />
           <Route path="/commentSummary" element={<CommentSummary />} />
-          {/* <Route path='/checkout-success' element={<Home />} />
-          <Route path='/checkout-cancel' element={<AboutPage />} /> */}
+          {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
         </Route>
       </Routes>
     </div>
+    {/* {!shouldHideNavBar && <BottomNavBar/>} */}
     <BottomNavBar/>
   </Router>
   );
 }
-
-// function ProductSelectionWrapper({ match }: any) {
-//   const { shopId } = match.params;
-//   return <ProductSelection shopId={parseInt(shopId)} />;
-// }
 
 export default App;

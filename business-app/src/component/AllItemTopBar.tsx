@@ -1,4 +1,4 @@
-export default function AddItemTopBar() {
+export default function AllItemTopBar() {
   return (
     <div className="navbar bg-base-100 border-2 rounded-lg">
       <div className="flex-1">
