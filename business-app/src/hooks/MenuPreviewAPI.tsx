@@ -44,3 +44,22 @@ export async function EditCategory(updateCatName: string, categoryId: number) {
 
   return result.data;
 }
+
+export async function DelCategory(categoryId: number) {
+  const resDelCat = await fetch(`${source}/menuPreviews/deleteCategoryName`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      // nameInput: updateCatName,
+      categoryId: categoryId,
+    }),
+  });
+  console.log("categoryId", categoryId);
+
+  const result = await resDelCat.json();
+  // console.log("result", result);
+
+  return result;
+}

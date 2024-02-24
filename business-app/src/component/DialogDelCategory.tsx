@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EditCategory } from "../hooks/MenuPreviewAPI";
+import { DelCategory, EditCategory } from "../hooks/MenuPreviewAPI";
 
 interface EditDialogProps {
   onClose: () => void;
@@ -28,19 +28,18 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
   // useSelector
   // const categoryId = 1;
 
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-  //   const mutation = useMutation({
-  //     mutationFn: async (data: { updateCatName: string }) =>
-  //       EditCategory(data.updateCatName, categoryId),
-  //     onSuccess: () =>
-  //       queryClient.invalidateQueries({
-  //         queryKey: ["menuPreview"],
-  //         exact: true,
-  //       }),
-  //   });
+  const mutation = useMutation({
+    mutationFn: async (catId: number) => DelCategory(categoryId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["menuPreview"],
+        exact: true,
+      }),
+  });
 
-  const [editCatInput, setEditCatInput] = useState("");
+  const [delCatInput, setDelCatInput] = useState(NaN);
 
   if (isShow)
     return (
@@ -67,11 +66,11 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
                 type="submit"
                 className="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
-                  //   mutation.mutate({ updateCatName: editCatInput });
-                  setEditCatInput("");
+                  mutation.mutate(delCatInput);
+                  setDelCatInput(NaN);
                 }}
               >
-                儲存
+                刪除
               </button>
               <button
                 type="button"
