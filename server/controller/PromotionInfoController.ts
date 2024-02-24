@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { Upload } from "@aws-sdk/lib-storage";
+// import { Upload } from "@aws-sdk/lib-storage";
 import { PromotionInfoService } from "../services/PromotionInfoService";
 import formidable from "formidable";
 import { bucketName, s3 } from "../utils/s3upload";
