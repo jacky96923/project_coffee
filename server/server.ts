@@ -48,14 +48,14 @@ import { CommentService } from "./services/CommentService";
 
 // Business-app
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
-import { MenuPreviewController } from "./controller/business/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
 import { PromotionInfoService } from "./services/PromotionInfoService";
 import { PromotionInfoController } from "./controller/PromotionInfoController";
-import { DialogAddCategoryController } from "./controller/DialogAddCategoryController";
 import { DialogAddCategoryService } from "./services/DialogAddCategoryService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
+import { MenuPreviewController } from "./controller/MenuPreviewController";
+import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -87,10 +87,10 @@ const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-const promotionInfoService = new PromotionInfoService(knex);
-const promotionInfoController = new PromotionInfoController(
-  promotionInfoService
-);
+// const promotionInfoService = new PromotionInfoService(knex);
+// const promotionInfoController = new PromotionInfoController(
+//   promotionInfoService
+// );
 
 // Route Setup
 // Route Setup (Client)
@@ -104,7 +104,7 @@ app.use("/receipt", receiptController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
-app.use("/PromotionInfo", promotionInfoController.router);
+// app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 
 // Route Setup (Business)
