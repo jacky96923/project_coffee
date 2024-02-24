@@ -79,4 +79,38 @@ export class MenuPreviewService {
       return false;
     }
   }
+
+  async deleteCatName(categoryId: number) {
+    try {
+      await this.knex.raw(
+        "delete from menu_category_relation where category_id = ?",
+        [categoryId]
+      );
+      await this.knex.raw(
+        "delete from category_item_relation where category_id = ?",
+        [categoryId]
+      );
+      const categorySetRelationIdList = await this.knex.raw(
+        "select id from category_set_relation where category_id = ?",
+        [categoryId]
+      );
+      if (categorySetRelationIdList) {
+        await this.knex.raw(
+          "delete from category_set_relation where category_id = ?",
+          [categoryId]
+        );
+      }
+      await this.knex.raw("delete from category where id = ?", [categoryId]);
+      //   .del();
+      // await this.knex("menu_category_relation")
+      //   .where("menu_category_relation.category_id", categoryId)
+      //   .del();
+      // await this.knex("category").where("category.id", categoryId).del();
+
+      return { message: "delete succeed" };
+    } catch (error) {
+      console.log(error);
+      return { message: "delete failed" };
+    }
+  }
 }
