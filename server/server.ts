@@ -13,8 +13,8 @@ const app = express();
 const server = new http.Server(app);
 const io = new SocketIO(server, {
   cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"]
-  }
+    origin: ["http://localhost:3000", "http://localhost:3001"],
+  },
 });
 
 app.use(cors());
@@ -50,11 +50,12 @@ import { CommentService } from "./services/CommentService";
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
 import { MenuPreviewController } from "./controller/business/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
-import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
+import { PromotionInfoService } from "./services/PromotionInfoService";
+import { PromotionInfoController } from "./controller/PromotionInfoController";
+import { DialogAddCategoryController } from "./controller/DialogAddCategoryController";
 import { DialogAddCategoryService } from "./services/DialogAddCategoryService";
 import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
-
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -85,6 +86,13 @@ const dialogAddCategoryController = new DialogAddCategoryController(
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
+//ForPromotionInfo
+const promotionInfoService = new PromotionInfoService(knex);
+const promotionInfoController = new PromotionInfoController(
+  promotionInfoService
+);
+
+// Route Setup
 // Route Setup (Client)
 app.use("/auth", userAuthController.router);
 
@@ -96,6 +104,7 @@ app.use("/receipt", receiptController.router);
 app.use("/comments", commentsController.router); // Mount CommentsController's router at the "/comments" endpoint
 app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
+app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 
 // Route Setup (Business)

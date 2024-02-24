@@ -4,7 +4,7 @@ import jwtSimple from "jwt-simple";
 import jwt from "../utils/jwt";
 
 export class UserAuthService {
-  constructor(private knex: Knex) { }
+  constructor(private knex: Knex) {}
   async userLogin(userNameInput: string, userPasswordInput: string) {
     let userLoginInfo = await this.knex
       .select("*")
@@ -20,6 +20,7 @@ export class UserAuthService {
         console.log("login success");
         //login successful, create JWT and send to user's device
         const payload = {
+          type: "customer",
           id: userLoginInfo[0].id,
           username: userLoginInfo[0].login_name,
         };
@@ -45,12 +46,12 @@ export class UserAuthService {
           email: email,
           login_password: await hashPassword(confirmPassword),
           contact_no: contactNo,
-          reward_points: 0
+          reward_points: 0,
         })
         .into("users")
         .returning("*");
       console.log(result);
-      return this.userLogin(result[0].login_name, confirmPassword)
+      return this.userLogin(result[0].login_name, confirmPassword);
     } catch (error) {
       console.error("error:", error);
       return error;
@@ -59,9 +60,7 @@ export class UserAuthService {
 
   async hasEmail(email: string) {
     try {
-      const existingEmail = await this.knex
-        .select("email")
-        .from("users");
+      const existingEmail = await this.knex.select("email").from("users");
       //console.log(existingEmail)
       return existingEmail.some((user) => user.email === email);
     } catch (error) {
@@ -82,11 +81,10 @@ export class UserAuthService {
       return error;
     }
   }
-
 }
 
 export class BusinessAuthService {
-  constructor(private knex: Knex) { }
+  constructor(private knex: Knex) {}
   async businessLogin(
     businessNameInput: string,
     businessPasswordInput: string
@@ -105,6 +103,7 @@ export class BusinessAuthService {
         console.log("success");
         //login successful, create JWT and send to user's device
         const payload = {
+          type: "business",
           id: businessLoginInfo[0].id,
           username: businessLoginInfo[0].login_name,
         };
