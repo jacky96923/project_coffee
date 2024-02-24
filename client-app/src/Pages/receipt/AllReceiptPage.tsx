@@ -23,7 +23,7 @@ export default function AllReceipt() {
                 let ratedReceiptDataInEffect: any = []
                 let unratedReceiptDataInEffect: any = []
                 for (let dataEachDate of allReceiptData) {
-                    const dateForReceipts = dataEachDate.date
+                    let dateForReceipts = dataEachDate.date
                     // construct ratedReceiptData entry and push into ratedReceiptData
                     const ratedReceiptsEachDate = dataEachDate.receipts.filter((receipt: any) => receipt.commented === true)
                     if (ratedReceiptsEachDate.length > 0) {
@@ -36,9 +36,11 @@ export default function AllReceipt() {
                         const unratedReceiptDataEntry = { date: dateForReceipts, receipts: unratedReceiptsEachDate }
                         unratedReceiptDataInEffect = [...unratedReceiptData, unratedReceiptDataEntry]
                     }
+                    setRatedReceiptData(ratedReceiptDataInEffect)
+                    setUnratedReceiptData(unratedReceiptDataInEffect)
+                    ratedReceiptDataInEffect = []
+                    unratedReceiptDataInEffect = []
                 }
-                setRatedReceiptData(ratedReceiptDataInEffect)
-                setUnratedReceiptData(unratedReceiptDataInEffect)
             }
         } else {
             setGroupDataTimes(groupDataTimes + 1)

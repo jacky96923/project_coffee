@@ -1,7 +1,5 @@
 import { BellIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import styles from "./ReceiptPage.module.css"
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { ReceiptAPI } from "../../hooks/receiptAPI";
 

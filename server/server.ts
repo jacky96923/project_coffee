@@ -58,12 +58,12 @@ import { ReceiptService } from "./services/ReceiptService";
 import { ReceiptController } from "./controller/ReceiptController";
 import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
+import { OrderService } from "./services/business/OrderService";
+import { OrderController } from "./controller/business/OrderController";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
 const userAuthController = new UserAuthController(userAuthService);
-const businessAuthService = new BusinessAuthService(knex);
-const businessAuthController = new BusinessAuthController(businessAuthService);
 const shopService = new ShopService(knex);
 const shopController = new ShopController(shopService);
 const itemPageService = new ItemPageService(knex);
@@ -75,14 +75,16 @@ const menuController = new MenuController(menuIdService);
 const receiptService = new ReceiptService(knex);
 const receiptController = new ReceiptController(receiptService);
 
-// Controller and Service Instantiation (Client)
+// Controller and Service Instantiation (Business)
+const businessAuthService = new BusinessAuthService(knex);
+const businessAuthController = new BusinessAuthController(businessAuthService);
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
-
 const dialogAddCategoryService = new DialogAddCategoryService(knex);
-const dialogAddCategoryController = new DialogAddCategoryController(
-  dialogAddCategoryService
-);
+const dialogAddCategoryController = new DialogAddCategoryController(dialogAddCategoryService);
+const orderService = new OrderService(knex)
+const orderController = new OrderController(orderService)
+
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
@@ -111,6 +113,7 @@ app.use("/category", dialogAddCategoryController.router);
 app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
+app.use("/orders", orderController.router)
 
 app.get("/hi", (req, res) => res.send("hi"));
 
