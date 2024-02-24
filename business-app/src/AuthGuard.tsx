@@ -6,9 +6,9 @@ import { RootState } from "./store";
 export function AuthGuard(){
     const isAuthenticated: string | undefined = useSelector((state:RootState)=> state.auth.isAuthenticated)
     console.log(isAuthenticated)
-    if(isAuthenticated === "client"){
+    if(isAuthenticated === "business"){
         return <Outlet/>;
     } else {
-        return <Navigate to="/client-login" />;
+        return <Navigate to="/businessLogin" />;
     }
 }

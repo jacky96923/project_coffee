@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { ItemPageService } from "../../services/ItemPageService";
+import { ItemPageService } from "../../services/client/ItemPageService";
 
 export class ItemPageController {
   router = express.Router();

@@ -20,7 +20,7 @@ export class UserAuthService {
         console.log("login success");
         //login successful, create JWT and send to user's device
         const payload = {
-          type: "customer",
+          type: "client",
           id: userLoginInfo[0].id,
           username: userLoginInfo[0].login_name,
         };

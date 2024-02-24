@@ -60,10 +60,10 @@ export default function RegisterPage() {
     );
 
     if (result) {
-      let decoded: { user_id: number; username: string } = jwtDecode(
+      let decoded: { user_id: number; username: string, type: string } = jwtDecode(
         localStorage.getItem("token")!
       );
-      dispatch(login({user: decoded.username, user_id: decoded.user_id}));
+      dispatch(login({user: decoded.username, user_id: decoded.user_id, type: decoded.type}));
       window.location.href = "/";
     }
   };

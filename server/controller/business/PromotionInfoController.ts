@@ -1,16 +1,15 @@
 import express, { Request, Response } from "express";
-// import { Upload } from "@aws-sdk/lib-storage";
-import { PromotionInfoService } from "../services/PromotionInfoService";
+import { PromotionInfoService } from "../../services/business/PromotionInfoService";
 import formidable from "formidable";
-import { bucketName, s3 } from "../utils/s3upload";
+import { bucketName, s3 } from "../../utils/s3upload";
 import fs from "fs";
-import { isLoggedIn } from "../utils/guard";
+import { isLoggedIn } from "../../utils/guard";
 
 export class PromotionInfoController {
   router = express.Router();
   public constructor(private promotionInfoService: PromotionInfoService) {
     this.router.get("/getPromotionInfo/:id", this.getPromotionInfo);
-    this.router.post("/uploads", isLoggedIn, this.uploadPromotionInfo);
+    this.router.post("/uploads/:id", isLoggedIn, this.uploadPromotionInfo);
   }
 
   getPromotionInfo = async (req: Request, res: Response) => {
@@ -29,7 +28,6 @@ export class PromotionInfoController {
 
   uploadPromotionInfo = async (req: Request, res: Response) => {
     const form = new formidable.IncomingForm();
-    console.log("controller Check form", form);
     console.log("business id is ", req.body.user_id);
     let shopId = req.body.user_id;
 

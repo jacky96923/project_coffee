@@ -47,10 +47,10 @@ export default function LoginPage() {
 
     let result = await postLogin(usernameInput, passwordInput);
     if (result) {
-      let decoded: { id: number; username: string } = jwtDecode(
+      let decoded: { id: number; username: string, type: string } = jwtDecode(
         localStorage.getItem("token")!
       );
-      dispatch(login({user: decoded.username, user_id: decoded.id}));
+      dispatch(login({user: decoded.username, user_id: decoded.id, type: decoded.type}));
       navigate("/main")
     } 
   };
