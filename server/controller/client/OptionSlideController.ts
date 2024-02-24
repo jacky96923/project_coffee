@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { OptionSlideService } from "../services/OptionSlideService";
+import { OptionSlideService } from "../../services/OptionSlideService";
 
 export class OptionSlideController {
   router = express.Router();

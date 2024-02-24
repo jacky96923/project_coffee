@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "./slices/authSlice";
+import { login } from "../../slices/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./BusinessLoginPage.module.css";
 
@@ -8,7 +8,7 @@ const source = "http://localhost:8100";
 
 export async function postLogin(username: string, password: string) {
   try {
-    const response = await fetch(`${source}/auth/businessLogin`, {
+    const response = await fetch(`${source}/business/auth/businessLogin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
