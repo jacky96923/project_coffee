@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
-import { MenuIdService } from "../services/MenuService";
+import { MenuIdService } from "../../services/MenuService";
 
 export class MenuController {
   router = express.Router();

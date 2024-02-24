@@ -37,18 +37,18 @@ import {
 // Client-app
 import { ShopController } from "./controller/ShopController";
 import { ShopService } from "./services/ShopService";
-import { ItemPageController } from "./controller/ItemPageController";
+import { ItemPageController } from "./controller/client/ItemPageController";
 import { ItemPageService } from "./services/ItemPageService";
 import { OptionSlideService } from "./services/OptionSlideService";
-import { OptionSlideController } from "./controller/OptionSlideController";
+import { OptionSlideController } from "./controller/client/OptionSlideController";
 import { MenuIdService } from "./services/MenuService";
-import { MenuController } from "./controller/MenuController";
+import { MenuController } from "./controller/client/MenuController";
 import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 
 // Business-app
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
-import { MenuPreviewController } from "./controller/MenuPreviewController";
+import { MenuPreviewController } from "./controller/business/MenuPreviewController";
 import { MenuPreviewService } from "./services/MenuPreviewServices";
 import { PromotionInfoService } from "./services/PromotionInfoService";
 import { PromotionInfoController } from "./controller/PromotionInfoController";
