@@ -8,6 +8,7 @@ export class MenuPreviewController {
     this.router.post("/menuPreview", this.menuPreview);
     this.router.put("/updateCategoryName", this.updateCategoryName);
     this.router.delete("/deleteCategoryName", this.deleteCategoryName);
+    this.router.delete("/deleteItem", this.deleteItem);
   }
 
   menuPreview = async (req: Request, res: Response) => {
@@ -153,5 +154,21 @@ export class MenuPreviewController {
     // console.log("UpdateCategoryName", UpdateCategoryName);
 
     res.status(200).json(DeleteCategoryName);
+  };
+
+  deleteItem = async (req: Request, res: Response) => {
+    let categoryId = Number(req.body.categoryId);
+    let itemId = Number(req.body.itemId);
+    console.log("categoryId", categoryId);
+    console.log("itemId", itemId);
+
+    let DeleteItem = await this.menuPreviewService.deleteItem(
+      // categoryId,
+      itemId,
+      categoryId
+    );
+    // console.log("UpdateCategoryName", UpdateCategoryName);
+
+    res.status(200).json(DeleteItem);
   };
 }
