@@ -27,37 +27,37 @@ export default function Sidebar() {
         </div>
         <ul className="flex flex-col items-center justify-center py-4 ">
           <li className="p-4 hover:bg-gray-700 text-center">
-            <div className="flex">
+            <div className="flex cursor-pointer" onClick={() => navigate("/")}>
               <FaHome className="size-6" />
               <h3 className="ml-3">主頁</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex" onClick={() => navigate("/AllItem")}>
+            <div className="flex cursor-pointer" onClick={() => navigate("/AllItem")}>
               <FaCoffee className="size-6" />
               <h3 className="ml-3">所有商品</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex">
+            <div className="flex cursor-pointer" onClick={() => navigate("/MenuPreview")}>
               <BiSolidFoodMenu className="size-6" />
               <h3 className="ml-3">餐單更新</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex">
+            <div className="flex cursor-pointer">
               <FaUser className="size-6" />
               <h3 className="ml-3">商店資料</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex" onClick={() => navigate("/PromotionInfo")}>
+            <div className="flex cursor-pointer" onClick={() => navigate("/PromotionInfo")}>
               <FaCog className="size-6" />
               <h3 className="ml-3">推廣資料</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex">
+            <div className="flex cursor-pointer">
               <FaCommentDots className="size-6" />
               <h3 className="ml-3">顧客評價</h3>
             </div>
@@ -65,7 +65,8 @@ export default function Sidebar() {
           <br />
           <br />
           <br />
-          <button className="block mx-auto w-40 h-14 my-1.5 bg-gradient-to-r from-blue-900 to-blue-700 rounded-2xl font-bold text-white">
+          <button onClick={() => navigate("/receivedOrders")}
+          className="block mx-auto w-40 h-14 my-1.5 bg-gradient-to-r from-blue-900 to-blue-700 rounded-2xl font-bold text-white">
             查看訂單
           </button>
         </ul>

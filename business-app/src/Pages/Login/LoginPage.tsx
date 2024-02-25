@@ -69,7 +69,7 @@ export default function BusinessLoginPage() {
 
       // Redirect the user to the profile page using useNavigate
       console.log("Attempting to navigate to /profile...");
-      navigate("/login-success");
+      navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       alert(error); // Show an alert if there is an error

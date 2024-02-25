@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { DelCategory, EditCategory } from "../hooks/MenuPreviewAPI";
+import { DelItem } from "../hooks/MenuPreviewAPI";
 
 interface EditDialogProps {
   onClose: () => void;
-  categoryId: number;
   categoryName: string;
+  categoryId: number;
+  ItemId: number;
+  ItemName: string;
   isShow: boolean;
 }
 
-const DialogDelCategory: React.FC<EditDialogProps> = ({
+const DialogDelItem: React.FC<EditDialogProps> = ({
   onClose,
-  categoryId,
   categoryName,
+  categoryId,
+  ItemId,
+  ItemName,
+
   isShow,
 }) => {
   const handleSubmit = (e: any) => {
@@ -28,18 +33,17 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
   // useSelector
   // const categoryId = 1;
 
-  //   const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (iId: number) => DelItem(categoryId, ItemId),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["menuPreview"],
+        exact: true,
+      }),
+  });
 
-  //   const mutation = useMutation({
-  //     mutationFn: async (catId: number) => DelCategory(categoryId),
-  //     onSuccess: () =>
-  //       queryClient.invalidateQueries({
-  //         queryKey: ["menuPreview"],
-  //         exact: true,
-  //       }),
-  //   });
-
-  const [delCatInput, setDelCatInput] = useState(NaN);
+  const [delItemInput, setDelItemInput] = useState(NaN);
 
   if (isShow)
     return (
@@ -54,8 +58,7 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
                 className="block text-base	 mb-1  text-black"
               >
                 <p>
-                  您確定要刪除{" "}
-                  <span className="text-red-500">{categoryName}</span>{" "}
+                  您確定要刪除 <span className="text-red-500">{ItemName}</span>{" "}
                   嗎？請注意，一旦刪除，將無法撤銷此操作。{" "}
                 </p>
               </label>
@@ -66,8 +69,8 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
                 type="submit"
                 className="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
-                  //   mutation.mutate(delCatInput);
-                  setDelCatInput(NaN);
+                  mutation.mutate(delItemInput);
+                  setDelItemInput(NaN);
                 }}
               >
                 刪除
@@ -89,4 +92,4 @@ const DialogDelCategory: React.FC<EditDialogProps> = ({
   }
 };
 
-export default DialogDelCategory;
+export default DialogDelItem;

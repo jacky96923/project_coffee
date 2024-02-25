@@ -3,10 +3,10 @@ import Sidebar from "../../component/Sidebar";
 import styles from "../PromotionInfo/PromotionInfo.module.css";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { GetPromotionInfo } from "../../hook/PromotionInfoApi";
+import { GetPromotionInfo } from "../../hooks/PromotionInfoApi";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { uploadPhoto } from "../../hook/PromotionInfoApi";
+import { uploadPhoto } from "../../hooks/PromotionInfoApi";
 
 export default function PromotionInfo() {
   // let shopID: string;

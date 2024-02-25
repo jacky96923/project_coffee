@@ -6,6 +6,7 @@ interface EditDialogProps {
   onClose: () => void;
   categoryId: number;
   categoryName: string;
+
   isShow: boolean;
 }
 

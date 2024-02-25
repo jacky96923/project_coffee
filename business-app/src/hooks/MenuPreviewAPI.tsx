@@ -63,3 +63,23 @@ export async function DelCategory(categoryId: number) {
 
   return result;
 }
+
+export async function DelItem(categoryId: number, itemId: number) {
+  const resDelItem = await fetch(`${source}/menuPreviews/deleteItem`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      // nameInput: updateCatName,
+      categoryId: categoryId,
+      itemId: itemId,
+    }),
+  });
+  // console.log("itemId", itemId);
+
+  const result = await resDelItem.json();
+  // console.log("result", result);
+
+  return result;
+}
