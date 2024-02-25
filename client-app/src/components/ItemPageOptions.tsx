@@ -9,7 +9,7 @@ import { RootState } from "../store";
 type ItemPageOptionsProps = {
   itemId: string;
   optionListName: string;
-  selectedOption: string
+  selectedOption: string;
 };
 
 export default function ItemPageOptions(props: ItemPageOptionsProps) {
@@ -39,12 +39,12 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   const optionsButtons = isClicked
     ? styles.optionsButtonsClicked
     : styles.optionsButtons;
-//
+  //
   // const getSelectedOption = useSelector(
   //   (state: RootState) => state.itemPage.item.optionList
   // );
   // console.log("getSelected default", getSelectedOption);
-  
+
   // useEffect(() => {
   //   let displayOption: string[] = [];
   //   getSelectedOption.forEach((entry) => {
@@ -55,17 +55,17 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
   //   console.log("ItemPageOptions Selected", selected);
   // }, [getSelectedOption]);
   // console.log("selected outside useEffect", selected)
+  //
 
-//
   return (
     <>
       <div className={optionsButtons} onClick={() => slideHandler()}>
         <div className={styles.options}>
-          <div>{props.optionListName}</div>
-          
-          <div className="flex font-bold">
-            <p>{props.selectedOption}</p>
-            <ChevronRightIcon className="h-6 w-6" />
+          <div className="pl-3 pb-3 text-xl">{props.optionListName}</div>
+
+          <div className="flex font-bold pb-3">
+            <p className="pr-2 text-xl">{props.selectedOption}</p>
+            <ChevronRightIcon className="h-7 w-7 pr-2" />
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@
   border-top: 1px lightgrey solid;
   width: 20rem;
   height: 15rem;
+  margin-top: -3rem;
 }
 
 .optionItems {
@@ -26,7 +27,7 @@
 }
 
 .optionText {
-  font-size: larger;
+  font-size: x-large;
   color: black;
 }
 

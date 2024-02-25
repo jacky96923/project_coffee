@@ -26,7 +26,6 @@ export default function ShopSelectionList() {
 
   return (
     <div>
-      <h2>Shop Selection List</h2>
       <ul className="space-y-4">
         {Array.isArray(shopItem) ? (
           shopItem.length > 0 ? (
@@ -36,12 +35,13 @@ export default function ShopSelectionList() {
                   <div
                     style={{
                       display: "grid",
-                      border: "1px solid grey",
+                      border: "1px solid green",
                       margin: "7px",
                       gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
                       borderRadius: "10px",
                       width: "auto",
                       height: "10rem",
+                      // backgroundColor: "green",
                     }}
                   >
                     <img

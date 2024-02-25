@@ -22,15 +22,15 @@ export default function getReceivedOrders() {
     );
     if (isLoading || isFetching) return "Incoming data ...";
 
-    if (error) {
-        return "Error occured";
-    }
+  if (error) {
+    return "Error occured";
+  }
 
-    if (!data) {
-        return "";
-    }
+  if (!data) {
+    return "";
+  }
 
-    return data;
+  return data;
 }
 
 export async function updateCompletedOrder(transactionId: number){

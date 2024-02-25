@@ -51,6 +51,8 @@ import { PromotionInfoService } from "./services/business/PromotionInfoService";
 import { PromotionInfoController } from "./controller/business/PromotionInfoController";
 import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
 import { DialogAddCategoryService } from "./services/business/DialogAddCategoryService";
+import { AllItemService } from "./services/business/AllItemService";
+import { AllItemController } from "./controller/business/AllItemController";
 
 // Both Client & Business
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
@@ -91,8 +93,14 @@ const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-// const promotionInfoService = new PromotionInfoService(knex);
-// const promotionInfoController = new PromotionInfoController(promotionInfoService);
+const promotionInfoService = new PromotionInfoService(knex);
+const promotionInfoController = new PromotionInfoController(
+  promotionInfoService
+);
+
+//For AllItem
+const allItemService = new AllItemService(knex);
+const allItemController = new AllItemController(allItemService);
 
 // Route Setup (Client & Business)
 app.use("/auth", userAuthController.router);
@@ -108,6 +116,7 @@ app.use("/initialState", itemPageController.router);
 app.use("/menuPreviews", menuPreviewController.router);
 // app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
+app.use("/AllItem", allItemController.router);
 
 // Route Setup (Business)
 app.use("/business/menuPreviews", menuPreviewController.router);

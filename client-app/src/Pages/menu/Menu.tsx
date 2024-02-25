@@ -87,7 +87,7 @@ export default function Menu() {
               onClick={() => navigate("/shopSelection")}
               className={`self-center btn btn-circle btn-sm`}
             >
-              <ChevronLeftIcon className="h-5 w-5 text-black" />
+              <ChevronLeftIcon className="h-5 w-5 text-green-800" />
             </button>
 
             {typeof result === "string"
@@ -107,7 +107,7 @@ export default function Menu() {
           </div>
           <div className="flex m-2">
             <div className="m-2 ">
-              <span className=" text-sm w-auto p-2 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+              <span className=" text-sm w-auto p-2 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white">
                 評論區
               </span>
             </div>
@@ -121,8 +121,8 @@ export default function Menu() {
         <hr className="mt-3" />
         <div className="flex ">
           {categoryNameList.map((category) => (
-            <div className="m-2">
-              <button className="flex w-auto p-2 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+            <div className="m-1">
+              <button className="flex w-auto p-2 bg-green-800 mt-2 rounded-2xl font-bold text-white">
                 {category.categoryName}
               </button>
             </div>
@@ -132,7 +132,6 @@ export default function Menu() {
         {typeof result !== "string"
           ? result.categoryItemList.map((cat) => (
               <div id={cat.categoryName}>
-                <hr />
                 <div className="m-5 font-bold">{cat.categoryName}</div>
                 <div>
                   {cat.itemsInformation.map((item) => {

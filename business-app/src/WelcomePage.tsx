@@ -25,6 +25,7 @@ const BusinessWelcome: React.FC = () => {
         },
         body: JSON.stringify({
           login_name: login_name,
+          shop_name: shop_name,
           login_password: password,
           contact_no: contact_no,
           area: area,
@@ -34,14 +35,20 @@ const BusinessWelcome: React.FC = () => {
       });
   
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // throw new Error('Network response was not ok');
       }
   
-      const data = await response.json(); // Assuming the server responds with JSON
+      const data = await response.json();
       
-      console.log(data); // Log the response data to the console
+      console.log(data);
+      
+      if (data.error) {
+        alert(data.error); // Alert the error message
+      } else {
+        // Handle successful response
+      }
     } catch (error) {
-      console.error('Fetch error:', error); // Log any error to the console
+      // console.error('Fetch error:', error);
     }
   };
 
@@ -58,7 +65,7 @@ const BusinessWelcome: React.FC = () => {
           <div style={{ fontSize: "24px", paddingBottom: "1rem" }}>
        
           <h3>登入名稱：{login_name}</h3>
-          <h3>店舖名稱名稱：{shop_name}</h3>
+          <h3>店舖名稱：{shop_name}</h3>
            <h3>登入密碼：{password}</h3> 
             <h3>聯絡電話：{contact_no}</h3>
             <h3>地域：{area}</h3>
