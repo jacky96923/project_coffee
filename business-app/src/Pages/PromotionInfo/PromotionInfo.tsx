@@ -16,17 +16,6 @@ export default function PromotionInfo() {
   console.log("check shopID", shopId);
 
   const promotionInfo = GetPromotionInfo(shopId);
-  //   | string
-  //   | {
-  //       images: Array<{
-  //         filename: string;
-  //         isCover: boolean;
-  //         isLogo: true;
-  //       }>[];
-  //       description: Array<{
-  //         description: string;
-  //       }>;
-  //     }
 
   const [logoSelectedFile, setLogoSelectedFile] = useState<File | null>(null);
   const [logoPreviewURL, setLogoPreviewURL] = useState<string | null>(null);

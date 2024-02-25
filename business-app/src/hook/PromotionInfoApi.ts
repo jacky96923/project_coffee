@@ -28,10 +28,6 @@ export function GetPromotionInfo(shopId: number) {
 }
 
 export const uploadPhoto = async (formData: FormData) => {
-  // console.log("-------API----formData:");
-  // formData.forEach((value, key) => {
-  //   console.log(key, value);
-  // });
   const res = await fetch(`${source}/PromotionInfo/uploads`, {
     method: "POST",
     headers: {
