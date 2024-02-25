@@ -35,14 +35,20 @@ const BusinessWelcome: React.FC = () => {
       });
   
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // throw new Error('Network response was not ok');
       }
   
-      const data = await response.json(); // Assuming the server responds with JSON
+      const data = await response.json();
       
-      console.log(data); // Log the response data to the console
+      console.log(data);
+      
+      if (data.error) {
+        alert(data.error); // Alert the error message
+      } else {
+        // Handle successful response
+      }
     } catch (error) {
-      console.error('Fetch error:', error); // Log any error to the console
+      // console.error('Fetch error:', error);
     }
   };
 

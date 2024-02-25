@@ -112,14 +112,23 @@ export class BusinessAuthController {
       res.status(400).json(result.message);
     }
   };
-
   businessRegister = async (req: Request, res: Response) => {
     try {
       const { login_name, shop_name, login_password, contact_no, area, district, address } = req.body;
-
+  
+      // Check if login_name already exists
+      const existingUser = await this.pool.query(
+        `SELECT * FROM shops WHERE login_name = $1`,
+        [login_name]
+      );
+  
+      if (existingUser.rows.length > 0) {
+        return res.status(400).json({ error: '請使用其他登入名稱註冊' });
+      }
+  
       // Hash the password
       const hashedPassword = await hashPassword(login_password);
-
+  
       // Insert hashed password into PostgreSQL
       const insertQuery = `
         INSERT INTO shops (login_name, shop_name, login_password, contact_no, area, district, address)
@@ -127,7 +136,7 @@ export class BusinessAuthController {
       `;
       const params = [login_name, shop_name, hashedPassword, contact_no, area || null, district || null, address || null];
       await this.pool.query(insertQuery, params);
-
+  
       res.status(200).json({
         login_name,
         shop_name,
@@ -141,4 +150,4 @@ export class BusinessAuthController {
       res.status(500).json({ success: false, error: 'Internal server error' });
     }
   };
-}
+}  
