@@ -1,5 +1,4 @@
 import Sidebar from "../../component/Sidebar";
-import AddItemTopBar from "../../component/AllItemTopBar";
 import styles from "../AllItem/AllItem.module.css";
 import ItemTable from "../../component/ItemTable";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +15,10 @@ export default function AllItem() {
 
   const [checkedItem, setCheckedItem] = useState<number[]>([]);
 
+  let updatedCheckedItem = [];
+
   const addToCheckedItem = (checkId: number) => {
-    const updatedCheckedItem = [...checkedItem];
+    updatedCheckedItem = [...checkedItem];
     updatedCheckedItem.push(checkId);
     setCheckedItem(updatedCheckedItem);
   };
@@ -41,6 +42,41 @@ export default function AllItem() {
         }>;
       }> = GetAllItem(shopId);
 
+  //for sorting onClick button
+  const [searchQuery, setSearchQuery] = useState("");
+
+  let searchResults: typeof items = [];
+  if (Array.isArray(items)) {
+    searchResults = items.map((entry) => ({
+      item: entry.item.filter((subEntry) =>
+        subEntry.itemName.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    }));
+  }
+
+  let sortItemTrue: typeof items = [];
+  console.log("check items", items);
+  if (Array.isArray(items)) {
+    sortItemTrue = items
+      .map((entry) => ({
+        item: entry.item.filter((subEntry) => subEntry.status === true),
+      }))
+      .filter((entry) => entry.item.length > 0);
+    console.log("check sortItemTrue", sortItemTrue);
+  }
+
+  let sortItemFalse: typeof items = [];
+  if (Array.isArray(items)) {
+    sortItemFalse = items
+      .map((entry) => ({
+        item: entry.item.filter((subEntry) => subEntry.status === false),
+      }))
+      .filter((entry) => entry.item.length > 0);
+    console.log("check sortItemTrue", sortItemFalse);
+  }
+  const [sortState, setSortState] = useState(items);
+  //for sorting onClick button
+
   const mutation = useMutation({
     mutationFn: async (checkedItem: number[]) => passCheckedItem(checkedItem),
     onSuccess: () =>
@@ -56,6 +92,8 @@ export default function AllItem() {
     } else {
       alert("請選擇產品");
     }
+    setCheckedItem([]);
+    updatedCheckedItem = [];
   };
 
   return (
@@ -76,7 +114,46 @@ export default function AllItem() {
           </div>
 
           <div className={styles.searchBar}>
-            <AddItemTopBar />
+            <div className="navbar bg-base-100 border-2 rounded-lg">
+              <div className="flex-1">
+                <span>分類:</span>
+                <a
+                  className="btn btn-ghost"
+                  onClick={() => setSortState(items)}
+                >
+                  所有
+                </a>
+                <a
+                  className="btn btn-ghost"
+                  onClick={() => setSortState(sortItemTrue)}
+                >
+                  供應中
+                </a>
+                <a
+                  className="btn btn-ghost"
+                  onClick={() => setSortState(sortItemFalse)}
+                >
+                  暫停中
+                </a>
+              </div>
+              <div className="flex-none gap-2">
+                <div className="form-control">
+                  <input
+                    type="text"
+                    placeholder="搜尋產品"
+                    className="input input-bordered w-24 md:w-auto"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                  />
+                </div>
+                <a
+                  className="btn btn-ghost"
+                  onClick={() => setSortState(searchResults)}
+                >
+                  搜尋
+                </a>
+              </div>
+            </div>
           </div>
           <div>
             <div className="overflow-x-auto">
@@ -87,6 +164,7 @@ export default function AllItem() {
                     <th></th>
                     <th>產品圖片</th>
                     <th>產品名稱</th>
+                    <th>產品大小</th>
                     <th>產品價格</th>
                     <th>產品類別</th>
                     <th>狀態</th>
@@ -97,10 +175,10 @@ export default function AllItem() {
                   {/* row 1 */}
                   {/* td is each cell */}
                   {/* th is only each check box */}
-                  {typeof items === "string"
+                  {typeof sortState === "string"
                     ? ""
-                    : items.length > 0
-                    ? items.map((entry) =>
+                    : sortState.length > 0
+                    ? sortState.map((entry) =>
                         entry.item.map((subEntry, index) => (
                           <ItemTable
                             key={index}

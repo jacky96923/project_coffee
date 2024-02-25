@@ -53,6 +53,7 @@ export default function ItemTable(props: ItemTableProps) {
         </div>
       </td>
       <td>{props.itemName}</td>
+      <td>{props.size === null ? "不適用" : props.size}</td>
       <td>{props.price}</td>
       <td>{props.type}</td>
       <td style={{ color: props.status === true ? "green" : "red" }}>
