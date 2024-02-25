@@ -65,7 +65,7 @@ const BusinessWelcome: React.FC = () => {
           <div style={{ fontSize: "24px", paddingBottom: "1rem" }}>
        
           <h3>登入名稱：{login_name}</h3>
-          <h3>店舖名稱名稱：{shop_name}</h3>
+          <h3>店舖名稱：{shop_name}</h3>
            <h3>登入密碼：{password}</h3> 
             <h3>聯絡電話：{contact_no}</h3>
             <h3>地域：{area}</h3>
