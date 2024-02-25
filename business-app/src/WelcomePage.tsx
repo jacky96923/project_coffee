@@ -25,6 +25,7 @@ const BusinessWelcome: React.FC = () => {
         },
         body: JSON.stringify({
           login_name: login_name,
+          shop_name: shop_name,
           login_password: password,
           contact_no: contact_no,
           area: area,
