@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { BusinessAuthService, UserAuthService } from "../services/AuthService";
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-
+import { hashPassword } from "../utils/hash";
 dotenv.config(); 
 export class UserAuthController {
   router = express.Router();
@@ -117,20 +117,21 @@ export class BusinessAuthController {
     try {
       const { login_name, shop_name, login_password, contact_no, area, district, address } = req.body;
 
-      // Insert data into PostgreSQL, handling optional fields
+      // Hash the password
+      const hashedPassword = await hashPassword(login_password);
+
+      // Insert hashed password into PostgreSQL
       const insertQuery = `
         INSERT INTO shops (login_name, shop_name, login_password, contact_no, area, district, address)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
       `;
-      const params = [login_name, shop_name, login_password, contact_no, area || null, district || null, address || null];
+      const params = [login_name, shop_name, hashedPassword, contact_no, area || null, district || null, address || null];
       await this.pool.query(insertQuery, params);
 
       res.status(200).json({
-        
         login_name,
         shop_name,
-        login_password,
-        contact_no,
+        login_password: hashedPassword,
         area,
         district,
         address
