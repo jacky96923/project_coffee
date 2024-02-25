@@ -12,8 +12,6 @@ import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
-import { CommentPage } from "./Pages/comments/CommentPage";
-import { CommentSummary } from "./Pages/comments/CommentSummary";
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
@@ -27,6 +25,8 @@ import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
 import BottomNavBar from "./components/BottomNavBar";
+import { CommentPage } from "./Pages/Comments/CommentPage";
+import { CommentSummary } from "./Pages/Comments/CommentSummary";
 
 function App() {
   // const hideNavBarRoutes = ['/itemPage/'];

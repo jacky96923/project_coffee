@@ -9,23 +9,32 @@ import Carousels from "../../components/Carousels";
 export default function MainPage() {
   const username = useSelector((state: RootState) => state.auth.user);
   return (
-    <div className="relative overflow-hidden bg-white mx-9 my-4">
+    <div className="relative overflow-hidden bg-white mx-5 my-4">
       <div className="drop-shadow-lg">
-        <h1 className="text-4xl font-bold tracking-tight sm:text-6xl m-2 p-4 bg-slate-200 rounded-lg">
-          歡迎{username? <>, <span className="">{username}</span></>:""}
+        <h1 className="text-3xl font-bold tracking-tight sm:text-6xl mt-4 rounded-lg">
+          歡迎
+          {username ? (
+            <>
+              , <span className="">{username}</span>
+            </>
+          ) : (
+            ""
+          )}
         </h1>
         <Search />
       </div>
-      <h2 className=" m-3 text-2xl font-bold tracking-tight ">今日最抵</h2>
+      <h2 className="text-2xl font-bold tracking-tight mb-3 text-center">
+        今日最抵
+      </h2>
       <div className="flex justify-center mx-auto ">
         <Carousels />
       </div>
       <MainThreeButton />
-      <h1 className="text-2xl font-bold m-2 border rounded-2xl		 ">
+      <div className="text-2xl font-bold   rounded-2xl	text-center	 ">
         最新消息
-      </h1>
+      </div>
       <img
-        src="https://flash-coffee.com/zh-hk/wp-content/uploads/sites/21/2022/06/HK-zh-set1-1080x1080jpg-600x600.jpg"
+        src="https://hillsandvalleys.ph/wp-content/uploads/2023/09/buy-1-get-1-promo-coffee-shop-1024x1024.webp"
         alt="image"
         className=" mt-3 w-76 h-auto rounded-2xl			"
       />

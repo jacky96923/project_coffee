@@ -2,12 +2,17 @@ import React, { useEffect } from "react";
 import styles from "./ShoppingCartPage.module.css";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { ConfirmClearCartModal, NoUserLoginModal, PickupModal } from "../../components/Modal";
+import {
+  ConfirmClearCartModal,
+  NoUserLoginModal,
+  PickupModal,
+} from "../../components/Modal";
 import ShoppingCartItem, { ItemProps } from "../../components/ShoppingCartItem";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function ShoppingCartPage() {
   const navigate = useNavigate();
@@ -58,7 +63,8 @@ export default function ShoppingCartPage() {
   // }, []);
 
   // All data received for this page
-  let shoppingCartPage = JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
+  let shoppingCartPage =
+    JSON.parse(localStorage.getItem("shoppingCart") as string) || undefined;
   console.log("shoppingCartPage", shoppingCartPage);
 
   // Shop Info
@@ -66,7 +72,7 @@ export default function ShoppingCartPage() {
   const shopName = shoppingCartPage?.shopName;
   const shopAddress = shoppingCartPage?.address;
 
-  // State for Shopping Cart Info 
+  // State for Shopping Cart Info
   // const [key, setKey] = useState(shoppingCartPage?.itemList.length)
   const itemListWithKey = shoppingCartPage?.itemList.map(
     (item: ItemProps, idx: number) => {
@@ -89,7 +95,7 @@ export default function ShoppingCartPage() {
   // const [rewardPoint, setRewardPoint] = useState(false)
   const [total, setTotal] = useState(0);
   const [discountedTotal, setDiscountedTotal] = useState(0);
-  const [noUserLoginModal, setNoUserLoginModal] = useState(false)
+  const [noUserLoginModal, setNoUserLoginModal] = useState(false);
 
   //
   useEffect(() => {
@@ -102,7 +108,7 @@ export default function ShoppingCartPage() {
   }, [total, discountedTotal]);
 
   const onDeleteItemHandler = (key: number) => {
-    if (shoppingCartPage.itemList.length>1){
+    if (shoppingCartPage.itemList.length > 1) {
       const itemToDeleteIndex = shoppingCartPage.itemList.findIndex(
         (item: ItemProps) => item.key === key
       );
@@ -112,7 +118,7 @@ export default function ShoppingCartPage() {
       setTotal(0);
       setDiscountedTotal(0);
     } else {
-      onSafeClearCartHandler()
+      onSafeClearCartHandler();
     }
   };
 
@@ -131,39 +137,47 @@ export default function ShoppingCartPage() {
     // setTotal(0);
     // setDiscountedTotal(0);
     // setSafeClearCartModal(false);
-    localStorage.removeItem("shoppingCart")
+    localStorage.removeItem("shoppingCart");
     setSafeClearCartModal(false);
-    navigate("/shopSelection")
+    navigate("/shopSelection");
   };
 
   const onCheckoutHandler = async () => {
-    // 1. check if there is user login 
-    if (localStorage.getItem("token")===null){
-      setNoUserLoginModal(true)
+    // 1. check if there is user login
+    if (localStorage.getItem("token") === null) {
+      setNoUserLoginModal(true);
     } else {
       // 2. if yes, create req.body for checkout fetch
-      const checkoutData = { shop_id: shopId , cart: itemListWithKey, pickupTime: pickupTime, total: total };
+      const checkoutData = {
+        shop_id: shopId,
+        cart: itemListWithKey,
+        pickupTime: pickupTime,
+        total: total,
+      };
       console.log("checkoutData", checkoutData);
-      console.log("cart in checkout", checkoutData.cart)
+      console.log("cart in checkout", checkoutData.cart);
       // 3. fetch to get the url for checkout
-      let result = await fetch("http://localhost:8100/stripe/create-checkout-session", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(checkoutData),
-      });
+      let result = await fetch(
+        "http://localhost:8100/stripe/create-checkout-session",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(checkoutData),
+        }
+      );
       // 4. direct to the url in question
       if (result.ok) {
         console.log("Request sent successfully");
-  
+
         // Fetch the session URL from the response
         const { url } = await result.json();
-  
+
         // Clear shopping cart in localStorage
-        localStorage.removeItem("shoppingCart")
-  
+        localStorage.removeItem("shoppingCart");
+
         // Redirect the user to the Stripe Checkout page
         window.location.href = url;
       }
@@ -175,44 +189,51 @@ export default function ShoppingCartPage() {
   };
 
   const onLoginHandler = () => {
-    navigate("/client-login")
-  }
+    navigate("/client-login");
+  };
 
   return (
     <div className={styles.container}>
       {/* header */}
-      <div className="flex border-b border-slate-700">
+      <div className="flex ">
         <button
           onClick={() => navigate(`/menu/${shopId}`)}
           className={`self-center btn btn-circle btn-sm`}
         >
-          <ChevronLeftIcon className="h-5 w-5 text-black" />
+          <ChevronLeftIcon className="h-5 w-5 text-green-800 " />
         </button>
         <div className="ml-3">
-          <h4 className="font-bold text-2xl">我的購物車</h4>
-          <h6>{shopName}</h6>
-          <p>{shopAddress}</p>
+          <h4 className="font-bold text-2xl ">我的購物車</h4>
         </div>
       </div>
+
+      <div className=" flex border-b border-slate-700">
+        <h6 className="m-1 ml-12 text-green-800 font-bold	">{shopName}</h6>
+        <div className="flex mt-1 ml-12">
+          <IoLocationSharp className="m-1 text-green-800" />
+          <p className=""> {shopAddress}</p>
+        </div>
+      </div>
+
       {/* shopping cart & buttons for edit cart */}
       <div className="overflow-y-auto h-1/3">
         {cart.map((item) => (
-              <ShoppingCartItem
-                key={item.key}
-                item={item}
-                onDelete={() => onDeleteItemHandler(item.key)}
-              />
-            ))}
+          <ShoppingCartItem
+            key={item.key}
+            item={item}
+            onDelete={() => onDeleteItemHandler(item.key)}
+          />
+        ))}
       </div>
       <div className="border-b border-slate-700">
         <button
-          className="block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white"
+          className="block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
           onClick={onMenuHandler}
         >
           增加産品
         </button>
         <button
-          className="block mx-auto w-72 my-1.5 border border-dark-brown rounded-2xl font-bold text-red-500"
+          className="block mx-auto w-72 my-1.5 border border-dark-green rounded-2xl font-bold text-red-500"
           onClick={onSafeClearCartHandler}
         >
           清空購物車
@@ -250,7 +271,7 @@ export default function ShoppingCartPage() {
       <div className="border-y border-slate-700">
         <h6 className="font-bold">選擇自取時間</h6>
         <button
-          className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white"
+          className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
           onClick={onPickupTimeHandler}
         >
           自取時間： {pickupTime} {/*use pickup time in localstorage*/}
@@ -265,15 +286,19 @@ export default function ShoppingCartPage() {
       <div className="flex justify-around my-1.5">
         <div>
           <h4>訂單總額</h4>
-          <h4>HK$ {discountedTotal}.00</h4>
+          <h4 className="font-bold	">HK$ {discountedTotal}.00</h4>
         </div>
         <button
-          className="border rounded-2xl w-16 border-black"
+          className="border rounded-2xl w-16 border-black text-green-800 font-bold	"
           onClick={onCheckoutHandler}
         >
           付款
         </button>
-        <NoUserLoginModal show={noUserLoginModal} onClose={()=>setNoUserLoginModal(false)} onLogin={onLoginHandler}/>
+        <NoUserLoginModal
+          show={noUserLoginModal}
+          onClose={() => setNoUserLoginModal(false)}
+          onLogin={onLoginHandler}
+        />
       </div>
     </div>
   );
