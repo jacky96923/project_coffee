@@ -3,6 +3,7 @@ import moment from "moment";
 
 export class OrderService {
     constructor(private knex: Knex) {}
+
     async getReceivedOrders(shopId: number){
         const currentDate = moment().format("YYYY-MM-DD")
         let completedTransactionList = await this.knex
@@ -17,8 +18,9 @@ export class OrderService {
         .join("kitchen", "transaction.id", "kitchen.transaction_id")
         .where("transaction.shop_id", shopId)
         .where("transaction.payment_status", "completed")
+        .where("transaction.pick_status", false)
 
-        console.log("completedTransactionList in service", completedTransactionList)
+        //console.log("completedTransactionList in service", completedTransactionList)
         
         let result = []
         for (let entry of completedTransactionList){
@@ -29,6 +31,7 @@ export class OrderService {
                     "order_entry.id as orderId",
                     "item.name as itemName",
                     "item.size as itemSize",
+                    "order_entry.quantity as quantity", 
                     this.knex.raw(
                         "json_agg(custom_option.name order by custom_option.id) as options"
                     )
@@ -44,14 +47,31 @@ export class OrderService {
                 .groupBy("item.name")
                 .groupBy("item.size")
     
-                console.log("ordersInTransaction in service", ordersInTransaction)
+                //console.log("ordersInTransaction in service", ordersInTransaction)
                 entry.orders = ordersInTransaction
                 entry.orderTime = moment(entry.orderTime).format("HH:mm")
                 entry.pickupTime = moment(entry.pickupTime).format("HH:mm")
                 result.push(entry)
             }
         }
+        return result
+    }
 
+    async updateCompletedOrder(transactionId: number){
+        let result = await this.knex("kitchen")
+        .update({transaction_done: true})
+        .where("kitchen.transaction_id", transactionId)
+        .returning("id")
+        //console.log("result in service", result)
+        return result
+    }
+
+    async updatePickupedOrder(transactionId: number){
+        let result = await this.knex("transaction")
+        .update({pick_status: true})
+        .where("id", transactionId)
+        .returning("id")
+        console.log("result in service", result)
         return result
     }
 }

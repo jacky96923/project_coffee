@@ -64,9 +64,6 @@ export default function BusinessLoginPage() {
       //   navigate("/main")
       }
 
-      // Dispatch the login action with the received data
-      dispatch(login(data));
-
       // Redirect the user to the profile page using useNavigate
       console.log("Attempting to navigate to /profile...");
       navigate("/");
