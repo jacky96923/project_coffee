@@ -96,7 +96,9 @@ export default function ItemPage() {
   const [cupSize, setCupSize] = useState("小杯");
   const [selectedSize, setSelectedSize] = useState("小杯");
   const [selectedSizeId, setSelectedSizeId] = useState(id);
-  const [selectedOptions, setSelectedOptions] = useState<{optionListName: string, optionName: string}[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<
+    { optionListName: string; optionName: string }[]
+  >([]);
   const [price, setPrice] = useState(
     typeof items === "string"
       ? ""
@@ -113,23 +115,26 @@ export default function ItemPage() {
       );
     }
   }, [items, cupSize]);
-//
+  //
   const getSelectedOption = useSelector(
     (state: RootState) => state.itemPage.item.optionList
   );
   //console.log("getSelected default", getSelectedOption);
-  
+
   useEffect(() => {
-    let displayOption: {optionListName: string, optionName: string}[] = [];
+    let displayOption: { optionListName: string; optionName: string }[] = [];
     getSelectedOption.forEach((entry) => {
-      displayOption.push({optionListName: entry.optionListName, optionName: entry.option.option_name});
+      displayOption.push({
+        optionListName: entry.optionListName,
+        optionName: entry.option.option_name,
+      });
     });
     //console.log("displayOption", displayOption)
     setSelectedOptions(displayOption);
     //console.log("ItemPageOptions Selected", selectedOptions);
   }, [getSelectedOption]);
   //console.log("selected outside useEffect", selectedOptions)
-//
+  //
   function sizeHandler(size: string) {
     setSelectedSize(size);
     if (typeof items !== "string") {
@@ -241,7 +246,9 @@ export default function ItemPage() {
             </div>
             <div className={styles.optionsWrap}>
               <div className={styles.optionsTitle}>
-                <div className={styles.itemh2}>自訂選項</div>
+                <div className={styles.itemh2}>
+                  <p className="p-2 ml-3">自訂選項</p>
+                </div>
               </div>
 
               {typeof items === "string"
@@ -251,7 +258,12 @@ export default function ItemPage() {
                     <ItemPageOptions
                       key={index}
                       optionListName={entry.option_list_name}
-                      selectedOption={selectedOptions.find((option)=>option.optionListName===entry.option_list_name)?.optionName || ""}
+                      selectedOption={
+                        selectedOptions.find(
+                          (option) =>
+                            option.optionListName === entry.option_list_name
+                        )?.optionName || ""
+                      }
                       itemId={selectedSizeId!}
                       // Pass the selected option at the same index
                     />
@@ -261,31 +273,33 @@ export default function ItemPage() {
             <div className={styles.addItemWrap}>
               <div className={styles.quantityWrap}>
                 <button
-                  className="btn btn-circle bg-slate-500 w-8 h-8"
+                  className="btn btn-circle  w-8 h-8"
                   onClick={decreaseQuantity}
                 >
-                  <MinusIcon className="fill-white w-6 h-5" />
+                  <MinusIcon className="text-black w-6 h-5" />
                 </button>
                 <div className={styles.count}>
-                  <div className="text-white">{quantity}</div>
+                  <div className="">{quantity}</div>
                 </div>
                 <button
-                  className="btn btn-circle bg-red-600 w-8 h-8"
+                  className="btn btn-circle  w-8 h-8"
                   onClick={increaseQuantity}
                 >
-                  <PlusIcon className="fill-white w-6 h-5" />
+                  <PlusIcon className=" w-6 h-5" />
                 </button>
               </div>
-              <button
-                className="btn rounded-full bg-yellow-900 px-28"
-                onClick={handleAddToCart}
-              >
-                <div className={styles.addItemContent}>
-                  <div className="text-white">加入購物車</div>
-                  <div className={styles.vl}></div>
-                  <div className="text-white">${subtotal}</div>
-                </div>
-              </button>
+              <div className={styles.shoppingCartButton}>
+                <button
+                  className="btn rounded-full bg-green-800 px-28"
+                  onClick={handleAddToCart}
+                >
+                  <div className={styles.addItemContent}>
+                    <div className="text-white">加入購物車</div>
+                    <div className={styles.vl}></div>
+                    <div className="text-white">${subtotal}</div>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>

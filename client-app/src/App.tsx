@@ -12,8 +12,6 @@ import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
-import { CommentPage } from "./Pages/comments/CommentPage";
-import { CommentSummary } from "./Pages/comments/CommentSummary";
 import { RootState } from "./store";
 import { useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
@@ -27,6 +25,8 @@ import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
 import BottomNavBar from "./components/BottomNavBar";
+import { CommentPage } from "./Pages/Comments/CommentPage";
+import { CommentSummary } from "./Pages/Comments/CommentSummary";
 
 function App() {
   // const hideNavBarRoutes = ['/itemPage/'];
@@ -35,7 +35,7 @@ function App() {
   // if (currentPath !== window.location.pathname){
   //   setCurrentPath(window.location.pathname)
   // }
-  
+
   // useEffect(()=>{
   //   if (hideNavBarRoutes.some(route => {
   //   if (route.endsWith('/')) {
@@ -52,37 +52,34 @@ function App() {
   // console.log("shouldHideNavBar", shouldHideNavBar)
 
   return (
-  <Router>
-    <div className="App mb-20">
-      <Routes>
-        <Route path="/" element={<Navigate to="/main"></Navigate>} />
-        <Route path="/client-login" element={<ClientLoginPage />} />
-        <Route path="/client-register" element={<ClientRegisterPage />} />
-        <Route path="/main" element={<ClientMainPage />} />
-        <Route path="/shopSelection" element={<ShopSelection />} />
-        <Route path="/myReward" element={<MyReward />} />
-        <Route
-          path="/menu/:shopId"
-          element={<Menu />}
-        />
-        <Route path="/itemPage/:id" element={<ItemPage />} />
-        <Route element={<CartGuard/>}>
-          <Route path="/shoppingCart" element={<ShoppingCartPage />} />
-        </Route>
+    <Router>
+      <div className="App mb-20">
+        <Routes>
+          <Route path="/" element={<Navigate to="/main"></Navigate>} />
+          <Route path="/client-login" element={<ClientLoginPage />} />
+          <Route path="/client-register" element={<ClientRegisterPage />} />
+          <Route path="/main" element={<ClientMainPage />} />
+          <Route path="/shopSelection" element={<ShopSelection />} />
+          <Route path="/myReward" element={<MyReward />} />
+          <Route path="/menu/:shopId" element={<Menu />} />
+          <Route path="/itemPage/:id" element={<ItemPage />} />
+          <Route element={<CartGuard />}>
+            <Route path="/shoppingCart" element={<ShoppingCartPage />} />
+          </Route>
 
-        <Route element={<AuthGuard />}>
-          <Route path="/myPage" element={<MyPage />} />
-          <Route path="/receipt/all" element={<AllReceipt />} />
-          <Route path="/receipt/:transactionId" element={<Receipt />} />
-          <Route path="/comment/:transactionId" element={<CommentPage />} />
-          <Route path="/commentSummary" element={<CommentSummary />} />
-          {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
-        </Route>
-      </Routes>
-    </div>
-    {/* {!shouldHideNavBar && <BottomNavBar/>} */}
-    <BottomNavBar/>
-  </Router>
+          <Route element={<AuthGuard />}>
+            <Route path="/myPage" element={<MyPage />} />
+            <Route path="/receipt/all" element={<AllReceipt />} />
+            <Route path="/receipt/:transactionId" element={<Receipt />} />
+            <Route path="/comment/:transactionId" element={<CommentPage />} />
+            <Route path="/commentSummary" element={<CommentSummary />} />
+            {/* <Route path="/checkoutCancel" element={<CheckoutCancel />} /> */}
+          </Route>
+        </Routes>
+      </div>
+      {/* {!shouldHideNavBar && <BottomNavBar/>} */}
+      <BottomNavBar />
+    </Router>
   );
 }
 
