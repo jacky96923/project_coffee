@@ -193,7 +193,7 @@ export default function ItemPage() {
         </div>
         <button
           onClick={() => navigate(-1)}
-          className={`btn btn-circle btn-sm ${styles.backButton}`}
+          className={`btn btn-circle btn-sm  ${styles.backButton}`}
         >
           <ChevronLeftIcon className="h-5 w-5 text-white" />
         </button>
@@ -248,6 +248,7 @@ export default function ItemPage() {
               <div className={styles.optionsWrap}>
                 <div className={styles.optionsTitle}>
                   <div className={styles.itemh2}>自訂選項</div>
+                  <hr />
                 </div>
 
                 {typeof items === "string"
@@ -271,26 +272,17 @@ export default function ItemPage() {
               </div>
               <div className={styles.addItemWrap}>
                 <div className={styles.quantityWrap}>
-                  <button
-                    className="btn btn-circle bg-slate-500 w-8 h-8"
-                    onClick={decreaseQuantity}
-                  >
-                    <MinusIcon className="fill-white w-6 h-5" />
+                  <button className="btn  " onClick={decreaseQuantity}>
+                    <MinusIcon className="fill-black size-5 " />
                   </button>
                   <div className={styles.count}>
-                    <div className="text-white">{quantity}</div>
+                    <div className="text-green-800">{quantity}</div>
                   </div>
-                  <button
-                    className="btn btn-circle bg-red-600 w-8 h-8"
-                    onClick={increaseQuantity}
-                  >
-                    <PlusIcon className="fill-white w-6 h-5" />
+                  <button className="btn " onClick={increaseQuantity}>
+                    <PlusIcon className="fill-black size-5" />
                   </button>
                 </div>
-                <button
-                  className="btn rounded-full bg-yellow-900 px-28"
-                  onClick={handleAddToCart}
-                >
+                <button className="btn bg-green-800" onClick={handleAddToCart}>
                   <div className={styles.addItemContent}>
                     <div className="text-white">加入購物車</div>
                     <div className={styles.vl}></div>
