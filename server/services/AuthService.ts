@@ -2,7 +2,6 @@ import { Knex } from "knex";
 import { comparePassword, hashPassword } from "../utils/hash";
 import jwtSimple from "jwt-simple";
 import jwt from "../utils/jwt";
-import { start } from "repl";
 
 export class UserAuthService {
   constructor(private knex: Knex) {}

@@ -5,6 +5,7 @@ export class ReceiptService {
   constructor(private knex: Knex) { }
   async getAllReceipts(userId: number) {
     let result = await this.knex
+      .distinct()
       .select(
         "transaction.id as transactionId",
         "transaction.order_time as orderTime",

@@ -65,7 +65,7 @@ export default function ItemPage() {
           optionList: firstValues.map((option) => ({
             optionListName: option.firstOptionList,
             option: option.firstOption,
-          })),
+          }))
         })
       );
     }

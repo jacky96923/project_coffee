@@ -30,7 +30,7 @@ function App() {
           <Route element={<AuthGuard/>}>
             <Route path="/main" element={<MainPage />} />{" "}
             <Route path="/MenuPreview" element={<MenuPreview />} />
-            <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />}/>
+            <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} /> // Change the type of BusinessChooseShopOpenTime
             <Route path="/receivedOrders" element={<ReceivedOrders/>}/>
             <Route path="/AllItem" element={<AllItem />} />
             <Route path="/AddItem" element={<AddItem />} />

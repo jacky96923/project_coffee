@@ -23,24 +23,32 @@ export default function AllReceipt() {
                 let ratedReceiptDataInEffect: any = []
                 let unratedReceiptDataInEffect: any = []
                 for (let dataEachDate of allReceiptData) {
+                    console.log("dataEachDate", dataEachDate)
+                    // get the date of the data dealing with
                     let dateForReceipts = dataEachDate.date
+
                     // construct ratedReceiptData entry and push into ratedReceiptData
                     const ratedReceiptsEachDate = dataEachDate.receipts.filter((receipt: any) => receipt.commented === true)
+                    console.log("ratedReceiptsEachDate", ratedReceiptsEachDate)
                     if (ratedReceiptsEachDate.length > 0) {
                         const ratedReceiptDataEntry = { date: dateForReceipts, receipts: ratedReceiptsEachDate }
-                        ratedReceiptDataInEffect = [...ratedReceiptData, ratedReceiptDataEntry]
+                        ratedReceiptDataInEffect.push(ratedReceiptDataEntry)
+                        console.log("ratedReceiptDataInEffect", ratedReceiptDataInEffect)
                     }
-                    // construct unratedReceiptData entry
+    
+                    // construct unratedReceiptData entry and push into ratedReceiptData
                     const unratedReceiptsEachDate = dataEachDate.receipts.filter((receipt: any) => receipt.commented !== true)
+                    console.log("unratedReceiptsEachDate", unratedReceiptsEachDate)
                     if (unratedReceiptsEachDate.length > 0) {
                         const unratedReceiptDataEntry = { date: dateForReceipts, receipts: unratedReceiptsEachDate }
-                        unratedReceiptDataInEffect = [...unratedReceiptData, unratedReceiptDataEntry]
+                        unratedReceiptDataInEffect.push(unratedReceiptDataEntry)
+                        console.log("unratedReceiptDataInEffect", unratedReceiptDataInEffect)
                     }
                     setRatedReceiptData(ratedReceiptDataInEffect)
                     setUnratedReceiptData(unratedReceiptDataInEffect)
-                    ratedReceiptDataInEffect = []
-                    unratedReceiptDataInEffect = []
                 }
+                // ratedReceiptDataInEffect = []
+                // unratedReceiptDataInEffect = []
             }
         } else {
             setGroupDataTimes(groupDataTimes + 1)
@@ -93,7 +101,7 @@ export default function AllReceipt() {
                     >
 
                         {/* <h6 className="font-bold mb-5 text-xs text-center">如無標記, 訂單紀錄將於6個月後自動刪除</h6> */}
-                        <div className="fixed inset-x-0 mx-auto w-2/3">
+                        <div className="fixed inset-x-0 mx-auto w-2/3 h-1/2 overflow-auto">
                             <table className="table table-zebra table-xs">
                                 {Array.isArray(allReceiptData) && allReceiptData.length > 0 ? allReceiptData.map((dateReceipts) => <>
                                     <thead>
@@ -153,7 +161,7 @@ export default function AllReceipt() {
                         className="tab-content p-10"
                         aria-labelledby="rated_orders_tab"
                     >
-                        <div className="fixed inset-x-0 mx-auto w-2/3">
+                        <div className="fixed inset-x-0 mx-auto w-2/3 h-1/2 overflow-auto">
                             <table className="table table-zebra table-xs">
                             {Array.isArray(ratedReceiptData) && ratedReceiptData.length > 0 ? ratedReceiptData.map((dateReceipts) => <>
                                 <thead>
@@ -195,7 +203,7 @@ export default function AllReceipt() {
                     className="tab-content p-10"
                     aria-labelledby="unrated_orders_tab"
                 >
-                     <div className="fixed inset-x-0 mx-auto w-2/3">
+                     <div className="fixed inset-x-0 mx-auto w-2/3 h-1/2 overflow-auto">
                             <table className="table table-zebra table-xs">
                             {Array.isArray(unratedReceiptData) && unratedReceiptData.length > 0 ? unratedReceiptData.map((dateReceipts) => <>
                                 <thead>

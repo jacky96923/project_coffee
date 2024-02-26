@@ -73,7 +73,6 @@ export default function ShoppingCartPage() {
   const shopAddress = shoppingCartPage?.address;
 
   // State for Shopping Cart Info
-  // const [key, setKey] = useState(shoppingCartPage?.itemList.length)
   const itemListWithKey = shoppingCartPage?.itemList.map(
     (item: ItemProps, idx: number) => {
       item.key = idx + 1;
