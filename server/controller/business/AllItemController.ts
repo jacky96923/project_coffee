@@ -18,7 +18,7 @@ export class AllItemController {
     let shopId = req.body.user_id;
     try {
       let result = await this.allItemService.getAllItem(shopId);
-      console.log("AllItem Con result", result);
+      // console.log("AllItem Con result", result);
       return res.json(result);
     } catch (error) {
       console.log("AllItem controller", error);
@@ -34,7 +34,7 @@ export class AllItemController {
         checkedItemList,
         shopId
       );
-      console.log("contoller", result);
+      // console.log("contoller", result);
       return res.json(result);
     } catch (error) {
       console.log("passCheckedItemController", error);

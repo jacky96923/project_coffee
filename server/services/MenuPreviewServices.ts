@@ -125,4 +125,23 @@ export class MenuPreviewService {
       return { message: "delete failed" };
     }
   }
+
+  async addItemToCat(itemId: number, categoryId: number) {
+    try {
+      // const catId = await this.knex("category")
+      //   .select("id")
+      //   .where("category.id", categoryId);
+
+      // const iId = await this.knex("item").select("id").where("item.id", itemId);
+
+      const result = await this.knex("category_item_relation").insert({
+        category_id: categoryId,
+        item_id: itemId,
+      });
+      return result;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
 }

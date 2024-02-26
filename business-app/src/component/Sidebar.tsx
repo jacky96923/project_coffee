@@ -23,7 +23,7 @@ export default function Sidebar() {
             src="https://i.pinimg.com/564x/e4/df/c4/e4dfc41fd3ec20e83c2da8da613e213b.jpg"
             alt=""
           />
-          <span className="text-2xl font-bold">Project Coffee</span>
+          <span className="text-2xl font-bold text-center">Project Coffee</span>
         </div>
         <ul className="flex flex-col items-center justify-center py-4 ">
           <li className="p-4 hover:bg-gray-700 text-center">

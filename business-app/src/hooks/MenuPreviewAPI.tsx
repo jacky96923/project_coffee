@@ -83,3 +83,23 @@ export async function DelItem(categoryId: number, itemId: number) {
 
   return result;
 }
+
+export async function AddItemToCat(categoryId: number, itemId: number[]) {
+  const resDelItem = await fetch(`${source}/menuPreviews/addItemToCat`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      // nameInput: updateCatName,
+      categoryId: categoryId,
+      itemId: itemId,
+    }),
+  });
+  // console.log("itemId", itemId);
+
+  const result = await resDelItem.json();
+  // console.log("result", result);
+
+  return result;
+}

@@ -13,13 +13,9 @@ export default function MainPage() {
       <div className="drop-shadow-lg">
         <h1 className="text-3xl font-bold tracking-tight sm:text-6xl mt-4 rounded-lg">
           歡迎
-          {username ? (
-            <>
-              , <span className="">{username}</span>
-            </>
-          ) : (
-            ""
-          )}
+          {username ? 
+            <>, <span className="">{username}</span></>
+           :""}
         </h1>
         <Search />
       </div>

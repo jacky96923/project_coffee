@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 const source = "http://localhost:8100";
 
-export function GetAllItem(shopId: number) {
+export function GetAllItem() {
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["getAllItem"],
     queryFn: async () => {
