@@ -93,10 +93,10 @@ const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-const promotionInfoService = new PromotionInfoService(knex);
-const promotionInfoController = new PromotionInfoController(
-  promotionInfoService
-);
+// const promotionInfoService = new PromotionInfoService(knex);
+// const promotionInfoController = new PromotionInfoController(
+//   promotionInfoService
+// );
 
 //For AllItem
 const allItemService = new AllItemService(knex);

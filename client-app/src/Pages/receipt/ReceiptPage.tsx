@@ -37,7 +37,7 @@ export default function Receipt() {
                         className={`self-center btn btn-circle btn-sm`}
                     >
                         <ChevronLeftIcon className="h-5 w-5 text-black" />
-                    </button>                    
+                    </button>
                     <h3 className="self-center ml-3">訂單收據</h3>
                 </div>
                 <BellIcon className="h-6 w-6" />
@@ -82,23 +82,27 @@ export default function Receipt() {
                         </div>
                     </li>
                     <li>
-                        <h6 className="font-bold mx-auto text-red-500 text-lg">{receiptData?.pickupStatus ? "已取餐" : "未取餐"}</h6>
+                        {receiptData?.pickupStatus ? <h6 className="font-bold mx-auto text-green-500 text-lg">已取餐</h6> : <h6 className="font-bold mx-auto text-red-500 text-lg">未取餐</h6>}
                     </li>
-                    {receiptData?.pickupStatus === false ? 
-                        receiptData?.commented === false? <>
-                        <li>
+                    {receiptData?.pickupStatus === true ?
+                        receiptData?.commented === false ? <>
+                            <li>
+                                <div>
+                                    <p><span className="font-bold">用餐愉快!</span><br />給予評價/意見可獲額外積分獎賞</p>
+                                </div>
+                            </li>
+                            <li>
+                                <button className="font-bold self-center" onClick={onCommentHandler}>立即評價!</button>
+                            </li>
+                        </>
+                            : <li>
+                                <button className="font-bold self-center">已評價</button>
+                            </li>
+                        : <li>
                             <div>
-                                <p><span className="font-bold">用餐愉快!</span><br />給予評價/意見可獲額外積分獎賞</p>
+                                <p>取餐後可給予<span className="font-bold">評價/意見</span><br /><span className="font-bold">以獲得額外積分獎賞</span></p>
                             </div>
                         </li>
-                        <li>
-                            <button className="font-bold self-center" onClick={onCommentHandler}>立即評價!</button>
-                        </li>
-                        </>
-                        : <li>
-                            <button className="font-bold self-center">已評價</button>
-                        </li>
-                    :""
                     }
                 </ul>
                 {/* item menu */}
