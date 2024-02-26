@@ -1,5 +1,5 @@
 import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type ItemTableProps = {
   key: number;
@@ -21,14 +21,40 @@ export default function ItemTable(props: ItemTableProps) {
   const addToCheckedItem = props.addToCheckedItem;
   const removeFromCheckedItem = props.removeFromCheckedItem;
 
-  const handleChange = (checkId: number) => {
+  useEffect(() => {
+    // Check if any other items have the same name as the current item
+    const itemsWithSameName = document.querySelectorAll(
+      `tr[data-item-name="${props.itemName}"]`
+    );
     if (checked) {
-      removeFromCheckedItem(checkId);
+      // If the current item is checked, check all items with the same name
+      itemsWithSameName.forEach((item) => {
+        item.classList.add("checked");
+        const itemId = parseInt(item.getAttribute("data-item-id") || "");
+        addToCheckedItem(itemId);
+      });
     } else {
-      addToCheckedItem(checkId);
+      // If the current item is unchecked, uncheck all items with the same name
+      itemsWithSameName.forEach((item) => {
+        item.classList.remove("checked");
+        const itemId = parseInt(item.getAttribute("data-item-id") || "");
+        removeFromCheckedItem(itemId);
+      });
     }
+  }, [checked, props.itemName, addToCheckedItem, removeFromCheckedItem]);
+
+  const handleChange = (checkId: number) => {
     setChecked(!checked);
   };
+
+  // const handleChange = (checkId: number) => {
+  //   if (checked) {
+  //     removeFromCheckedItem(checkId);
+  //   } else {
+  //     addToCheckedItem(checkId);
+  //   }
+  //   setChecked(!checked);
+  // };
 
   return (
     <tr>

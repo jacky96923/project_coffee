@@ -25,10 +25,10 @@ export default function AddItem() {
 
   const handleOptionAdd = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (radioTextValue.trim().length === 0) return;
-    const newOption = radioTextValue.toLowerCase().replace(" ", "-");
-    append({ option: newOption });
-    setRadioTextValue("");
+    // if (radioTextValue.trim().length === 0) return;
+    // const newOption = radioTextValue.toLowerCase().replace(" ", "-");
+    // append({ option: newOption });
+    // setRadioTextValue("");
   };
 
   // //for type radio button
@@ -60,9 +60,9 @@ export default function AddItem() {
   // }, [radioValue]);
   // //for radio button
 
-  // //for optionList
-  // const [optionList, setOptionList] = useState<string[]>([]);
-  // //for optionList
+  //for optionList
+  const [optionList, setOptionList] = useState<string[]>([]);
+  //for optionList
 
   return (
     <>
@@ -70,6 +70,8 @@ export default function AddItem() {
         <Sidebar />
         <div className={styles.content}>
           <div className={styles.pageTitle}>添加商品 </div>
+          {/* 3 types of changes: add, edit, delete */}
+
           <div className="border-2 border-black">
             <form>
               <div className="mb-4">
@@ -122,15 +124,13 @@ export default function AddItem() {
                 </label>
                 {/*radio button*/}
                 <div>
-                  <input
-                    type="text"
-                    placeholder="添加類別"
-                    className="input input-bordered input-xs w-25 max-w-xs"
-                    onChange={(e) => setRadioTextValue(e.target.value)}
-                  />
                   <button className="btn btn-sm" onClick={handleOptionAdd}>
-                    添加
+                    添加類別
                   </button>
+
+                  {/* multi select of created types from server */}
+                  {/* at least and at most 1 type must be selected */}
+                  {/* on type selected , display corresponding option lists and options ( editing won't be done here) */}
                 </div>
 
                 {fields.map((field, index) => (
