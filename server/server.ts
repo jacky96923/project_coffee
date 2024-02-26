@@ -14,6 +14,8 @@ const server = new http.Server(app);
 const io = new SocketIO(server, {
   cors: {
     origin: ["http://localhost:3000", "http://localhost:3001"],
+    methods: ["GET", "POST"], // Add the methods you want to allow
+    allowedHeaders: ["Content-Type"], // Add the headers you want to allow
   },
 });
 
@@ -83,10 +85,11 @@ const businessAuthController = new BusinessAuthController(businessAuthService);
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
 const dialogAddCategoryService = new DialogAddCategoryService(knex);
-const dialogAddCategoryController = new DialogAddCategoryController(dialogAddCategoryService);
-const orderService = new OrderService(knex)
-const orderController = new OrderController(orderService)
-
+const dialogAddCategoryController = new DialogAddCategoryController(
+  dialogAddCategoryService
+);
+const orderService = new OrderService(knex);
+const orderController = new OrderController(orderService);
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
@@ -122,8 +125,8 @@ app.use("/AllItem", allItemController.router);
 app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
-app.use("/orders", orderController.router)
-
+app.use("/orders", orderController.router);
+app.use("/shopopentime", businessAuthController.router);
 app.get("/hi", (req, res) => res.send("hi"));
 
 // Starting the Server

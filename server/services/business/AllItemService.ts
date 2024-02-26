@@ -32,5 +32,32 @@ export class AllItemService {
     }
   }
 
-  async changeItemStatus() {}
+  async changeItemStatus(checkedItemList: number[], shopId: number) {
+    try {
+      console.log("---changeItemStatus----service---", shopId);
+      console.log("---changeItemStatus----service---", checkedItemList);
+
+      let checkItemStatus = await this.knex("item")
+        .select("*")
+        .whereIn("id", checkedItemList)
+        .where("is_enabled", true);
+
+      if (checkItemStatus.length > 0) {
+        await this.knex("item")
+          .whereIn("id", checkedItemList)
+          .update({ is_enabled: false });
+        return { message: "items status changed to false" };
+      } else {
+        await this.knex("item")
+          .whereIn("id", checkedItemList)
+          .update({ is_enabled: true });
+        return { message: "items status changed to true" };
+      }
+    } catch (error) {
+      console.log("Error running changeItemStatus query", error);
+      return {
+        message: "Error running changeItemStatus query kill me please.",
+      };
+    }
+  }
 }

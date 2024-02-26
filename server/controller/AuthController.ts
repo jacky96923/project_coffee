@@ -100,6 +100,7 @@ export class BusinessAuthController {
     this.router.post("/BusinessLogin", this.businessLogin);
     this.router.post("/BusinessRegister", this.businessRegister);
     this.router.post("/info", this.businessRegister);
+    this.router.post("/api", this.businessRegister);
   }
 
   businessLogin = async (req: Request, res: Response) => {

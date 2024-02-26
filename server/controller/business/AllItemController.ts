@@ -6,7 +6,11 @@ export class AllItemController {
   router = express.Router();
   public constructor(private allItemService: AllItemService) {
     this.router.get("/getAllItem", isLoggedIn, this.getAllItem);
-    this.router.get("/getAllItem/passCheckedItem", isLoggedIn, this.getAllItem);
+    this.router.post(
+      "/getAllItem/passCheckedItem",
+      isLoggedIn,
+      this.passCheckedItem
+    );
   }
 
   getAllItem = async (req: Request, res: Response) => {
@@ -14,7 +18,7 @@ export class AllItemController {
     let shopId = req.body.user_id;
     try {
       let result = await this.allItemService.getAllItem(shopId);
-      console.log("AllItem Con result", result);
+      // console.log("AllItem Con result", result);
       return res.json(result);
     } catch (error) {
       console.log("AllItem controller", error);
@@ -23,9 +27,17 @@ export class AllItemController {
 
   passCheckedItem = async (req: Request, res: Response) => {
     let shopId = req.body.user_id;
-    let checkedItemList = req.body.json;
+    let checkedItemList = req.body.checkedItemList;
     console.log("passCheckedItem Controller", checkedItemList);
     try {
-    } catch (error) {}
+      let result = await this.allItemService.changeItemStatus(
+        checkedItemList,
+        shopId
+      );
+      // console.log("contoller", result);
+      return res.json(result);
+    } catch (error) {
+      console.log("passCheckedItemController", error);
+    }
   };
 }

@@ -11,6 +11,22 @@ export function BusinessChooseShopOpenTime() {
     "星期五",
     "星期六",
     "星期日",
+    "一月一日",
+    "農曆新年（初一）",
+    "農曆新年（初二）",
+    "農曆新年（初三）",
+    "農曆新年（初四）",
+    "耶穌受難節",
+    "復活節星期一",
+    "清明節",
+    "勞動節",
+    "佛誕",
+    "端午節",
+    "香港特別行政區成立紀念日",
+    "中秋節翌日",
+    "國慶日",
+    "重陽節",
+    "聖誕節",
   ];
 
   const PH = [
@@ -73,17 +89,17 @@ export function BusinessChooseShopOpenTime() {
       }
     });
 
-    console.log("Checked weekdays:", checkedWeekdays);
-    console.log("Checked public holidays:", checkedPHs);
 
     // Filter opening times based on checked weekdays
     const filteredOpeningTimes = openingTimes.filter(
       (time, index) => weekdayCheckboxStates[index]
     );
-
+    const checkedPH = openingTimes.filter(
+      (time, index) => PHCheckboxStates[index]
+    );
     // Log filtered opening times
-    console.log("Opening times:", filteredOpeningTimes);
-
+    console.log("Weekdays times:", filteredOpeningTimes);
+    console.log("PH times:", checkedPH);
     await fetch("/api/shop", {
       method: "POST",
       headers: {
@@ -216,17 +232,43 @@ export function BusinessChooseShopOpenTime() {
         <div className="flex-1">
           <h1>公眾假期</h1>
           {PH.map((event, index) => (
-            <div key={index} className="my-1">
-              <Checkbox
-                id={`event-checkbox-${index}`}
-                label={event}
-                ripple={true}
-                checked={PHCheckboxStates[index]}
-                onChange={() => handlePHCheckboxClick(index)}
-                crossOrigin={undefined}
-              />
-            </div>
-          ))}
+  <div key={index} className="my-1">
+    <Checkbox
+      id={`event-checkbox-${index}`}
+      label={event}
+      ripple={true}
+      checked={PHCheckboxStates[index]}
+      onChange={() => handlePHCheckboxClick(index)}
+      crossOrigin={undefined}
+    />
+    {PHCheckboxStates[index] && (
+      <div style={{ marginTop: "8px" }}>
+        <Input
+          type="text"
+          placeholder={`${event}...開店時間`}
+          style={{ marginLeft: "10px", width: "80%" }}
+          onChange={(e) =>
+            handleInputChange(index.toString(), "start", e.target.value)
+          }
+          crossOrigin={undefined}
+        />
+        <Input
+          type="text"
+          placeholder={`${event}...關門時間`}
+          onChange={(e) =>
+            handleInputChange(index.toString(), "end", e.target.value)
+          }
+          style={{
+            marginTop: "8px",
+            marginLeft: "10px",
+            width: "80%",
+          }}
+          crossOrigin={undefined}
+        />
+      </div>
+    )}
+  </div>
+))}
         </div>
       </div>
       <div className={styles.buttonContainer}>
