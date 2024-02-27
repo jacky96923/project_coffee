@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
- import regReducer from "./slices/RegSlice";
+import regReducer from "./slices/RegSlice";
+import itemReducer from "./slices/MainAddItemSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     reg: regReducer,
+    item: itemReducer,
   },
 });
 

@@ -11,8 +11,7 @@ import MenuPreview from "./Pages/MenuPreview/MenuPreview";
 import AllItem from "./Pages/AllItem/AllItem";
 import PromotionInfo from "./Pages/PromotionInfo/PromotionInfo";
 import { BusinessChooseShopOpenTime } from "./ShopOpenTime";
-import AddItem from "./Pages/AddItem/AddItem";
-
+import MainAddItem from "./Pages/AddItem/MainAddItem";
 import { AuthGuard } from "./AuthGuard";
 import ReceivedOrders from "./Pages/ReceivedOrders/ReceivedOrders";
 
@@ -25,15 +24,17 @@ function App() {
           <Route path="/businessRegister" element={<BusinessRegisterPage />} />
           <Route path="/businessLocation" element={<BusinessLocationPage />} />
           <Route path="/businessWelcome" element={<BusinessWelcome />} />{" "}
-          <Route path="/businessLogin" element={<BusinessLoginPage />}
-          />
-          <Route element={<AuthGuard/>}>
+          <Route path="/businessLogin" element={<BusinessLoginPage />} />
+          <Route element={<AuthGuard />}>
             <Route path="/main" element={<MainPage />} />{" "}
             <Route path="/MenuPreview" element={<MenuPreview />} />
-            <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />}/>
-            <Route path="/receivedOrders" element={<ReceivedOrders/>}/>
+            <Route
+              path="/ShopOpenTime"
+              element={<BusinessChooseShopOpenTime />}
+            />
+            <Route path="/receivedOrders" element={<ReceivedOrders />} />
             <Route path="/AllItem" element={<AllItem />} />
-            <Route path="/AddItem" element={<AddItem />} />
+            <Route path="/MainAddItem" element={<MainAddItem />} />
             <Route path="/PromotionInfo" element={<PromotionInfo />} />
           </Route>
         </Routes>

@@ -53,6 +53,8 @@ import { DialogAddCategoryController } from "./controller/business/DialogAddCate
 import { DialogAddCategoryService } from "./services/business/DialogAddCategoryService";
 import { AllItemService } from "./services/business/AllItemService";
 import { AllItemController } from "./controller/business/AllItemController";
+import { AddItemService } from "./services/business/AddItemService";
+import { AddItemController } from "./controller/business/AddItemController";
 
 // Both Client & Business
 import { BusinessAuthService, UserAuthService } from "./services/AuthService";
@@ -83,10 +85,11 @@ const businessAuthController = new BusinessAuthController(businessAuthService);
 const menuPreviewService = new MenuPreviewService(knex);
 const menuPreviewController = new MenuPreviewController(menuPreviewService);
 const dialogAddCategoryService = new DialogAddCategoryService(knex);
-const dialogAddCategoryController = new DialogAddCategoryController(dialogAddCategoryService);
-const orderService = new OrderService(knex)
-const orderController = new OrderController(orderService)
-
+const dialogAddCategoryController = new DialogAddCategoryController(
+  dialogAddCategoryService
+);
+const orderService = new OrderService(knex);
+const orderController = new OrderController(orderService);
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
@@ -101,6 +104,10 @@ const promotionInfoController = new PromotionInfoController(
 //For AllItem
 const allItemService = new AllItemService(knex);
 const allItemController = new AllItemController(allItemService);
+
+//For AddItem
+const addItemService = new AddItemService(knex);
+const addItemController = new AddItemController(addItemService);
 
 // Route Setup (Client & Business)
 app.use("/auth", userAuthController.router);
@@ -117,12 +124,13 @@ app.use("/menuPreviews", menuPreviewController.router);
 // app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 app.use("/AllItem", allItemController.router);
+app.use("/AddItem", addItemController.router);
 
 // Route Setup (Business)
 app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
-app.use("/orders", orderController.router)
+app.use("/orders", orderController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

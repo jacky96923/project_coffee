@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { GetAllItem, passCheckedItem } from "../../hooks/AllItemAPI";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function AllItem() {
@@ -21,6 +21,7 @@ export default function AllItem() {
     updatedCheckedItem = [...checkedItem];
     updatedCheckedItem.push(checkId);
     setCheckedItem(updatedCheckedItem);
+    console.log("addToCheckedItem", updatedCheckedItem);
   };
 
   const removeFromCheckedItem = (checkId: number) => {
@@ -44,6 +45,7 @@ export default function AllItem() {
 
   //for sorting onClick button
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortState, setSortState] = useState(items);
 
   let searchResults: typeof items = [];
   if (Array.isArray(items)) {
@@ -74,7 +76,6 @@ export default function AllItem() {
       .filter((entry) => entry.item.length > 0);
     console.log("check sortItemTrue", sortItemFalse);
   }
-  const [sortState, setSortState] = useState(items);
   //for sorting onClick button
 
   const mutation = useMutation({
@@ -92,9 +93,12 @@ export default function AllItem() {
     } else {
       alert("請選擇產品");
     }
+  };
+
+  useEffect(() => {
     setCheckedItem([]);
     updatedCheckedItem = [];
-  };
+  }, [items]);
 
   return (
     <>
