@@ -25,16 +25,16 @@ import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
 import BottomNavBar from "./components/BottomNavBar";
-import { CommentPage } from "./Pages/comments/CommentPage";
-import { CommentSummary } from "./Pages/comments/CommentSummary";
 import { showNavbar } from "./slices/navbarSlice";
+import { CommentPage } from "./Pages/Comments/CommentPage";
+import { CommentSummary } from "./Pages/Comments/CommentSummary";
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   // const hideNavBarRoutes = ['/itemPage/'];
   // const [currentPath, setCurrentPath] = useState("");
   // const [shouldHideNavBar, setShouldHideNavBar] = useState(false)
-  
+
   // useEffect(()=>{
   //   if (currentPath !== window.location.pathname){
   //     setCurrentPath(window.location.pathname)

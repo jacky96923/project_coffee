@@ -1,41 +1,83 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../component/Sidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import Header from "../../component/Header";
+import { GetShopInformation } from "../../hooks/MainAPI";
 
 function MainPage() {
-    const shop: string = useSelector((state: RootState) => state.auth.shop) as string
-    return (
+  const shopId: undefined | number = useSelector(
+    (state: RootState) => state.auth.shop_id
+  );
+  console.log("shop = ", shopId);
 
-        <div className="flex">
-            <Sidebar />
-            <div className="w-full">
-                <Header title={shop} />
-                <div className="hero min-h-screen bg-base-200">
-                    <div className="hero-content flex-row lg:flex-col">
-                        <div className="card w-96 bg-base-100 shadow-xl">
-                            <div className="card-body">
-                                <h2 className="card-title">Card title!</h2>
-                                <p>If a dog chews shoes whose shoes does he choose?</p>
-                                <div className="card-actions justify-end">
-                                    <button className="btn btn-primary">Buy Now</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex">
-                            <img src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg" className="max-w-sm rounded-lg shadow-2xl" />
-                            <div>
-                                <h1 className="text-5xl font-bold">商店簡介</h1>
-                                <p className="py-6">商店資料中的"介紹你的咖啡店"</p>
-                                <button className="btn btn-primary">Get Started</button>
-                            </div>
-                        </div>
+  const shopInfo: {
+    shop_name: string;
+    contact_no: number;
+    area: string;
+    district: string;
+    address: string;
+    description: string;
+    filename: string;
+  }[] = GetShopInformation(shopId as number);
+
+  return (
+    <div className="flex">
+      <Sidebar />
+
+      {Array.isArray(shopInfo) ? (
+        shopInfo.length > 0 ? (
+          shopInfo.map((info) => (
+            <div className="">
+              <div>
+                <Header title={info.shop_name} />
+              </div>
+              <div className="mt-20 bg-base-150 shadow-2xl m-10 rounded-2xl	">
+                <div className="hero-content flex-row lg:flex-col">
+                  <div>
+                    <div className="flex">
+                      <img
+                        src={info.filename}
+                        className="rounded-lg  mr-5 w-auto h-32 mt-20"
+                      />{" "}
+                      <div>
+                        <h1 className="text-3xl font-bold m-3">
+                          {info.shop_name}
+                        </h1>
+
+                        <hr />
+                        <p className="m-3 text-sm	">{info.description}</p>
+                        <p className="m-3 text-sm">
+                          {info.area}
+                          {info.district}
+                          {info.address}
+                        </p>
+                        <p className="m-3 text-sm">
+                          Tel: +852 {info.contact_no}
+                        </p>
+
+                        <button className="btn btn-primary m-3 text-sm">
+                          Edit
+                        </button>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
-    )
+          ))
+        ) : (
+          "No todo Items"
+        )
+      ) : typeof shopInfo === "string" && shopInfo === "Data is coming" ? (
+        <>
+          <img alt="loading" />
+          <h3>Loading</h3>
+        </>
+      ) : (
+        <>{shopInfo}</>
+      )}
+    </div>
+  );
 }
-
 export default MainPage;

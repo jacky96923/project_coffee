@@ -14,7 +14,6 @@ const server = new http.Server(app);
 const io = new SocketIO(server, {
   cors: {
     origin: ["http://localhost:3000", "http://localhost:3001"],
-    
   },
 });
 
@@ -63,6 +62,8 @@ import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 import { OrderService } from "./services/business/OrderService";
 import { OrderController } from "./controller/business/OrderController";
+import { MainService } from "./services/business/mainService";
+import { MainController } from "./controller/business/mainController";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -89,6 +90,8 @@ const dialogAddCategoryController = new DialogAddCategoryController(
 );
 const orderService = new OrderService(knex);
 const orderController = new OrderController(orderService);
+const mainService = new MainService(knex);
+const mainController = new MainController(mainService);
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
@@ -126,9 +129,9 @@ app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
 app.use("/orders", orderController.router);
 app.use("/shopopentime", businessAuthController.router);
+app.use("/mainPage", mainController.router);
+
 app.get("/hi", (req, res) => res.send("hi"));
-
-
 
 // Starting the Server
 const PORT = 8100;
