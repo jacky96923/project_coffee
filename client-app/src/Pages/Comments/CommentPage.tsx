@@ -66,7 +66,7 @@ export function CommentPage() {
     }
   };
 
-  // useEffect(() => {
+  // useEffect(() => {rating rating-md
   //   // Retrieve form data from local storage when component mounts
   //   const storedFormData = localStorage.getItem("commentFormData");
   //   if (storedFormData) {

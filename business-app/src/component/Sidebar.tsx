@@ -57,7 +57,7 @@ export default function Sidebar() {
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex cursor-pointer">
+            <div className="flex cursor-pointer" onClick={() => navigate("/businessComment")}>
               <FaCommentDots className="size-6" />
               <h3 className="ml-3">顧客評價</h3>
             </div>
