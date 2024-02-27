@@ -10,6 +10,7 @@ import MenuPreview from "./Pages/MenuPreview/MenuPreview";
 import AllItem from "./Pages/AllItem/AllItem";
 import PromotionInfo from "./Pages/PromotionInfo/PromotionInfo";
 import { BusinessChooseShopOpenTime } from "./ShopOpenTime";
+import MainAddItem from "./Pages/AddItem/MainAddItem";
 import AddItem from "./Pages/AddItem/AddItem";
 import { AuthGuard } from "./AuthGuard";
 import ReceivedOrders from "./Pages/ReceivedOrders/ReceivedOrders";
@@ -25,13 +26,17 @@ function App() {
           <Route path="/businessWelcome" element={<BusinessWelcome />} />
           <Route path="/businessLogin" element={<BusinessLoginPage />} />
           <Route path="/businessComment" element={<BusinessCommentPage />} />
-          <Route element={<AuthGuard/>}>
+          <Route element={<AuthGuard />}>
             <Route path="/main" element={<MainPage />} />{" "}
             <Route path="/MenuPreview" element={<MenuPreview />} />
-            <Route path="/ShopOpenTime" element={<BusinessChooseShopOpenTime />} /> // Change the type of BusinessChooseShopOpenTime
-            <Route path="/receivedOrders" element={<ReceivedOrders/>}/>
+            <Route
+              path="/ShopOpenTime"
+              element={<BusinessChooseShopOpenTime />}
+            />{" "}
+            // Change the type of BusinessChooseShopOpenTime
+            <Route path="/receivedOrders" element={<ReceivedOrders />} />
             <Route path="/AllItem" element={<AllItem />} />
-            <Route path="/AddItem" element={<AddItem />} />
+            <Route path="/MainAddItem" element={<MainAddItem />} />
             <Route path="/PromotionInfo" element={<PromotionInfo />} />
           </Route>
         </Routes>

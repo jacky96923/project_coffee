@@ -70,15 +70,15 @@ export function CommentPage() {
     }
   };
 
-  // useEffect(() => {rating rating-md
-  //   // Retrieve form data from local storage when component mounts
-  //   const storedFormData = localStorage.getItem("commentFormData");
-  //   if (storedFormData) {
-  //     const { rating, description } = JSON.parse(storedFormData);
-  //     setStar(rating);
-  //     setComment(description);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Retrieve form data from local storage when component mounts
+    const storedFormData = localStorage.getItem("commentFormData");
+    if (storedFormData) {
+      const { rating, description } = JSON.parse(storedFormData);
+      setStar(rating);
+      setComment(description);
+    }
+  }, []);
 
   return (
     <div>
