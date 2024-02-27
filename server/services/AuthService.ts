@@ -147,5 +147,21 @@ export class BusinessAuthService {
     } catch (error) {
       console.error("error:", error);
     }
+    //     async shopopentime(
+    //       openday: string,
+    //       opentime: number,
+    //       try {
+    //         return await this.knex
+    //           .insert({
+    // day: openday,
+    // start_time: opentime,
+    // end_time: closetime,
+    //           })
+    //           .into("opening_days")
+    //           .returning("*");
+    //       } catch (error) {
+    //         console.error("error:", error);
+    //       }
+    // )
   }
 }

@@ -3,13 +3,14 @@ import styles from "../AllItem/AllItem.module.css";
 import ItemTable from "../../component/ItemTable";
 import { useNavigate } from "react-router-dom";
 import { GetAllItem, passCheckedItem } from "../../hooks/AllItemAPI";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../store";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function AllItem() {
   const shopId: any = useSelector<RootState>((state) => state.auth.shop_id);
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -41,7 +42,24 @@ export default function AllItem() {
           status: boolean;
           type: string;
         }>;
-      }> = GetAllItem(shopId);
+      }> = GetAllItem();
+
+  //     let itemListForRedux: {
+  //   itemName: string;
+  //   itemId: number;
+  // }[] = [];
+
+  // if (Array.isArray(items)) {
+  //   itemListForRedux = items.map((entry) => {
+  //     for (let item of entry.item) {
+  //       return { itemId: item.itemId, itemName: item.itemName };
+  //     }
+  //   }) as {
+  //     itemName: string;
+  //     itemId: number;
+  //   }[];
+  // }
+  // dispatch(setInitialItemList(itemListForRedux));
 
   //for sorting onClick button
   const [searchQuery, setSearchQuery] = useState("");

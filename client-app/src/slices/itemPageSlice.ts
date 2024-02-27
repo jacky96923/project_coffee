@@ -65,7 +65,7 @@ export const itemPageSlice = createSlice({
         item_photo,
         size,
         price,
-        optionList,
+        optionList
       } = action.payload;
       state.shopId = shopId;
       state.shopName = shopName;
@@ -76,6 +76,7 @@ export const itemPageSlice = createSlice({
       state.item.size = size;
       state.item.price = price;
       state.item.optionList = optionList;
+      state.item.quantity = 1
     },
 
     cupPrice: (

@@ -45,8 +45,8 @@ import { MenuIdService } from "./services/client/MenuService";
 import { MenuController } from "./controller/client/MenuController";
 
 // Business-app
-import { MenuPreviewController } from "./controller/MenuPreviewController";
-import { MenuPreviewService } from "./services/MenuPreviewServices";
+import { MenuPreviewController } from "./controller/business/MenuPreviewController";
+import { MenuPreviewService } from "./services/business/MenuPreviewServices";
 import { PromotionInfoService } from "./services/business/PromotionInfoService";
 import { PromotionInfoController } from "./controller/business/PromotionInfoController";
 import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
@@ -64,6 +64,8 @@ import { CommentsController } from "./controller/CommentsController";
 import { CommentService } from "./services/CommentService";
 import { OrderService } from "./services/business/OrderService";
 import { OrderController } from "./controller/business/OrderController";
+import { MainService } from "./services/business/mainService";
+import { MainController } from "./controller/business/mainController";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -90,16 +92,18 @@ const dialogAddCategoryController = new DialogAddCategoryController(
 );
 const orderService = new OrderService(knex);
 const orderController = new OrderController(orderService);
+const mainService = new MainService(knex);
+const mainController = new MainController(mainService);
 
 // Instantiate CommentService and then CommentsController
 const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-const promotionInfoService = new PromotionInfoService(knex);
-const promotionInfoController = new PromotionInfoController(
-  promotionInfoService
-);
+// const promotionInfoService = new PromotionInfoService(knex);
+// const promotionInfoController = new PromotionInfoController(
+//   promotionInfoService
+// );
 
 //For AllItem
 const allItemService = new AllItemService(knex);
@@ -120,17 +124,18 @@ app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/receipt", receiptController.router);
 app.use("/initialState", itemPageController.router);
-app.use("/menuPreviews", menuPreviewController.router);
 // app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 app.use("/AllItem", allItemController.router);
 app.use("/AddItem", addItemController.router);
 
 // Route Setup (Business)
-app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
+app.use("/menuPreviews", menuPreviewController.router);
 app.use("/orders", orderController.router);
+app.use("/shopopentime", businessAuthController.router);
+app.use("/mainPage", mainController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

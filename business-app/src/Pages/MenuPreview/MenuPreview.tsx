@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../../component/Sidebar";
 
-import { FaEdit } from "react-icons/fa";
-import { IoIosAddCircle, IoIosCloseCircleOutline } from "react-icons/io";
+import {
+  IoIosAddCircle,
+  IoIosCloseCircleOutline,
+  IoIosOptions,
+} from "react-icons/io";
+import { IoIosAddCircleOutline } from "react-icons/io";
+
 import { IoClose } from "react-icons/io5";
 
 import { GetMenuPreview } from "../../hooks/MenuPreviewAPI";
@@ -10,6 +15,8 @@ import DialogEditCategory from "../../component/DialogEditCategory";
 import DialogAddCategory from "../../component/DialogAddCategory";
 import DialogDelCategory from "../../component/DialogDelCategory";
 import DialogDelItem from "../../component/DialogDelItem";
+import DialogAddItemToCat from "../../component/DialogAddItemToCat";
+import item from "../../slices/itemSlice";
 
 // Header component
 const Header = () => {
@@ -106,91 +113,92 @@ const MainContent = () => {
   };
 
   // itemAdd State
-  // const [itemAdd, setItemAdd] = useState(false);
-  // const itemAddClick = () => {
-  //   setItemAdd(true);
-  // };
-  // const ItemAddDialogClose = () => {
-  //   setItemAdd(false);
-  // };
+  const [itemAdd, setItemAdd] = useState(false);
+  const itemAddClick = (
+    targetCatId: number,
+    targetCatName: string,
+    targetItemId: number
+  ) => {
+    setOriginalCatId(targetCatId);
+    setOriginalCatName(targetCatName);
+    setOriginalItemId(targetItemId);
+    setItemAdd(true);
+  };
+  const ItemAddDialogClose = () => {
+    setItemAdd(false);
+  };
 
   return (
     <div className="main-content m-2 ">
       {/* Main content */}
-      <div className="Topic">
-        <h2 className="text-2xl m-8 font-bold underline">餐單預覽</h2>
-      </div>
-      <div className="content flex">
-        <div className="Type m-6">
+      <div className="flex justify-between m-5">
+        <div className="Topic">
+          <h2 className="text-2xl font-bold underline">餐單預覽</h2>
+        </div>
+        <div className="flex">
           {/* 類別 */}
           <div className="flex">
-            <div className="p-3 w-30 m-5 text-2xl font-bold ">類別</div>
+            <div className="text-2xl font-bold mr-3">新增類別</div>
             <button onClick={() => CatAddClick()}>
-              <IoIosAddCircle className="size-12  " />
+              <IoIosAddCircle className="size-10  mr-3" />
             </button>
           </div>
 
           {/* 產品 */}
-          <div className="flex">
-            <div className="p-3 w-30 m-5 text-2xl font-bold ">產品</div>
-            <div>
-              {/* <button onClick={itemAddClick}> */}
-              <IoIosAddCircle className="size-12  " />
-              {/* </button> */}
-            </div>
-          </div>
+          {/* <div className="flex">
+            <div className="text-2xl font-bold mr-3 ">產品</div>
+            <button onClick={() => itemAddClick()}>
+              <IoIosAddCircle className="size-10 mr-3 " />
+            </button>
+          </div> */}
         </div>
+      </div>
 
+      <div className="content flex">
         {/* Cat Button */}
-        <div className="cats + items">
+        <div className="cats + items m-3">
           {Array.isArray(menuCategoryItem) ? (
             menuCategoryItem.length > 0 ? (
-              menuCategoryItem.map((cat) => (
+              menuCategoryItem.map((cat, idx, menuCatItem) => (
                 <div className="">
-                  <div className="flex">
-                    <div className="Cat flex flex-wrap">
-                      <div className="flex justify-around  p-3 w-52 m-7 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white item-center">
-                        <button className="text-xl">
-                          {cat.category.categoryName}
-                          {/* {cat.category.categoryId} */}
-                        </button>
-                        <div className="flex justify-end">
-                          <button
-                            className=""
-                            onClick={() =>
-                              CatEditClick(
-                                cat.category.categoryId,
-                                cat.category.categoryName
-                              )
-                            }
-                          >
-                            <FaEdit className="w-6 h-7" />
-                          </button>
-                          <button
-                            onClick={() =>
-                              CatDelClick(
-                                cat.category.categoryId,
-                                cat.category.categoryName
-                              )
-                            }
-                          >
-                            <div className="ml-2">
-                              <IoIosCloseCircleOutline className=" w-8 h-8" />
-                            </div>
-                          </button>
-                        </div>
+                  <div className="flex justify-around  m-3 p-3 w-52 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white item-center">
+                    <button
+                      className="mr-2"
+                      onClick={() =>
+                        CatEditClick(
+                          cat.category.categoryId,
+                          cat.category.categoryName
+                        )
+                      }
+                    >
+                      <IoIosOptions className="w-6 h-7" />
+                    </button>
+                    <button className="text-xl mr-2">
+                      {cat.category.categoryName}
+                      {/* {cat.category.categoryId} */}
+                    </button>
+                    <button
+                      onClick={() =>
+                        CatDelClick(
+                          cat.category.categoryId,
+                          cat.category.categoryName
+                        )
+                      }
+                    >
+                      <div className="">
+                        <IoIosCloseCircleOutline className=" w-8 h-8" />
                       </div>
-                    </div>
+                    </button>
                   </div>
 
                   {/* All items */}
                   {typeof menuCategoryItem !== "string"
                     ? cat.itemsInformation.map((item: any) => (
-                        <div className="flex">
-                          <div className="item flex justify-start flex-wrap">
+                        <div className="flex shadow-xl rounded-2xl	m-10">
+                          <div className="item flex justify-start flex-wrap  ">
                             <div
                               key={item.id}
-                              className="grid grid-cols-2 min-w-0 w-150p h-40 border border-gray-300 mt-6 rounded-lg relative"
+                              className="grid grid-cols-2 min-w-0 w-150p h-40 border-gray-300 m-8 rounded-lg relative"
                               // onClick={itemPageHandle}
                             >
                               <div className="flex items-center justify-start m-2">
@@ -230,6 +238,23 @@ const MainContent = () => {
                         </div>
                       ))
                     : ""}
+                  {/* add item to cat button */}
+                  <div className="flex justify-center m-10">
+                    <div className="border-2	flex rounded-xl	  ">
+                      <span className="text-lg font-bold m-3 ">新增產品</span>
+                      <button
+                        onClick={() =>
+                          itemAddClick(
+                            cat.category.categoryId,
+                            cat.category.categoryName,
+                            cat.itemsInformation.id
+                          )
+                        }
+                      >
+                        <IoIosAddCircleOutline className="size-10  mr-3" />
+                      </button>
+                    </div>
+                  </div>
 
                   {
                     <DialogEditCategory
@@ -262,6 +287,14 @@ const MainContent = () => {
                       ItemId={originalItemId}
                       ItemName={originalItemName}
                       isShow={itemDel}
+                    />
+                  }
+                  {
+                    <DialogAddItemToCat
+                      onClose={ItemAddDialogClose}
+                      categoryId={originalCatId}
+                      categoryName={originalCatName}
+                      isShow={itemAdd}
                     />
                   }
                 </div>

@@ -20,7 +20,7 @@ export default function ShopSelection() {
           尋找咖啡店
         </h1>
       </div>
-      <hr className="bg-green-800 h-0.5" />
+      <hr />
       <Search />
       <br />
       <br />

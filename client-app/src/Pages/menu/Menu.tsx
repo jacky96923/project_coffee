@@ -163,7 +163,7 @@ export default function Menu() {
                           />
                         </div>
                         <div className="flex flex-col overflow-hidden m-2">
-                          <span className="text-base m-2 font-bold">
+                          <span className="text-base m-2 font-bold text-green-800">
                             {item.name}
                           </span>
                           <span className="text-xs m-2 truncate">

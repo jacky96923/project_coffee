@@ -12,8 +12,8 @@ import ShoppingCartPage from "./Pages/shoppingCart/ShoppingCartPage";
 import ClientLoginPage from "./Pages/login/LoginPage";
 import ClientRegisterPage from "./Pages/register/RegisterPage";
 import ClientMainPage from "./Pages/main/MainPage";
-import { RootState } from "./store";
-import { useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store";
+import { useDispatch, useSelector } from "react-redux";
 import ShopSelection from "./Pages/shopSelection/ShopSelection";
 import Menu from "./Pages/menu/Menu";
 import MyReward from "./Pages/myReward/MyReward";
@@ -25,31 +25,32 @@ import { AuthGuard } from "./AuthGuard";
 import CheckoutCancel from "./Pages/shoppingCart/CheckoutCancel";
 import { CartGuard } from "./CartGuard";
 import BottomNavBar from "./components/BottomNavBar";
+import { showNavbar } from "./slices/navbarSlice";
 import { CommentPage } from "./Pages/comments/CommentPage";
 import { CommentSummary } from "./Pages/comments/CommentSummary";
 
 function App() {
+  const dispatch = useDispatch<AppDispatch>();
   // const hideNavBarRoutes = ['/itemPage/'];
   // const [currentPath, setCurrentPath] = useState("");
   // const [shouldHideNavBar, setShouldHideNavBar] = useState(false)
-  // if (currentPath !== window.location.pathname){
-  //   setCurrentPath(window.location.pathname)
-  // }
 
   // useEffect(()=>{
+  //   if (currentPath !== window.location.pathname){
+  //     setCurrentPath(window.location.pathname)
+  //   }
   //   if (hideNavBarRoutes.some(route => {
-  //   if (route.endsWith('/')) {
-  //     return currentPath.startsWith(route);
-  //   } else {
-  //     return currentPath === route;
-  //   }
-  //   })) {
-  //     setShouldHideNavBar(true)
-  //   } else {
-  //     setShouldHideNavBar(false)
-  //   }
-  // }, [currentPath])
-  // console.log("shouldHideNavBar", shouldHideNavBar)
+  //     if (route.endsWith('/')) {
+  //       return currentPath.startsWith(route);
+  //     } else {
+  //       return currentPath === route;
+  //     }})) {
+  //       setShouldHideNavBar(true)
+  //     } else {
+  //       setShouldHideNavBar(false)
+  //     }
+  //     console.log("shouldHideNavBar", shouldHideNavBar)
+  //   }, [currentPath])
 
   return (
     <Router>

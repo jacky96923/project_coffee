@@ -61,11 +61,11 @@ export default function ItemPageOptions(props: ItemPageOptionsProps) {
     <>
       <div className={optionsButtons} onClick={() => slideHandler()}>
         <div className={styles.options}>
-          <div className="pl-3 pb-3 text-xl">{props.optionListName}</div>
+          <div className="pl-3 pb-3 text-sm">{props.optionListName}</div>
 
           <div className="flex font-bold pb-3">
-            <p className="pr-2 text-xl">{props.selectedOption}</p>
-            <ChevronRightIcon className="h-7 w-7 pr-2" />
+            <p className="pr-2 text-sm">{props.selectedOption}</p>
+            <ChevronRightIcon className="h-7 w-7 pr-2 text-green-800" />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
-import { MenuPreviewService } from "../services/MenuPreviewServices";
+import { MenuPreviewService } from "../../services/business/MenuPreviewServices";
 
 export class MenuPreviewController {
   router = express.Router();
@@ -9,6 +9,7 @@ export class MenuPreviewController {
     this.router.put("/updateCategoryName", this.updateCategoryName);
     this.router.delete("/deleteCategoryName", this.deleteCategoryName);
     this.router.delete("/deleteItem", this.deleteItem);
+    this.router.put("/addItemToCat", this.addItemToCat);
   }
 
   menuPreview = async (req: Request, res: Response) => {
@@ -34,7 +35,7 @@ export class MenuPreviewController {
 
     let result = await this.menuPreviewService.getMenuPreview(shopId);
 
-    console.log("result", result);
+    //console.log("result", result);
 
     // menuList = result
     // for (const menus of result) {
@@ -157,8 +158,8 @@ export class MenuPreviewController {
   };
 
   deleteItem = async (req: Request, res: Response) => {
-    let categoryId = Number(req.body.categoryId);
-    let itemId = Number(req.body.itemId);
+    let categoryId: number = req.body.categoryId;
+    let itemId: number[] = req.body.itemId;
     console.log("categoryId", categoryId);
     console.log("itemId", itemId);
 
@@ -170,5 +171,20 @@ export class MenuPreviewController {
     // console.log("UpdateCategoryName", UpdateCategoryName);
 
     res.status(200).json(DeleteItem);
+  };
+
+  addItemToCat = async (req: Request, res: Response) => {
+    let categoryId: number = req.body.categoryId;
+    let itemId: number[] = req.body.itemId;
+    console.log("categoryId", categoryId);
+    console.log("itemId", itemId);
+
+    let AddItem = await this.menuPreviewService.addItemToCat(
+      itemId,
+      categoryId
+    );
+    // console.log("UpdateCategoryName", UpdateCategoryName);
+
+    res.status(200).json(AddItem);
   };
 }
