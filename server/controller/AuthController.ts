@@ -100,7 +100,7 @@ export class BusinessAuthController {
     this.router.post("/BusinessLogin", this.businessLogin);
     this.router.post("/BusinessRegister", this.businessRegister);
     this.router.post("/info", this.businessRegister);
-    this.router.post("/api", this.businessRegister);
+    this.router.post("/api", this.addOpeningDays);
   }
 
   businessLogin = async (req: Request, res: Response) => {
@@ -150,5 +150,31 @@ export class BusinessAuthController {
       console.error('Error inserting data:', error);
       res.status(500).json({ success: false, error: 'Internal server error' });
     }
+    
   };
-}  
+  addOpeningDays = async (req: Request, res: Response) => {
+    try {
+      const { openingTimes } = req.body;
+      console.log(openingTimes)
+
+      for (let i = 0; i < openingTimes.length; i++) {
+        const { day, start_time, close_time, shop_id } = openingTimes[i];
+        console.log({day, start_time, close_time})
+
+        const insertQuery = `
+        INSERT INTO opening_days (day, start_time, close_time)
+        VALUES ($1, $2, $3)
+      `;
+      const params = [day, start_time, close_time];
+      await this.pool.query(insertQuery, params);
+
+      }
+      // Insert data into the opening_days table using the Pool instance
+
+      res.status(200).json({ success: true, message: 'hello' });
+    } catch (error) {
+      console.error('Error inserting opening days:', error);
+      res.status(500).json({ success: false, error: 'hello' });
+    }
+  };
+}

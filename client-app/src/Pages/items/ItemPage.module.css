@@ -11,9 +11,8 @@
   /* position: sticky;
   top: 0.5rem;
   z-index: 3; */
-  margin-top: 2.5rem;
-  margin-left: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 4rem;
+  margin-left: 1rem;
 }
 
 .itemImg {
@@ -38,6 +37,7 @@
   width: 20rem;
   display: flex;
   align-items: center;
+  border-radius: 10px;
 }
 
 .itemName {
@@ -75,7 +75,7 @@
   color: green;
   font-size: 25px;
   font-weight: bold;
-  margin: 10px;
+  margin: 5px;
 }
 
 .divider {
@@ -110,16 +110,15 @@
   height: auto;
   position: fixed;
   bottom: 0;
+
 }
 
 .quantityWrap {
-  background-color: rgba(0, 0, 0, 0.33);
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 .shoppingCartButton {
-  background-color: rgba(0, 0, 0, 0.33);
   display: flex;
   justify-content: center;
 }
@@ -127,6 +126,7 @@
 .addItemContent {
   display: flex;
   justify-content: space-around;
+  
 }
 
 .vl {
@@ -137,18 +137,17 @@
 }
 
 .optionsWrap {
-  width: 100%;
-}
+  width: 90%;
 
+}
+/* 
 .optionsTitle {
   background-color: lightgrey;
-}
+} */
 
 .count {
-  border-radius: 20rem;
   display: flex;
   justify-content: center;
   width: 10rem;
-  background-color: slategrey;
-  font-size: x-large;
+  font-size: 20px;
 }

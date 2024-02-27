@@ -6,7 +6,7 @@ export default function MyCoupon() {
         // className="rounded-full border-solid border-2 border-sky-500"
         style={{
           display: "grid",
-          border: "1px solid grey",
+          border: "1px solid green",
           margin: "3px",
           gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
           borderRadius: "10px",

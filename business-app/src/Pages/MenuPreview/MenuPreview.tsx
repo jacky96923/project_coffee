@@ -161,63 +161,44 @@ const MainContent = () => {
             menuCategoryItem.length > 0 ? (
               menuCategoryItem.map((cat, idx, menuCatItem) => (
                 <div className="">
-                  <div className=" flex justify-between m-3">
-                    <div className="flex justify-around  p-3 w-52 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white item-center">
-                      <button
-                        className="mr-2"
-                        onClick={() =>
-                          CatEditClick(
-                            cat.category.categoryId,
-                            cat.category.categoryName
-                          )
-                        }
-                      >
-                        <IoIosOptions className="w-6 h-7" />
-                      </button>
-                      <button className="text-xl mr-2">
-                        {cat.category.categoryName}
-                        {/* {cat.category.categoryId} */}
-                      </button>
-                      <button
-                        onClick={() =>
-                          CatDelClick(
-                            cat.category.categoryId,
-                            cat.category.categoryName
-                          )
-                        }
-                      >
-                        <div className="">
-                          <IoIosCloseCircleOutline className=" w-8 h-8" />
-                        </div>
-                      </button>
-                    </div>
-
-                    <div className="flex">
-                      <span className="text-lg font-bold mr-3">
-                        新增產品到種類
-                      </span>
-                      <button
-                        onClick={() =>
-                          itemAddClick(
-                            cat.category.categoryId,
-                            cat.category.categoryName,
-                            cat.itemsInformation.id
-                          )
-                        }
-                      >
-                        <IoIosAddCircleOutline className="size-10  mr-3" />
-                      </button>
-                    </div>
+                  <div className="flex justify-around  m-3 p-3 w-52 text-2xl font-bold bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl  text-white item-center">
+                    <button
+                      className="mr-2"
+                      onClick={() =>
+                        CatEditClick(
+                          cat.category.categoryId,
+                          cat.category.categoryName
+                        )
+                      }
+                    >
+                      <IoIosOptions className="w-6 h-7" />
+                    </button>
+                    <button className="text-xl mr-2">
+                      {cat.category.categoryName}
+                      {/* {cat.category.categoryId} */}
+                    </button>
+                    <button
+                      onClick={() =>
+                        CatDelClick(
+                          cat.category.categoryId,
+                          cat.category.categoryName
+                        )
+                      }
+                    >
+                      <div className="">
+                        <IoIosCloseCircleOutline className=" w-8 h-8" />
+                      </div>
+                    </button>
                   </div>
 
                   {/* All items */}
                   {typeof menuCategoryItem !== "string"
                     ? cat.itemsInformation.map((item: any) => (
-                        <div className="flex">
-                          <div className="item flex justify-start flex-wrap">
+                        <div className="flex shadow-xl rounded-2xl	m-10">
+                          <div className="item flex justify-start flex-wrap  ">
                             <div
                               key={item.id}
-                              className="grid grid-cols-2 min-w-0 w-150p h-40 border border-gray-300 m-3 rounded-lg relative"
+                              className="grid grid-cols-2 min-w-0 w-150p h-40 border-gray-300 m-8 rounded-lg relative"
                               // onClick={itemPageHandle}
                             >
                               <div className="flex items-center justify-start m-2">
@@ -257,6 +238,23 @@ const MainContent = () => {
                         </div>
                       ))
                     : ""}
+                  {/* add item to cat button */}
+                  <div className="flex justify-center m-10">
+                    <div className="border-2	flex rounded-xl	  ">
+                      <span className="text-lg font-bold m-3 ">新增產品</span>
+                      <button
+                        onClick={() =>
+                          itemAddClick(
+                            cat.category.categoryId,
+                            cat.category.categoryName,
+                            cat.itemsInformation.id
+                          )
+                        }
+                      >
+                        <IoIosAddCircleOutline className="size-10  mr-3" />
+                      </button>
+                    </div>
+                  </div>
 
                   {
                     <DialogEditCategory
