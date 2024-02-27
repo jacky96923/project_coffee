@@ -5,23 +5,37 @@ import { Textarea } from '@material-tailwind/react';
 const MenuPreview = () => {
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    // Fetch comments data from your backend service
-    fetch('http://localhost:8100/comments/rating')
-      .then(response => {
+
+
+    // Perform the POST request when the component mounts
+    const fetchData = async () => {
+      try {
+        const formData = {
+          // construct your form data here
+        };
+
+        const response = await fetch("http://localhost:8100/comments/rating", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
-        return response.json();
-      })
-      .then(data => {
-        // Set the fetched comments data to the state
-        setComments(data);
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-  }, []);  // Empty dependency array means this effect runs only once when the component mounts
+
+        const responseData = await response.json();
+        console.log("Response data:", responseData);
+
+      } catch (error) {
+        console.error("There was a problem with your fetch operation:", error);
+        // Handle error here
+      }
+    };
+
+    fetchData(); // Call the function to perform the POST request
 
   // Define the default value for the textarea
   const defaultValue = "This is the content of the first row.\n\n";
@@ -48,7 +62,7 @@ const MenuPreview = () => {
             defaultValue={defaultValue} // Set the default value
             readOnly // Make the textarea un-editable
           />
-          <div className="absolute top-0 right-0 mt-2">
+          <div className="absolute top-0 right-0 mt-2 non-clickable">
             <div className="rating rating-md px-2">
               {[1, 2, 3, 4, 5].map((star, index) => (
                 <input
