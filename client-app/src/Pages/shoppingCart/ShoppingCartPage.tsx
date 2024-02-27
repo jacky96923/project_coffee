@@ -224,7 +224,7 @@ export default function ShoppingCartPage() {
           />
         ))}
       </div>
-      <div className="border-b border-slate-700">
+      <div className=" ">
         <button
           className="block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
           onClick={onMenuHandler}
@@ -232,7 +232,7 @@ export default function ShoppingCartPage() {
           增加産品
         </button>
         <button
-          className="block mx-auto w-72 my-1.5 border border-dark-green rounded-2xl font-bold text-red-500"
+          className="block mx-auto w-72 my-1.5 border border-dark-green rounded-2xl font-bold text-red-500 mt-3 mb-2"
           onClick={onSafeClearCartHandler}
         >
           清空購物車
@@ -245,30 +245,20 @@ export default function ShoppingCartPage() {
       </div>
       {/* Discount & bill total */}
       <div className="border-b border-slate-700">
-        <h6 className="font-bold">訂單總結</h6>
+        <h6 className="font-bold m-2">訂單總結</h6>
       </div>
-      <div className="border-b border-slate-700">
-        <button className="block mx-auto font-bold text-tahiti">
+      <div className="border-b border-slate-700 m-2">
+        <button className="block mx-auto font-bold text-tahiti m-1">
           + 使用優惠卷
         </button>
-        <button className="block mx-auto font-bold text-tahiti">
+        <button className="block mx-auto font-bold text-tahiti m-2">
           + 使用積分
         </button>
       </div>
-      <div className="w-5/6 mx-auto">
-        <div className="flex justify-around my-1.5">
-          <h6 className="font-bold">小計</h6>
-          <p className="font-bold">${total}</p>
-        </div>
-        <div className="flex justify-around my-1.5">
-          <h6 className="font-bold">總額</h6>
-          <p className="font-bold">${discountedTotal}</p>
-        </div>
-        <div></div>
-      </div>
+
       {/* Pickup Time */}
-      <div className="border-y border-slate-700">
-        <h6 className="font-bold">選擇自取時間</h6>
+      <div className="">
+        <h6 className="font-bold m-2">選擇自取時間</h6>
         <button
           className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
           onClick={onPickupTimeHandler}
@@ -281,8 +271,20 @@ export default function ShoppingCartPage() {
           onClose={() => setPickupModal(false)}
         ></PickupModal>
       </div>
+      <div className="w-5/6 mx-auto">
+        <div className="flex justify-around my-1.5">
+          <h6 className="font-bold">小計</h6>
+          <p className="font-bold">${total}</p>
+        </div>
+        <div className="flex justify-around my-1.5">
+          <h6 className="font-bold">總額</h6>
+          <p className="font-bold">${discountedTotal}</p>
+        </div>
+        <div></div>
+      </div>
+
       {/* Checkout */}
-      <div className="flex justify-around my-1.5">
+      <div className="flex justify-around m-5">
         <div>
           <h4>訂單總額</h4>
           <h4 className="font-bold	">HK$ {discountedTotal}.00</h4>
