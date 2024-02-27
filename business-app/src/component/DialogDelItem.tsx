@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DelItem } from "../hooks/MenuPreviewAPI";
+import { GetAllItem } from "../hooks/AllItemAPI";
 
 interface EditDialogProps {
   onClose: () => void;
@@ -17,9 +18,34 @@ const DialogDelItem: React.FC<EditDialogProps> = ({
   categoryId,
   ItemId,
   ItemName,
-
   isShow,
 }) => {
+  const items:
+    | string
+    | Array<{
+      item: Array<{
+        itemId: number;
+        itemName: string;
+        itemPhoto: string;
+        size: string | null;
+        price: number;
+        status: boolean;
+        type: string;
+      }>;
+    }> = GetAllItem();
+
+  let itemWithDuplicateId: number[] = []
+
+  if (Array.isArray(items)) {
+    for (let item of items) {
+      if (item.item[0].itemName === ItemName) {
+        itemWithDuplicateId.push(item.item[0].itemId)
+      }
+    }
+  }
+
+  console.log("itemWithDuplicateId", itemWithDuplicateId)
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     onClose();
@@ -30,20 +56,15 @@ const DialogDelItem: React.FC<EditDialogProps> = ({
     onClose();
   };
 
-  // useSelector
-  // const categoryId = 1;
-
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (iId: number) => DelItem(categoryId, ItemId),
+    mutationFn: async (iId: number[]) => DelItem(categoryId, iId),
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ["menuPreview"],
         exact: true,
       }),
   });
-
-  const [delItemInput, setDelItemInput] = useState(NaN);
 
   if (isShow)
     return (
@@ -69,8 +90,7 @@ const DialogDelItem: React.FC<EditDialogProps> = ({
                 type="submit"
                 className="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
-                  mutation.mutate(delItemInput);
-                  setDelItemInput(NaN);
+                  mutation.mutate(itemWithDuplicateId);
                 }}
               >
                 刪除
