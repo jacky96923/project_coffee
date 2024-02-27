@@ -113,12 +113,14 @@ export class MenuPreviewService {
       return { message: "delete failed" };
     }
   }
-  async deleteItem(itemId: number, categoryId: number) {
+  async deleteItem(itemId: number[], categoryId: number) {
     try {
-      await this.knex.raw(
-        "DELETE FROM category_item_relation WHERE item_id = ? AND category_id = ??",
-        [itemId, categoryId]
-      );
+      for (let entry of itemId){
+        await this.knex.raw(
+          "DELETE FROM category_item_relation WHERE item_id = ? AND category_id = ??",
+          [entry, categoryId]
+        );
+      }
       return { message: "delete succeed" };
     } catch (error) {
       console.log(error);
@@ -126,19 +128,28 @@ export class MenuPreviewService {
     }
   }
 
-  async addItemToCat(itemId: number, categoryId: number) {
+  async addItemToCat(itemId: number[], categoryId: number) {
     try {
       // const catId = await this.knex("category")
       //   .select("id")
       //   .where("category.id", categoryId);
 
       // const iId = await this.knex("item").select("id").where("item.id", itemId);
-
-      const result = await this.knex("category_item_relation").insert({
-        category_id: categoryId,
-        item_id: itemId,
-      });
-      return result;
+      for (let entry of itemId){
+        let existingRelation = await this.knex("category_item_relation")
+        .select("id")
+        .where("category_id", categoryId)
+        .where("item_id", entry)
+        if (existingRelation.length === 0){
+          await this.knex("category_item_relation").insert({
+            category_id: categoryId,
+            item_id: entry,
+          })
+        } else {
+          return {error: "item already exists in category"}
+        }
+      }
+      return {msg: "category_item_relation service INSERT success"};
     } catch (error) {
       console.log(error);
       return false;

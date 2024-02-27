@@ -20,82 +20,97 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
   categoryId,
   isShow,
 }) => {
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    onClose();
-  };
-  const [addItemInput, setAddItemInput] = useState("");
-
-  // item name chosen
-  const [itemPick, setItemPick] = useState("");
-  const itemPickedHandler = (e: any) => {
-    let itemIdListChosen = itemListForRedux.map((entry) => {
-      if (entry.itemName === e.target.value) {
-        return entry.itemId;
-      }
-    }) as number[];
-
-    setItemPick(e.target.value);
-
-    setItemIdList(itemIdListChosen);
-    // console.log("e.target.value", e.target.value);
-  };
-
-  // item id list chosen
-  const [itemIdList, setItemIdList] = useState([] as number[]);
-
   const items:
     | string
     | Array<{
-        item: Array<{
-          itemId: number;
-          itemName: string;
-          itemPhoto: string;
-          size: string | null;
-          price: number;
-          status: boolean;
-          type: string;
-        }>;
-      }> = GetAllItem();
+      item: Array<{
+        itemId: number;
+        itemName: string;
+        itemPhoto: string;
+        size: string | null;
+        price: number;
+        status: boolean;
+        type: string;
+      }>;
+    }> = GetAllItem();
 
-  let itemListForRedux: {
+  let itemListNoDuplicate: {
     itemName: string;
     itemId: number;
   }[] = [];
 
+  let itemListWithDuplicate: {
+    itemName: string;
+    itemId: number;
+    size: string | null;
+    price: number
+  }[] = [];
+
   if (Array.isArray(items)) {
     for (let item of items) {
+      itemListWithDuplicate.push({
+        itemName: item.item[0].itemName,
+        itemId: item.item[0].itemId,
+        size: item.item[0].size,
+        price: item.item[0].price
+      })
       if (
-        itemListForRedux.find(
+        itemListNoDuplicate.find(
           (entry) => entry.itemName === item.item[0].itemName
         )
       ) {
         continue;
       } else {
-        itemListForRedux.push({
+        itemListNoDuplicate.push({
           itemId: item.item[0].itemId,
           itemName: item.item[0].itemName,
         });
       }
     }
   }
-  // console.log("itemListForRedux", itemListForRedux);
+  // console.log("itemListNoDuplicate", itemListNoDuplicate);
+  // console.log("itemListWithDuplicate", itemListWithDuplicate)
+  // console.log("categoryId", categoryId)
 
-  // useSelector
-  // const shopId = 1;
-  // const itemList = useSelector((state: RootState) => state.item.itemList);
-  // console.log("itemList", itemList);
+  // item name chosen
+  const [itemPick, setItemPick] = useState("");
+  // item id list chosen
+  const [itemIdList, setItemIdList] = useState([] as number[]);
 
+  const itemPickedHandler = (e: any) => {
+
+    let itemIdListChosenWithUndefined = itemListWithDuplicate.map((entry) => {
+      if (entry.itemName === e.target.value) {
+        return entry.itemId
+      }
+    }) as number[];
+
+    let itemIdListChosen = itemIdListChosenWithUndefined.filter((entry) => entry !== undefined)
+
+    setItemPick(e.target.value);
+    setItemIdList(itemIdListChosen);
+    console.log("itemIdListChosen", itemIdListChosen)
+    // console.log("e.target.value", e.target.value);
+
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    onClose();
+  };
+
+  // Mutation
   const queryClient = useQueryClient();
-  // const mutation = useMutation({
-  //   mutationFn: async (catId: number, iId: number[]) =>
-  //     AddItemToCat(catId, iId),
-  //   onSuccess: () =>
-  //     queryClient.invalidateQueries({
-  //       queryKey: ["menuPreview"],
-  //       exact: true,
-  //     }),
-  // });
+  const mutation = useMutation({
+    mutationFn: async (data: { catId: number, iId: number[] }) => {
+      AddItemToCat(data.catId, data.iId)
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["menuPreview"],
+        exact: true,
+      })
+  });
 
   if (isShow)
     return (
@@ -112,10 +127,8 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
                   onChange={itemPickedHandler}
                   className="select select-bordered w-30 max-w-xs"
                 >
-                  <option disabled selected>
-                    現有產品
-                  </option>
-                  {itemListForRedux.map((item) => (
+                  <option disabled selected>現有產品</option>
+                  {itemListNoDuplicate.map((item) => (
                     <option value={item.itemName}>{item.itemName} </option>
                   ))}
                 </select>
@@ -132,7 +145,7 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
               {/* Question */}
               <label
                 htmlFor="name"
-                className="block text-base	 mt-5  text-black"
+                className="block text-base mt-5 text-black"
               >
                 <p>
                   您確定要增加 <span className="text-red-500">{itemPick}</span>{" "}
@@ -142,13 +155,13 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
               </label>
             </div>
 
-            <div className="flex justify-center  m-5 ">
+            <div className="flex justify-center m-5 ">
               <button
                 type="submit"
                 className="bg-green-800 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
-                  // mutation.mutate(catId, iId);
-                  setAddItemInput("");
+                  mutation.mutate({ catId: categoryId, iId: itemIdList });
+
                 }}
               >
                 儲存

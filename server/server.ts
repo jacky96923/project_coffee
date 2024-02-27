@@ -45,8 +45,8 @@ import { MenuIdService } from "./services/client/MenuService";
 import { MenuController } from "./controller/client/MenuController";
 
 // Business-app
-import { MenuPreviewController } from "./controller/MenuPreviewController";
-import { MenuPreviewService } from "./services/MenuPreviewServices";
+import { MenuPreviewController } from "./controller/business/MenuPreviewController";
+import { MenuPreviewService } from "./services/business/MenuPreviewServices";
 import { PromotionInfoService } from "./services/business/PromotionInfoService";
 import { PromotionInfoController } from "./controller/business/PromotionInfoController";
 import { DialogAddCategoryController } from "./controller/business/DialogAddCategoryController";
@@ -118,15 +118,14 @@ app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/receipt", receiptController.router);
 app.use("/initialState", itemPageController.router);
-app.use("/menuPreviews", menuPreviewController.router);
 // app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 app.use("/AllItem", allItemController.router);
 
 // Route Setup (Business)
-app.use("/business/menuPreviews", menuPreviewController.router);
 app.use("/business/auth", businessAuthController.router);
 app.use("/businessRegister", businessAuthController.router);
+app.use("/menuPreviews", menuPreviewController.router);
 app.use("/orders", orderController.router);
 app.use("/shopopentime", businessAuthController.router);
 app.use("/mainPage", mainController.router);

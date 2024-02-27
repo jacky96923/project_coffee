@@ -1,6 +1,6 @@
 import express from "express";
 import { Request, Response } from "express";
-import { MenuPreviewService } from "../services/MenuPreviewServices";
+import { MenuPreviewService } from "../../services/business/MenuPreviewServices";
 
 export class MenuPreviewController {
   router = express.Router();
@@ -35,7 +35,7 @@ export class MenuPreviewController {
 
     let result = await this.menuPreviewService.getMenuPreview(shopId);
 
-    console.log("result", result);
+    //console.log("result", result);
 
     // menuList = result
     // for (const menus of result) {
@@ -158,8 +158,8 @@ export class MenuPreviewController {
   };
 
   deleteItem = async (req: Request, res: Response) => {
-    let categoryId = Number(req.body.categoryId);
-    let itemId = Number(req.body.itemId);
+    let categoryId: number = req.body.categoryId;
+    let itemId: number[] = req.body.itemId;
     console.log("categoryId", categoryId);
     console.log("itemId", itemId);
 
@@ -174,8 +174,8 @@ export class MenuPreviewController {
   };
 
   addItemToCat = async (req: Request, res: Response) => {
-    let categoryId = Number(req.body.categoryId);
-    let itemId = Number(req.body.itemId);
+    let categoryId: number = req.body.categoryId;
+    let itemId: number[] = req.body.itemId;
     console.log("categoryId", categoryId);
     console.log("itemId", itemId);
 
