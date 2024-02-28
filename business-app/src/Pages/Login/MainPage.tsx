@@ -9,7 +9,7 @@ function MainPage() {
   const shopId: undefined | number = useSelector(
     (state: RootState) => state.auth.shop_id
   );
-  console.log("shop = ", shopId);
+  console.log("shop_id = ", shopId);
 
   const shopInfo: {
     shop_name: string;

@@ -26,8 +26,7 @@ export class CommentService {
       // Adjust the query to filter out comments with empty descriptions
       const comments = await this.table()
         .select('*')
-
-        .andWhereNot('description', ''); // Ensure description is not empty
+       .andWhereNot('description', ''); // Ensure description is not empty
       return comments;
     } catch (error) {
       console.error("Error fetching comments by shopId:", error);

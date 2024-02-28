@@ -110,44 +110,43 @@ export default function PromotionInfo() {
                       {/* Error message for logo upload */}
 
                       <label htmlFor="logo_upload" className="cursor-pointer">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-8 h-8 text-gray-700 mx-auto mb-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                          />
-                        </svg>
-                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-700">
-                          上傳圖片
-                        </h5>
-                        <p className="font-normal text-sm text-gray-400 md:px-6">
-                          Choose photo size should be less than{" "}
-                          <b className="text-gray-600">2mb</b>
-                        </p>
-                        {logoPreviewURL ? <img src={logoPreviewURL}></img> : ""}
-                        {promotionInfo && promotionInfo !== "Incoming ..." ? (
-                          <img
-                            src={
-                              promotionInfo.images.find(
-                                (entry: any) => entry.isLogo == true
-                              ).filename
-                            }
-                          ></img>
-                        ) : (
-                          ""
-                        )}
-                        <p className="font-normal text-sm text-gray-400 md:px-6">
+                        <div className="flex-col">
+                          <div className="border-dashed border-2 border-gray-400">
+                            <div>上載預覽</div>
+                            {logoPreviewURL ? (
+                              <div className="flex justify-center">
+                                <img src={logoPreviewURL}></img>
+                              </div>
+                            ) : (
+                              "貴店還沒有上傳圖片"
+                            )}
+                          </div>
+                          <div className="justify-center border-dashed border-2 border-gray-400">
+                            <div>
+                              <div>現存圖片</div>
+                              <div className="flex justify-center">
+                                {promotionInfo &&
+                                promotionInfo !== "Incoming ..." ? (
+                                  <img
+                                    src={
+                                      promotionInfo.images.find(
+                                        (entry: any) => entry.isLogo == true
+                                      ).filename
+                                    }
+                                  ></img>
+                                ) : (
+                                  "上傳圖片"
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* <p className="font-normal text-sm text-gray-400 md:px-6">
                           and should be in{" "}
                           <b className="text-gray-600">JPG, PNG, or GIF</b>{" "}
                           format.
-                        </p>
+                        </p> */}
                         {/* Post selected filename*/}
                         <span
                           id="filename"
@@ -191,55 +190,43 @@ export default function PromotionInfo() {
                       />
                       {/* Error message for banner upload */}
                       <label htmlFor="banner_upload" className="cursor-pointer">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="w-8 h-8 text-gray-700 mx-auto mb-4"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
-                          />
-                        </svg>
-                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-700">
-                          上傳圖片
-                        </h5>
-                        <p className="font-normal text-sm text-gray-400 md:px-6">
-                          Choose photo size should be less than{" "}
-                          <b className="text-gray-600">2mb</b>
-                        </p>
-                        {bannerPreviewURL ? (
-                          <img src={bannerPreviewURL}></img>
-                        ) : (
-                          ""
-                        )}
-                        {promotionInfo && promotionInfo !== "Incoming ..." ? (
-                          <img
-                            src={
-                              promotionInfo.images.find(
-                                (entry: any) => entry.isCover == true
-                              ).filename
-                            }
-                          ></img>
-                        ) : (
-                          ""
-                        )}
-                        <p className="font-normal text-sm text-gray-400 md:px-6">
-                          and should be in{" "}
-                          <b className="text-gray-600">JPG, PNG, or GIF</b>{" "}
-                          format.
-                        </p>
-                        {/* Post selected filename*/}
-                        <span
-                          id="filename"
-                          className="text-gray-500 bg-gray-200 z-50"
-                        >
-                          {bannerSelectedFile ? bannerSelectedFile.name : ""}
-                        </span>
+                        <div className="flex-col">
+                          <div className="border-dashed border-2 border-gray-400">
+                            <div>上載預覽</div>
+                            {bannerPreviewURL ? (
+                              <div className="flex justify-center">
+                                <img src={bannerPreviewURL}></img>
+                              </div>
+                            ) : (
+                              "貴店還沒有上傳圖片"
+                            )}
+                          </div>
+                          <div className="border-dashed border-2 border-gray-400">
+                            <div>現存圖片</div>
+                            {promotionInfo &&
+                            promotionInfo !== "Incoming ..." ? (
+                              <div className="flex justify-center">
+                                <img
+                                  src={
+                                    promotionInfo.images.find(
+                                      (entry: any) => entry.isCover == true
+                                    ).filename
+                                  }
+                                ></img>
+                              </div>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+
+                          {/* Post selected filename*/}
+                          <span
+                            id="filename"
+                            className="text-gray-500 bg-gray-200 z-50"
+                          >
+                            {bannerSelectedFile ? bannerSelectedFile.name : ""}
+                          </span>
+                        </div>
                       </label>
                     </div>
                   </div>

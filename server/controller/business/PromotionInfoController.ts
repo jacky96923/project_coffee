@@ -8,12 +8,12 @@ import { isLoggedIn } from "../../utils/guard";
 export class PromotionInfoController {
   router = express.Router();
   public constructor(private promotionInfoService: PromotionInfoService) {
-    this.router.get("/getPromotionInfo/:id", this.getPromotionInfo);
-    this.router.post("/uploads/:id", isLoggedIn, this.uploadPromotionInfo);
+    this.router.get("/getPromotionInfo", isLoggedIn, this.getPromotionInfo);
+    this.router.post("/uploads", isLoggedIn, this.uploadPromotionInfo);
   }
 
   getPromotionInfo = async (req: Request, res: Response) => {
-    let shopId = req.params.id;
+    let shopId = req.body.user_id;
     console.log("PromoController", shopId);
     try {
       let result = await this.promotionInfoService.getpromotionInfo(
