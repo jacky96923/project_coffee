@@ -111,7 +111,7 @@ const MenuPreview = () => {
             <div key={index} className="mb-4  relative">
               <Textarea
                 variant="static"
-                rows={2}
+                rows={7}
                 defaultValue={description}
                 readOnly
                 style={{
@@ -119,6 +119,7 @@ const MenuPreview = () => {
                   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
                   border: "none",
                   resize: "none",
+                  paddingTop: "2rem",
                 }}
               />
               {/* Render stars based on rating */}
