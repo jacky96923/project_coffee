@@ -89,13 +89,13 @@ export class BusinessAuthController {
   private pool: Pool;
 
   public constructor(private businessAuthService: BusinessAuthService) {
-    // Initialize PostgreSQL pool using environment variables
+
     this.pool = new Pool({
       user: process.env.DB_USERNAME,
       host: 'localhost',
       database: process.env.DB_NAME,
       password: process.env.DB_PASSWORD,
-      port: 5432, // Default PostgreSQL port
+      port: 5432, 
     });
     this.router.post("/BusinessLogin", this.businessLogin);
     this.router.post("/BusinessRegister", this.businessRegister);
