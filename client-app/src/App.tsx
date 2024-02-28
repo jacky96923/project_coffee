@@ -28,6 +28,7 @@ import BottomNavBar from "./components/BottomNavBar";
 import { showNavbar } from "./slices/navbarSlice";
 import { CommentPage } from "./Pages/comments/CommentPage";
 import { CommentSummary } from "./Pages/comments/CommentSummary";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();

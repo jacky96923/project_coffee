@@ -5,7 +5,7 @@ import { isLoggedIn } from "../../utils/guard";
 export class AddItemController {
   router = express.Router();
   public constructor(private addItemService: AddItemService) {
-    this.router.get("/getItem/:id", isLoggedIn, this.getItem);
+    this.router.get("/getItem", isLoggedIn, this.getItem);
     this.router.get("/getAllTypes", isLoggedIn, this.getAllTypes);
   }
 
