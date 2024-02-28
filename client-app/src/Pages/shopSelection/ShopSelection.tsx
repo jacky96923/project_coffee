@@ -6,11 +6,11 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetShopDisplaying } from "../../hooks/dataAPI";
 import { Loader } from "@googlemaps/js-api-loader";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
 export default function ShopSelection() {
-  dotenv.config();
+  // dotenv.config();
   type SelectedShop = {
     id: number;
     shop_name: string;
@@ -160,6 +160,12 @@ export default function ShopSelection() {
                               <img
                                 src={entry.isCover ? entry.shopPhoto : ""}
                                 className="w-25 h-40 rounded"
+                                style={{
+                                  width: "100%",
+                                  height: "auto",
+                                  maxWidth: "100%",
+                                  maxHeight: "100%",
+                                }}
                               />
                             ))
                           : ""
