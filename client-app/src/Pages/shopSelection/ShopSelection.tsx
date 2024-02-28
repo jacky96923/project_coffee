@@ -47,14 +47,14 @@ export default function ShopSelection() {
         "marker"
       )) as google.maps.MarkerLibrary;
 
-      marker = new AdvancedMarkerElement({
-        map: map,
-        position: {
-          lat: selectedShopMap.latitude,
-          lng: selectedShopMap.longitude,
-        },
-        title: selectedShopMap.shop_name,
-      });
+      // marker = new AdvancedMarkerElement({
+      //   map: map,
+      //   position: {
+      //     lat: selectedShopMap.latitude,
+      //     lng: selectedShopMap.longitude,
+      //   },
+      //   title: selectedShopMap.shop_name,
+      // });
     });
   }, [selectedShopMap]);
 
@@ -134,10 +134,10 @@ export default function ShopSelection() {
                         flex: "start",
                         border: "1px solid green",
                         margin: "2px",
-                        gridTemplateColumns: "50% 50%",
                         borderRadius: "10px",
-                        width: "21rem",
+                        width: "auto",
                         height: "11rem",
+                        // justifyContent: "space-between",
                         // backgroundColor: "green",
                       }}
                     >
@@ -147,6 +147,12 @@ export default function ShopSelection() {
                               <img
                                 src={entry.isCover ? entry.shopPhoto : ""}
                                 className="w-25 h-40 rounded"
+                                style={{
+                                  maxWidth: "8rem",
+                                  maxHeight: "4rem",
+                                  margin: "10px ",
+                                  alignSelf: "center",
+                                }}
                               />
                             ))
                           : ""
