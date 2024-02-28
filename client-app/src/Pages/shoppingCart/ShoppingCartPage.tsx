@@ -192,114 +192,117 @@ export default function ShoppingCartPage() {
   };
 
   return (
-    <div className={styles.container}>
-      {/* header */}
-      <div className="flex ">
-        <button
-          onClick={() => navigate(`/menu/${shopId}`)}
-          className={`self-center btn btn-circle btn-sm`}
-        >
-          <ChevronLeftIcon className="h-5 w-5 text-green-800 " />
-        </button>
-        <div className="ml-3">
-          <h4 className="font-bold text-2xl ">我的購物車</h4>
+    <div className={`${styles.container} `}>
+      {" "}
+      <div className="m-5">
+        {/* header */}
+        <div className="flex ">
+          <button
+            onClick={() => navigate(`/coloum/${shopId}`)}
+            className={`self-center btn btn-circle btn-sm`}
+          >
+            <ChevronLeftIcon className="h-5 w-5 text-green-800 " />
+          </button>
+          <div className="ml-3">
+            <h4 className="font-bold text-2xl ">我的購物車</h4>
+          </div>
         </div>
-      </div>
 
-      <div className=" flex border-b border-slate-700">
-        <h6 className="m-1 ml-12 text-green-800 font-bold	">{shopName}</h6>
-        <div className="flex mt-1 ml-12">
-          <IoLocationSharp className="m-1 text-green-800" />
-          <p className=""> {shopAddress}</p>
+        <div className=" flex border-b border-slate-700">
+          <h6 className="m-1 ml-12 text-green-800 font-bold	">{shopName}</h6>
+          <div className="flex mt-1 ml-12">
+            <IoLocationSharp className="m-1 text-green-800" />
+            <p className=""> {shopAddress}</p>
+          </div>
         </div>
-      </div>
 
-      {/* shopping cart & buttons for edit cart */}
-      <div className="overflow-y-auto h-1/3">
-        {cart.map((item) => (
-          <ShoppingCartItem
-            key={item.key}
-            item={item}
-            onDelete={() => onDeleteItemHandler(item.key)}
+        {/* shopping cart & buttons for edit cart */}
+        <div className="overflow-y-auto h-1/3">
+          {cart.map((item) => (
+            <ShoppingCartItem
+              key={item.key}
+              item={item}
+              onDelete={() => onDeleteItemHandler(item.key)}
+            />
+          ))}
+        </div>
+        <div className=" ">
+          <button
+            className="block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
+            onClick={onMenuHandler}
+          >
+            增加産品
+          </button>
+          <button
+            className="block mx-auto w-72 my-1.5 border border-dark-green rounded-2xl font-bold text-red-500 mt-3 mb-2"
+            onClick={onSafeClearCartHandler}
+          >
+            清空購物車
+          </button>
+          <ConfirmClearCartModal
+            show={safeClearCartModal}
+            onClose={() => setSafeClearCartModal(false)}
+            onDelete={onClearCartHandler}
           />
-        ))}
-      </div>
-      <div className=" ">
-        <button
-          className="block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
-          onClick={onMenuHandler}
-        >
-          增加産品
-        </button>
-        <button
-          className="block mx-auto w-72 my-1.5 border border-dark-green rounded-2xl font-bold text-red-500 mt-3 mb-2"
-          onClick={onSafeClearCartHandler}
-        >
-          清空購物車
-        </button>
-        <ConfirmClearCartModal
-          show={safeClearCartModal}
-          onClose={() => setSafeClearCartModal(false)}
-          onDelete={onClearCartHandler}
-        />
-      </div>
-      {/* Discount & bill total */}
-      <div className="border-b border-slate-700">
-        <h6 className="font-bold m-2">訂單總結</h6>
-      </div>
-      <div className="border-b border-slate-700 m-2">
-        <button className="block mx-auto font-bold text-tahiti m-1">
-          + 使用優惠卷
-        </button>
-        <button className="block mx-auto font-bold text-tahiti m-2">
-          + 使用積分
-        </button>
-      </div>
+        </div>
+        {/* Discount & bill total */}
+        <div className="border-b border-slate-700">
+          <h6 className="font-bold m-2">訂單總結</h6>
+        </div>
+        <div className="border-b border-slate-700 m-2">
+          <button className="block mx-auto font-bold text-tahiti m-1">
+            + 使用優惠卷
+          </button>
+          <button className="block mx-auto font-bold text-tahiti m-2">
+            + 使用積分
+          </button>
+        </div>
 
-      {/* Pickup Time */}
-      <div className="">
-        <h6 className="font-bold m-2">選擇自取時間</h6>
-        <button
-          className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
-          onClick={onPickupTimeHandler}
-        >
-          自取時間： {pickupTime} {/*use pickup time in localstorage*/}
-          <ChevronRightIcon className="h-6 w-6" />
-        </button>
-        <PickupModal
-          show={pickupModal}
-          onClose={() => setPickupModal(false)}
-        ></PickupModal>
-      </div>
-      <div className="w-5/6 mx-auto">
-        <div className="flex justify-around my-1.5">
-          <h6 className="font-bold">小計</h6>
-          <p className="font-bold">${total}</p>
+        {/* Pickup Time */}
+        <div className="">
+          <h6 className="font-bold m-2">選擇自取時間</h6>
+          <button
+            className="flex justify-around mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
+            onClick={onPickupTimeHandler}
+          >
+            自取時間： {pickupTime} {/*use pickup time in localstorage*/}
+            <ChevronRightIcon className="h-6 w-6" />
+          </button>
+          <PickupModal
+            show={pickupModal}
+            onClose={() => setPickupModal(false)}
+          ></PickupModal>
         </div>
-        <div className="flex justify-around my-1.5">
-          <h6 className="font-bold">總額</h6>
-          <p className="font-bold">${discountedTotal}</p>
+        <div className="w-5/6 mx-auto">
+          <div className="flex justify-around my-1.5">
+            <h6 className="font-bold">小計</h6>
+            <p className="font-bold">${total}</p>
+          </div>
+          <div className="flex justify-around my-1.5">
+            <h6 className="font-bold">總額</h6>
+            <p className="font-bold">${discountedTotal}</p>
+          </div>
+          <div></div>
         </div>
-        <div></div>
-      </div>
 
-      {/* Checkout */}
-      <div className="flex justify-around m-5">
-        <div>
-          <h4>訂單總額</h4>
-          <h4 className="font-bold	">HK$ {discountedTotal}.00</h4>
+        {/* Checkout */}
+        <div className="flex justify-around m-5">
+          <div>
+            <h4>訂單總額</h4>
+            <h4 className="font-bold	">HK$ {discountedTotal}.00</h4>
+          </div>
+          <button
+            className="border rounded-2xl w-16 border-black text-green-800 font-bold	"
+            onClick={onCheckoutHandler}
+          >
+            付款
+          </button>
+          <NoUserLoginModal
+            show={noUserLoginModal}
+            onClose={() => setNoUserLoginModal(false)}
+            onLogin={onLoginHandler}
+          />
         </div>
-        <button
-          className="border rounded-2xl w-16 border-black text-green-800 font-bold	"
-          onClick={onCheckoutHandler}
-        >
-          付款
-        </button>
-        <NoUserLoginModal
-          show={noUserLoginModal}
-          onClose={() => setNoUserLoginModal(false)}
-          onLogin={onLoginHandler}
-        />
       </div>
     </div>
   );
