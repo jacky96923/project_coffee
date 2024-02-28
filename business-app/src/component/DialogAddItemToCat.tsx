@@ -23,16 +23,16 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
   const items:
     | string
     | Array<{
-      item: Array<{
-        itemId: number;
-        itemName: string;
-        itemPhoto: string;
-        size: string | null;
-        price: number;
-        status: boolean;
-        type: string;
-      }>;
-    }> = GetAllItem();
+        item: Array<{
+          itemId: number;
+          itemName: string;
+          itemPhoto: string;
+          size: string | null;
+          price: number;
+          status: boolean;
+          type: string;
+        }>;
+      }> = GetAllItem();
 
   let itemListNoDuplicate: {
     itemName: string;
@@ -43,7 +43,7 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
     itemName: string;
     itemId: number;
     size: string | null;
-    price: number
+    price: number;
   }[] = [];
 
   if (Array.isArray(items)) {
@@ -52,8 +52,8 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
         itemName: item.item[0].itemName,
         itemId: item.item[0].itemId,
         size: item.item[0].size,
-        price: item.item[0].price
-      })
+        price: item.item[0].price,
+      });
       if (
         itemListNoDuplicate.find(
           (entry) => entry.itemName === item.item[0].itemName
@@ -78,20 +78,20 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
   const [itemIdList, setItemIdList] = useState([] as number[]);
 
   const itemPickedHandler = (e: any) => {
-
     let itemIdListChosenWithUndefined = itemListWithDuplicate.map((entry) => {
       if (entry.itemName === e.target.value) {
-        return entry.itemId
+        return entry.itemId;
       }
     }) as number[];
 
-    let itemIdListChosen = itemIdListChosenWithUndefined.filter((entry) => entry !== undefined)
+    let itemIdListChosen = itemIdListChosenWithUndefined.filter(
+      (entry) => entry !== undefined
+    );
 
     setItemPick(e.target.value);
     setItemIdList(itemIdListChosen);
-    console.log("itemIdListChosen", itemIdListChosen)
+    console.log("itemIdListChosen", itemIdListChosen);
     // console.log("e.target.value", e.target.value);
-
   };
 
   const handleSubmit = (e: any) => {
@@ -102,14 +102,14 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
   // Mutation
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: async (data: { catId: number, iId: number[] }) => {
-      AddItemToCat(data.catId, data.iId)
+    mutationFn: async (data: { catId: number; iId: number[] }) => {
+      AddItemToCat(data.catId, data.iId);
     },
     onSuccess: () =>
       queryClient.invalidateQueries({
         queryKey: ["menuPreview"],
         exact: true,
-      })
+      }),
   });
 
   if (isShow)
@@ -127,7 +127,9 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
                   onChange={itemPickedHandler}
                   className="select select-bordered w-30 max-w-xs"
                 >
-                  <option disabled selected>現有產品</option>
+                  <option disabled selected>
+                    現有產品
+                  </option>
                   {itemListNoDuplicate.map((item) => (
                     <option value={item.itemName}>{item.itemName} </option>
                   ))}
@@ -143,10 +145,7 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
               </div>
 
               {/* Question */}
-              <label
-                htmlFor="name"
-                className="block text-base mt-5 text-black"
-              >
+              <label htmlFor="name" className="block text-base mt-5 text-black">
                 <p>
                   您確定要增加 <span className="text-red-500">{itemPick}</span>{" "}
                   到 <span className="text-red-500">{categoryName}</span>{" "}
@@ -158,10 +157,9 @@ const DialogAddItemToCat: React.FC<EditDialogProps> = ({
             <div className="flex justify-center m-5 ">
               <button
                 type="submit"
-                className="bg-green-800 text-white px-4 py-2 rounded m-2 text-xl	"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 text-white px-4 py-2 rounded m-2 text-xl	"
                 onClick={() => {
                   mutation.mutate({ catId: categoryId, iId: itemIdList });
-
                 }}
               >
                 儲存

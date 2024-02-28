@@ -119,9 +119,9 @@ export default function Menu() {
           </div>
         </div>
         <hr className="mt-3" />
-        <div className="flex ">
+        <div className="flex">
           {categoryNameList.map((category) => (
-            <div className="m-1">
+            <div className="m-3">
               <button className="flex w-auto p-2 bg-green-800 mt-2 rounded-2xl font-bold text-white">
                 {category.categoryName}
               </button>

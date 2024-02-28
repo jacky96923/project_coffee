@@ -60,10 +60,15 @@ export default function RegisterPage() {
     );
 
     if (result) {
-      let decoded: { user_id: number; username: string, type: string } = jwtDecode(
-        localStorage.getItem("token")!
+      let decoded: { user_id: number; username: string; type: string } =
+        jwtDecode(localStorage.getItem("token")!);
+      dispatch(
+        login({
+          user: decoded.username,
+          user_id: decoded.user_id,
+          type: decoded.type,
+        })
       );
-      dispatch(login({user: decoded.username, user_id: decoded.user_id, type: decoded.type}));
       window.location.href = "/";
     }
   };
@@ -110,7 +115,7 @@ export default function RegisterPage() {
                   name="username"
                   id="username"
                   autoComplete="username"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setUsernameInput(e.target.value);
                   }}
@@ -132,7 +137,7 @@ export default function RegisterPage() {
                   name="email"
                   id="email"
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setEmailInput(e.target.value);
                   }}
@@ -153,7 +158,7 @@ export default function RegisterPage() {
                   name="contactNo"
                   id="contactNo"
                   autoComplete="contactNo"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setPhoneInput(e.target.value);
                   }}
@@ -174,7 +179,7 @@ export default function RegisterPage() {
                   name="password"
                   id="password"
                   autoComplete="password"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setPasswordInput(e.target.value);
                   }}
@@ -195,7 +200,7 @@ export default function RegisterPage() {
                   name="confirmPassword"
                   id="confirmPassword"
                   autoComplete="confirmPassword"
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   onChange={(e) => {
                     setConfirmPasswordInput(e.target.value);
                   }}
@@ -207,7 +212,7 @@ export default function RegisterPage() {
           <div className="mt-10">
             <button
               type="submit"
-              className="block w-full rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="block w-full rounded-md bg-green-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
               onClick={handleSubmit}
             >
               提交{" "}
