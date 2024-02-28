@@ -2,40 +2,29 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './component/Sidebar';
 import { Textarea } from '@material-tailwind/react';
 
-const MenuPreview = () => {
-  const [comments, setComments] = useState([]);
 
 
-
-    // Perform the POST request when the component mounts
-    const fetchData = async () => {
-      try {
-        const formData = {
-          // construct your form data here
-        };
-
-        const response = await fetch("http://localhost:8100/comments/rating", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const MenuPreview = () => {
+    const [comments, setComments] = useState([]);
+   
+    // Perform the GET request when the component mounts
+    useEffect(() => {
+      const fetchComments = async () => {
+        try {
+          const response = await fetch("http://localhost:8100/comments/all");
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error("There was a problem with your fetch operation:", error);
         }
-
-        const responseData = await response.json();
-        console.log("Response data:", responseData);
-
-      } catch (error) {
-        console.error("There was a problem with your fetch operation:", error);
-        // Handle error here
-      }
-    };
-
-    fetchData(); // Call the function to perform the POST request
+      };
+      
+      fetchComments();
+    }, []);
+    // Call the function to perform the POST request
 
   // Define the default value for the textarea
   const defaultValue = "This is the content of the first row.\n\n";
