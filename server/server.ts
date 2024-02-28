@@ -100,10 +100,10 @@ const commentService = new CommentService(knex);
 const commentsController = new CommentsController(commentService);
 
 //ForPromotionInfo
-// const promotionInfoService = new PromotionInfoService(knex);
-// const promotionInfoController = new PromotionInfoController(
-//   promotionInfoService
-// );
+const promotionInfoService = new PromotionInfoService(knex);
+const promotionInfoController = new PromotionInfoController(
+  promotionInfoService
+);
 
 //For AllItem
 const allItemService = new AllItemService(knex);
@@ -124,7 +124,7 @@ app.use("/itemPage", optionSlideController.router);
 app.use("/menus", menuController.router);
 app.use("/receipt", receiptController.router);
 app.use("/initialState", itemPageController.router);
-// app.use("/PromotionInfo", promotionInfoController.router);
+app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 app.use("/AllItem", allItemController.router);
 app.use("/AddItem", addItemController.router);

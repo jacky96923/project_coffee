@@ -2,12 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 const source = "http://localhost:8100";
 
 export function GetPromotionInfo(shopId: number) {
+  console.log("api------running?-----");
   const { isLoading, error, data, isFetching } = useQuery({
     queryKey: ["getPromotionInfo"],
+
     queryFn: async () => {
-      const res = await fetch(
-        `${source}/PromotionInfo/getPromotionInfo/${shopId}`
-      );
+      const res = await fetch(`${source}/PromotionInfo/getPromotionInfo`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const result = await res.json();
       console.log("-------GetPromotionInfo API---------", result);
       return result;

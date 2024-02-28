@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetShopDisplaying } from "../../hooks/dataAPI";
 import { Loader } from "@googlemaps/js-api-loader";
@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
 export default function ShopSelection() {
-  // dotenv.config();
+  dotenv.config();
   type SelectedShop = {
     id: number;
     shop_name: string;
@@ -47,14 +47,14 @@ export default function ShopSelection() {
         "marker"
       )) as google.maps.MarkerLibrary;
 
-      marker = new AdvancedMarkerElement({
-        map: map,
-        position: {
-          lat: selectedShopMap.latitude,
-          lng: selectedShopMap.longitude,
-        },
-        title: selectedShopMap.shop_name,
-      });
+      // marker = new AdvancedMarkerElement({
+      //   map: map,
+      //   position: {
+      //     lat: selectedShopMap.latitude,
+      //     lng: selectedShopMap.longitude,
+      //   },
+      //   title: selectedShopMap.shop_name,
+      // });
     });
   }, [selectedShopMap]);
 
@@ -87,6 +87,15 @@ export default function ShopSelection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortState, setSortState] = useState(shopItem);
 
+  // let searchResults: typeof shopItem = [];
+  // if (Array.isArray(shopItem)) {
+  //   searchResults = shopItem.map((entry) => ({
+  //     shop_name: entry.shop_name.filter((subEntry) =>
+  //       subEntry.shop_name.toLowerCase().includes(searchQuery.toLowerCase())
+  //     ),
+  //   }));
+  // }
+
   return (
     <div className="relative bg-white m-5 mt-2">
       <div className="flex">
@@ -105,11 +114,15 @@ export default function ShopSelection() {
         <input
           type="text"
           placeholder="咖啡店名稱"
-          className="input input-bordered w-full max-w-xs m-3 rounded-2xl	drop-shadow-lg	"
+          className="input input-bordered w-full max-w-xs m-3 rounded-2xl	drop-shadow-lg"
+          onChange={(event) => setSearchQuery(event.target.value)}
         />
 
-        <button className="rounded-2xl	 w-10">
-          <AdjustmentsHorizontalIcon className="text-green-800" />
+        <button
+          className="rounded-2xl	 w-10"
+          // onClick={() => setSortState(searchResults)}
+        >
+          <MagnifyingGlassIcon className="text-green-800" />
         </button>
       </div>
 
