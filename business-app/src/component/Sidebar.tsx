@@ -45,7 +45,7 @@ export default function Sidebar() {
           <li className="p-4 hover:bg-gray-700">
             <div
               className="flex cursor-pointer"
-              onClick={() => navigate("/MainAddItem")}
+              onClick={() => navigate("/MainAddItem/0")}
             >
               <FaDumpsterFire className="size-6" />
               <h3 className="ml-3">添加/更改產品</h3>

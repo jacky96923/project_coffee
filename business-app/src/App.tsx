@@ -32,11 +32,10 @@ function App() {
             <Route
               path="/ShopOpenTime"
               element={<BusinessChooseShopOpenTime />}
-            />{" "}
-            // Change the type of BusinessChooseShopOpenTime
+            />
             <Route path="/receivedOrders" element={<ReceivedOrders />} />
             <Route path="/AllItem" element={<AllItem />} />
-            <Route path="/MainAddItem" element={<MainAddItem />} />
+            <Route path="/MainAddItem/:itemId" element={<MainAddItem />} />
             <Route path="/PromotionInfo" element={<PromotionInfo />} />
           </Route>
         </Routes>

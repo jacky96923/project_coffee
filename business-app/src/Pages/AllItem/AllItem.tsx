@@ -44,23 +44,6 @@ export default function AllItem() {
         }>;
       }> = GetAllItem();
 
-  //     let itemListForRedux: {
-  //   itemName: string;
-  //   itemId: number;
-  // }[] = [];
-
-  // if (Array.isArray(items)) {
-  //   itemListForRedux = items.map((entry) => {
-  //     for (let item of entry.item) {
-  //       return { itemId: item.itemId, itemName: item.itemName };
-  //     }
-  //   }) as {
-  //     itemName: string;
-  //     itemId: number;
-  //   }[];
-  // }
-  // dispatch(setInitialItemList(itemListForRedux));
-
   //for sorting onClick button
   const [searchQuery, setSearchQuery] = useState("");
   const [sortState, setSortState] = useState(items);

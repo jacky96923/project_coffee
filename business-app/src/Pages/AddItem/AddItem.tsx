@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import styles from "../AddItem/AddItem.module.css";
-import { useFieldArray, useForm, SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useParams } from "react-router-dom";
-import { GetAllTypes, GetItemInfo } from "../../hooks/AddItemAPI";
+import { AddItemInfo, GetAllTypes, GetItemInfo } from "../../hooks/AddItemAPI";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { saveFirstPageForm } from "../../slices/MainAddItemSlice";
-import { AddItemModal } from "../../component/Modal";
+import { AddItemModal, itemToAdd } from "../../component/Modal";
 
-type Inputs = {
+export type Inputs = {
   itemName: string;
   itemPhoto: string;
   itemSize: string;
@@ -21,32 +21,16 @@ type Inputs = {
   description: string;
 };
 
-type selectedOptionList = {
-  itemTypeId: number;
-  typeName: string;
-  itemoptionlist: Array<{
+type typeOptionListForModal = {
+  itemType: { itemTypeName: string; itemTypeId: number };
+  itemOptionList: Array<{
     optionList: string;
     options: Array<{
-      optionName: string;
-      optionPrice: number | null;
+      name: string;
+      price: number | null;
     }>;
   }>;
 };
-
-// type RegisteredInfo = {
-//   itemName: string;
-//   itemPhoto: string;
-//   itemSizePrice: [{ size: string | null; price: number }];
-//   itemType: [{ itemTypeName: string; itemTypeId: number }];
-//   optionList: [
-//     {
-//       optionListName: string;
-//       optionListId: number;
-//       options: [{ optionName: string; optionId: number }];
-//     }
-//   ];
-//   description: string;
-// }[];
 
 export default function AddItem() {
   let { itemId } = useParams();
@@ -54,21 +38,27 @@ export default function AddItem() {
   const [show, setShow] = useState(false);
   const handleModalShow = () => setShow(true);
   const handleModalClose = () => setShow(false);
-  // 1. only 1 itemId? what if you are changing item with 3 sizes?
+
   const getItem:
     | string
-    | Array<{
-        itemName: string;
-        itemPhoto: string;
-        itemDescription: string;
-        itemSizePrice: Array<{ size: string | null; price: number }>;
-        itemType: Array<{ itemTypeName: string; itemTypeId: number }>;
-        optionList: { [key: string]: string[] };
-      }> = GetItemInfo(itemId!);
+    | {
+      itemName: string;
+      itemPhoto: string;
+      itemDescription: string;
+      itemIdSizePrice: Array<{ itemid: number, size: string | null; price: number }>;
+      itemType: { itemTypeName: string; itemTypeId: number };
+      itemOptionList: Array<{
+        optionList: string;
+        options: Array<{
+          name: string;
+          price: number | null;
+        }>;
+      }>;
+    } = Number(itemId) !== 0 ? GetItemInfo(Number(itemId)) : "none";
 
   console.log("check getItem", getItem);
 
-  const getAllType: string | Array<selectedOptionList> = GetAllTypes();
+  const getAllType: string | Array<typeOptionListForModal> = GetAllTypes();
   console.log("check getAllType", getAllType);
 
   const {
@@ -81,33 +71,34 @@ export default function AddItem() {
   } = useForm<Inputs>();
 
   //define the the form's initial values
-  type FormValues = {
-    itemName: "";
-    itemPhoto: "";
-    itemDescription: "";
-    itemSizePrice: [{ size: "" | null; price: 0 }];
-    itemType: "";
-  };
+  // type FormInitialValues = {
+  //   itemName: string;
+  //   itemPhoto: string;
+  //   itemDescription: string;
+  //   itemSizePrice: [{ size: string | null; price: number }];
+  //   itemTypeId: number;
+  // };
 
-  // for props optionlist into the modal
-  const [selectedOptionList, setSelectedOptionList] = useState(
-    {} as selectedOptionList
-  );
+  // for props optionList into the modal
+  const [selectedOptionList, setSelectedOptionList] = useState(undefined as typeOptionListForModal | undefined);
+
+  let selectedItemTypeId = parseInt(watch("itemTypeId"));
+  let itemName = watch("itemName")
+  let itemSizePrice = watch("itemSize") === "0" ? [
+    { size: watch(`itemSizePrice.0.size`), price: watch("itemSizePrice.0.price") },
+    { size: watch(`itemSizePrice.1.size`), price: watch("itemSizePrice.1.price") },
+    { size: watch(`itemSizePrice.2.size`), price: watch("itemSizePrice.2.price") },
+  ] : watch("itemSize") === "1" ? [{ size: watch(`itemSizePrice.3.size`), price: watch("itemSizePrice.3.price") }]
+    : []
+
   useEffect(() => {
-    let selectedItemTypeId = parseInt(watch("itemTypeId"));
     if (typeof getAllType !== "string") {
       setSelectedOptionList(
-        getAllType.filter((item) => item.itemTypeId === selectedItemTypeId)[0]
+        getAllType.filter((item) => item.itemType.itemTypeId === selectedItemTypeId)[0]
       );
     }
-    console.log("check selectedOptionList", selectedOptionList);
-  }, [watch]);
-
-  //useFieldArray
-  // const { fields } = useFieldArray({
-  //   name: "itemSizePrice",
-  //   control,
-  // });
+    console.log("check selectedOptionList in effect", selectedOptionList);
+  }, [selectedItemTypeId]);
 
   useEffect(() => {
     let sub = watch((data) => {
@@ -116,11 +107,36 @@ export default function AddItem() {
     return () => sub.unsubscribe();
   }, [watch]);
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    dispatch(saveFirstPageForm(data));
-  };
+  // const onTypeChangingHandler: SubmitHandler<Inputs> = (data) => {
+  //   console.log("data submitted", data);
+  //   dispatch(saveFirstPageForm(data));
+  // };
 
+  const onSubmitHandler: SubmitHandler<Inputs> = (data) => {
+    console.log("data before formatting", data);
+    
+    const formData = new FormData();
+    formData.append("itemName", data.itemName);
+    if (data.itemSize === "0"){
+      data.itemSizePrice.splice(3, 1)
+      let itemSizePrice = JSON.stringify(data.itemSizePrice)
+      console.log("stringified itemsizeprice", itemSizePrice)
+      formData.append("itemSizePrice", itemSizePrice);
+    } else if (data.itemSize === "1"){
+      data.itemSizePrice.splice(0, 3)
+      let itemSizePrice = JSON.stringify(data.itemSizePrice)
+      console.log("stringified itemsizeprice", itemSizePrice)
+      formData.append("itemSizePrice", itemSizePrice);
+    }
+    
+    formData.append("description", data.description);
+    formData.append("itemPhoto", data.itemPhoto) //[0] as File);
+    formData.append("itemTypeId", data.itemTypeId);
+    AddItemInfo(formData)
+    handleModalClose()
+  }
+
+  // size price register
   useEffect(() => {
     if (watch("itemSize") === "0") {
       unregister(["itemSizePrice.3.size", "itemSizePrice.3.price"]);
@@ -147,7 +163,7 @@ export default function AddItem() {
             type="number"
             min="0"
             className="file-input file-input-bordered file-input-sm w-15 max-w-xs"
-            {...register(`itemSizePrice.0.size` as const, { value: "小" })}
+            {...register(`itemSizePrice.0.size` as const, { value: "小杯" })}
             {...register(`itemSizePrice.0.price` as const, { required: true })}
           />
 
@@ -157,7 +173,7 @@ export default function AddItem() {
             type="number"
             min="0"
             className="file-input file-input-bordered file-input-sm w-15 max-w-xs"
-            {...register(`itemSizePrice.1.size` as const, { value: "中" })}
+            {...register(`itemSizePrice.1.size` as const, { value: "中杯" })}
             {...register(`itemSizePrice.1.price` as const, { required: true })}
           />
           <div>大杯價錢</div>
@@ -166,7 +182,7 @@ export default function AddItem() {
             type="number"
             min="0"
             className="file-input file-input-bordered file-input-sm w-15 max-w-xs"
-            {...register(`itemSizePrice.2.size` as const, { value: "大" })}
+            {...register(`itemSizePrice.2.size` as const, { value: "大杯" })}
             {...register(`itemSizePrice.2.price` as const, { required: true })}
           />
           {errors.itemSizePrice?.type === "required" && (
@@ -174,7 +190,7 @@ export default function AddItem() {
           )}
         </div>
       );
-    } else {
+    } else if (watch("itemSize") === "1") {
       // unregister([
       //   "itemSizePrice.0.size",
       //   "itemSizePrice.0.price",
@@ -190,12 +206,13 @@ export default function AddItem() {
             type="number"
             min="0"
             className="file-input file-input-bordered file-input-sm w-15 max-w-xs"
-            {...register(`itemSizePrice.3.size` as const, { value: null })}
-            {...(register(`itemSizePrice.3.price` as const),
-            { required: true })}
+            {...register(`itemSizePrice.3.size` as const, { value: "無" })}
+            {...register(`itemSizePrice.3.price` as const, { required: true })}
           />
         </div>
       );
+    } else {
+      return <div className="font-bold">請先選擇大小</div>
     }
   };
 
@@ -205,7 +222,7 @@ export default function AddItem() {
         <div className={styles.content}>
           {/* 3 types of changes: add, edit, delete */}
           <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -218,6 +235,7 @@ export default function AddItem() {
                   type="text"
                   placeholder="產品名稱"
                   className="input input-bordered input-sm w-50 max-w-xs"
+                  // onChange={()=>set}
                   {...register("itemName", {
                     required: "This is requireddd",
                     maxLength: {
@@ -247,6 +265,9 @@ export default function AddItem() {
                   id="itemPhoto"
                   type="file"
                   className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                  {...register("itemPhoto", {
+                    required: "請上傳圖片",
+                  })}
                 />
               </div>
               <div className="mb-4">
@@ -309,14 +330,14 @@ export default function AddItem() {
                     <div>
                       <input
                         type="radio"
-                        key={entry.itemTypeId}
-                        id={entry.typeName}
-                        value={entry.itemTypeId}
+                        key={entry.itemType.itemTypeId}
+                        id={entry.itemType.itemTypeName}
+                        value={entry.itemType.itemTypeId}
                         {...register("itemTypeId", {
                           required: "請選擇產品類別",
                         })}
                       />
-                      <label htmlFor={entry.typeName}>{entry.typeName}</label>
+                      <label htmlFor={entry.itemType.itemTypeName}>{entry.itemType.itemTypeName}</label>
                     </div>
                   ))
                 )}
@@ -346,7 +367,7 @@ export default function AddItem() {
                 " "
               ) : (
                 <div>
-                  <button className="btn btn-sm" type="submit">
+                  <button className="btn btn-sm" type="submit" onClick={(e) => { e.preventDefault(); handleModalShow() }}>
                     確認
                   </button>
                 </div>
@@ -356,7 +377,6 @@ export default function AddItem() {
                 <button
                   className="btn btn-sm"
                   type="submit"
-                  onClick={handleModalShow}
                 >
                   新增/修改產品類別
                 </button>
@@ -368,11 +388,13 @@ export default function AddItem() {
       <AddItemModal
         isShow={show}
         onClose={handleModalClose}
-        itemTypeId={(selectedOptionList as selectedOptionList).itemTypeId}
-        typeName={(selectedOptionList as selectedOptionList).typeName}
-        itemoptionlist={
-          (selectedOptionList as selectedOptionList).itemoptionlist
-        }
+        onSubmit={handleSubmit(onSubmitHandler)}
+        item={{
+          itemName: itemName,
+          itemSizePrice: itemSizePrice,
+          itemOptionList: selectedOptionList?.itemOptionList,
+          itemType: selectedOptionList?.itemType
+        }}
       />
     </>
   );
