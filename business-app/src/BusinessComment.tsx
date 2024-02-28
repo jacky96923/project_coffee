@@ -6,16 +6,16 @@ const MenuPreview = () => {
   const [comments, setComments] = useState<any[]>([]);
   const [groupedDescriptions, setGroupedDescriptions] = useState<string[]>([]);
   const [groupedRatings, setGroupedRatings] = useState<number[]>([]);
- var shopId = 1000; // Set the default shop id or get it dynamically
+  var shopId = 1000; // Set the default shop id or get it dynamically
   // Retrieve the JWT token from local storage
   const jwtToken = localStorage.getItem("token");
   if (jwtToken) {
     // Split the token into its three parts: header, payload, and signature
     const parts = jwtToken.split(".");
-  
+
     // Decode and parse the payload (second part)
     const decodedPayload = JSON.parse(atob(parts[1]));
-  
+
     // Get the shop ID from the decoded payload
     shopId = decodedPayload.id;
     console.log("Decoded JWT payload:", decodedPayload);
@@ -71,11 +71,10 @@ const MenuPreview = () => {
         <svg
           key={i}
           xmlns="http://www.w3.org/2000/svg"
-          fill="none"
+          fill="currentColor"
           viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
           className="mr-1 h-5 w-5 text-warning"
+          style={{ marginRight: "-0.2rem" }}
         >
           <path
             strokeLinecap="round"
@@ -109,16 +108,23 @@ const MenuPreview = () => {
           {/* Render Textareas for descriptions */}
 
           {groupedDescriptions.map((description, index) => (
-            <div key={index} className="mb-4 relative">
+            <div key={index} className="mb-4  relative">
               <Textarea
                 variant="static"
-                rows={5}
+                rows={7}
                 defaultValue={description}
                 readOnly
+                style={{
+                  borderRadius: "0.8rem",
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)",
+                  border: "none",
+                  resize: "none",
+                  paddingTop: "2rem",
+                }}
               />
               {/* Render stars based on rating */}
               <div className="absolute top-0 right-0 mt-2 non-clickable">
-                <div className="rating rating px-2">
+                <div className="rating rating px-4">
                   {renderStars(groupedRatings[index])}
                 </div>
               </div>

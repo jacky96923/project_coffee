@@ -21,7 +21,7 @@ export class CommentService {
     }
   }
 
-  async getAllComments(description: string) {
+  async getAllComments() {
     try {
       // Adjust the query to filter out comments with empty descriptions
       const comments = await this.table()

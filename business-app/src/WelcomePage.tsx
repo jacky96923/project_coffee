@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import type { AppDispatch, RootState } from "./store"; // Adjust the import path to your store configuration
 import { useNavigate } from "react-router-dom";
+import { error } from "console";
 
 const BusinessWelcome: React.FC = () => {
   const area = useSelector((state: RootState) => state.reg.area);
@@ -35,7 +36,11 @@ const BusinessWelcome: React.FC = () => {
       });
   
       if (!response.ok) {
-        // throw new Error('Network response was not ok');
+         // Alert the error message
+      } else {
+        // Handle successful response
+        navigate('/main'); // Redirect to '/mainpage'
+        alert("註冊成功，重新登入！");
       }
   
       const data = await response.json();
