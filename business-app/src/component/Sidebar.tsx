@@ -19,12 +19,9 @@ export default function Sidebar() {
       <div className="sidebar bg-white text-black w-60 h-screen shadow">
         {/* Sidebar content */}
         <div className="flex flex-col items-center justify-between p-4">
-          <img
-            className="w-28 h-28"
-            src="https://i.pinimg.com/564x/e4/df/c4/e4dfc41fd3ec20e83c2da8da613e213b.jpg"
-            alt=""
-          />
-          <span className="text-2xl font-bold text-center">Project Coffee</span>
+          <span className="text-2xl font-bold text-center mt-3">
+            Project Coffee
+          </span>
         </div>
         <ul className="flex flex-col items-center justify-center py-4 ">
           <li className="p-4 hover:bg-gray-700 text-center">
@@ -76,7 +73,10 @@ export default function Sidebar() {
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex cursor-pointer" onClick={() => navigate("/businessComment")}>
+            <div
+              className="flex cursor-pointer"
+              onClick={() => navigate("/businessComment")}
+            >
               <FaCommentDots className="size-6" />
               <h3 className="ml-3">顧客評價</h3>
             </div>
@@ -86,7 +86,7 @@ export default function Sidebar() {
           <br />
           <button
             onClick={() => navigate("/receivedOrders")}
-            className="block mx-auto w-40 h-14 my-1.5 bg-gradient-to-r from-blue-900 to-blue-700 rounded-2xl font-bold text-white"
+            className="block mx-auto w-40 h-14  bg-gradient-to-r from-blue-900 to-blue-700 rounded-2xl font-bold text-white"
           >
             查看訂單
           </button>
