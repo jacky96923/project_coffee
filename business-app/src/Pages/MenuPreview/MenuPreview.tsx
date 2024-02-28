@@ -204,7 +204,7 @@ const MainContent = () => {
                               <div className="flex items-center justify-start m-2">
                                 <img
                                   className="rounded-md w-auto h-32"
-                                  src="{menu.item_photo}"
+                                  src={item.item_photo}
                                   alt={"menu.name"}
                                 />
                               </div>

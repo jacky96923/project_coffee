@@ -122,7 +122,7 @@ export default function PromotionInfo() {
                             )}
                           </div>
                           <div className="justify-center border-dashed border-2 border-gray-400">
-                            <div className="border-dashed border-2 border-gray-400">
+                            <div>
                               <div>現存圖片</div>
                               <div className="flex justify-center">
                                 {promotionInfo &&
@@ -198,20 +198,26 @@ export default function PromotionInfo() {
                                 <img src={bannerPreviewURL}></img>
                               </div>
                             ) : (
+                              "貴店還沒有上傳圖片"
+                            )}
+                          </div>
+                          <div className="border-dashed border-2 border-gray-400">
+                            <div>現存圖片</div>
+                            {promotionInfo &&
+                            promotionInfo !== "Incoming ..." ? (
+                              <div className="flex justify-center">
+                                <img
+                                  src={
+                                    promotionInfo.images.find(
+                                      (entry: any) => entry.isCover == true
+                                    ).filename
+                                  }
+                                ></img>
+                              </div>
+                            ) : (
                               ""
                             )}
                           </div>
-                          {promotionInfo && promotionInfo !== "Incoming ..." ? (
-                            <img
-                              src={
-                                promotionInfo.images.find(
-                                  (entry: any) => entry.isCover == true
-                                ).filename
-                              }
-                            ></img>
-                          ) : (
-                            ""
-                          )}
 
                           {/* Post selected filename*/}
                           <span
