@@ -98,7 +98,7 @@ export default function Sidebar() {
           </button>
           <button
             onClick={logOutHandler}
-            className="block mx-auto w-40 h-14 bg-red-500 rounded-2xl font-bold text-white"
+            className="block mx-auto w-40 h-14 bg-red-500 rounded-2xl font-bold text-white mt-5"
           >
             登出
           </button>

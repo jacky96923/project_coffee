@@ -323,9 +323,11 @@ const MainContent = () => {
 // App component
 const MenuPreview = () => {
   return (
-    <div className="flex ">
-      <Sidebar />
-      <div className="flex flex-col flex-1">
+    <div className="flex">
+      <div className="bg-fixed">
+        <Sidebar />
+      </div>
+      <div className="flex flex-col flex-1 w-full h-full">
         <Header />
         <MainContent />
       </div>

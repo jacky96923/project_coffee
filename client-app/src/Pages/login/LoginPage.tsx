@@ -45,6 +45,11 @@ export default function LoginPage() {
     console.log("username", usernameInput);
     console.log("password", passwordInput);
 
+    if (!usernameInput || !passwordInput) {
+      console.log("Please enter both username and password.");
+      return;
+    }
+
     let result = await postLogin(usernameInput, passwordInput);
     if (result) {
       let decoded: { id: number; username: string; type: string } = jwtDecode(
@@ -63,8 +68,11 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <div
+        className="flex flex-1 flex-col justify-center px-6 py-12 lg:px-8 h-2/4"
+        style={{ height: "50rem" }}
+      >
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm ">
           {/* <img
             className="mx-auto h-10 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"

@@ -9,7 +9,7 @@ const BusinessPromotionInfo: React.FC = () => {
       <div
         style={{ marginTop: "60px", display: "flex", flexDirection: "column" }}
       >
-        <h1 style={{ fontSize: "24px", paddingBottom: "3rem" }}>推廣資料</h1>
+        <h4 style={{ fontSize: "24px", paddingBottom: "3rem" }}>推廣資料</h4>
 
         <div
           style={{

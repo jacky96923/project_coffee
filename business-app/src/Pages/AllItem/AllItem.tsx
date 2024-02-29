@@ -125,118 +125,121 @@ export default function AllItem() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className={styles.content}>
-          <div className={styles.pageTitle}>
-            所有商品{" "}
-            <button
-              className="btn bg-gradient-to-r from-light-brown to-dark-brown text-white"
-              onClick={() => {
-                navigate("/AddItem");
-              }}
-            >
-              添加商品
-            </button>
-          </div>
-
-          <div className={styles.searchBar}>
-            <div className="navbar bg-base-100 border-2 rounded-lg">
-              <div className="flex-1">
-                <span>分類:</span>
-                <a
-                  className="btn btn-ghost"
-                  onClick={() => setSortState(items)}
-                >
-                  所有
-                </a>
-                <a
-                  className="btn btn-ghost"
-                  onClick={() => setSortState(sortItemTrue)}
-                >
-                  供應中
-                </a>
-                <a
-                  className="btn btn-ghost"
-                  onClick={() => setSortState(sortItemFalse)}
-                >
-                  暫停中
-                </a>
-              </div>
-              <div className="flex-none gap-2">
-                <div className="form-control">
-                  <input
-                    type="text"
-                    placeholder="搜尋產品"
-                    className="input input-bordered w-24 md:w-auto"
-                    value={searchQuery}
-                    onChange={(event) => setSearchQuery(event.target.value)}
-                  />
-                </div>
-                <a
-                  className="btn btn-ghost"
-                  onClick={() => setSortState(searchResults)}
-                >
-                  搜尋
-                </a>
-              </div>
-            </div>
-          </div>
+        <div className="flex flex-col flex-1 w-full h-full">
           <div>
-            <div className="overflow-x-auto">
-              <table className="table">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>產品圖片</th>
-                    <th>產品名稱</th>
-                    <th>產品大小</th>
-                    <th>產品價格</th>
-                    <th>產品類別</th>
-                    <th>狀態</th>
-                    <th>修改資料</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* row 1 */}
-                  {/* td is each cell */}
-                  {/* th is only each check box */}
-                  {typeof sortState === "string"
-                    ? ""
-                    : sortState.length > 0
-                    ? sortState.map((entry) =>
-                        entry.item.map((subEntry, index) => (
-                          <ItemTable
-                            key={index}
-                            itemId={subEntry.itemId}
-                            itemName={subEntry.itemName}
-                            itemPhoto={subEntry.itemPhoto}
-                            size={subEntry.size}
-                            price={subEntry.price}
-                            status={subEntry.status}
-                            type={subEntry.type}
-                            addToCheckedItem={addToCheckedItem}
-                            removeFromCheckedItem={removeFromCheckedItem}
-                          />
-                        ))
-                      )
-                    : ""}
-
-                  {/* row 2 */}
-
-                  {/* row 3 */}
-
-                  {/* row 4 */}
-                </tbody>
-                {/* foot */}
-              </table>
+            <div className="search">
+              <div className={styles.pageTitle}>
+                所有商品{" "}
+                <button
+                  className="btn bg-gradient-to-r from-light-brown to-dark-brown text-white"
+                  onClick={() => {
+                    navigate("/AddItem");
+                  }}
+                >
+                  添加商品
+                </button>
+              </div>
+              <div className={styles.searchBar}>
+                <div className="navbar bg-base-100 border-2 rounded-lg ">
+                  <div className="flex-1">
+                    <span>分類:</span>
+                    <a
+                      className="btn btn-ghost"
+                      onClick={() => setSortState(items)}
+                    >
+                      所有
+                    </a>
+                    <a
+                      className="btn btn-ghost"
+                      onClick={() => setSortState(sortItemTrue)}
+                    >
+                      供應中
+                    </a>
+                    <a
+                      className="btn btn-ghost"
+                      onClick={() => setSortState(sortItemFalse)}
+                    >
+                      暫停中
+                    </a>
+                  </div>
+                  <div className="flex-none gap-2">
+                    <div className="form-control">
+                      <input
+                        type="text"
+                        placeholder="搜尋產品"
+                        className="input input-bordered w-24 md:w-auto"
+                        value={searchQuery}
+                        onChange={(event) => setSearchQuery(event.target.value)}
+                      />
+                    </div>
+                    <a
+                      className="btn btn-ghost"
+                      onClick={() => setSortState(searchResults)}
+                    >
+                      搜尋
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-around">
-              <button
-                className="btn bg-gradient-to-r bg-emerald-500"
-                onClick={changeStatusHandler}
-              >
-                改變狀態
-              </button>
+            <div>
+              <div className="overflow-x-auto">
+                <table className=" w-full ">
+                  {/* head */}
+                  <thead>
+                    <tr className="">
+                      <th></th>
+                      <th>產品圖片</th>
+                      <th>產品名稱</th>
+                      <th>產品大小</th>
+                      <th>產品價格</th>
+                      <th>產品類別</th>
+                      <th>狀態</th>
+                      <th>修改資料</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* row 1 */}
+                    {/* td is each cell */}
+                    {/* th is only each check box */}
+                    {typeof sortState === "string"
+                      ? ""
+                      : sortState.length > 0
+                      ? sortState.map((entry) =>
+                          entry.item.map((subEntry, index) => (
+                            <ItemTable
+                              key={index}
+                              itemId={subEntry.itemId}
+                              itemName={subEntry.itemName}
+                              itemPhoto={subEntry.itemPhoto}
+                              size={subEntry.size}
+                              price={subEntry.price}
+                              status={subEntry.status}
+                              type={subEntry.type}
+                              addToCheckedItem={addToCheckedItem}
+                              removeFromCheckedItem={removeFromCheckedItem}
+                            />
+                          ))
+                        )
+                      : ""}
+
+                    {/* row 2 */}
+
+                    {/* row 3 */}
+
+                    {/* row 4 */}
+                  </tbody>
+                  {/* foot */}
+                </table>
+              </div>
+              <div className="flex justify-around">
+                <button
+                  className="btn bg-gradient-to-r bg-emerald-500"
+                  onClick={changeStatusHandler}
+                >
+                  改變狀態
+                </button>
+              </div>
             </div>
           </div>
         </div>
