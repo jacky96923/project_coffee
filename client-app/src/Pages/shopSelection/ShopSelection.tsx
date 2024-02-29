@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, ArrowPathIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GetShopDisplaying } from "../../hooks/dataAPI";
 import { Loader } from "@googlemaps/js-api-loader";
@@ -90,16 +90,24 @@ export default function ShopSelection() {
 
   let searchResults: typeof shopItem = [];
   if (Array.isArray(shopItem)) {
-    const filteredItems = shopItem.filter((item) => {
+    searchResults = shopItem.filter((item) => {
       const shopName = item.shop_name.toLowerCase();
       // const address = item.address.toLowerCase();
       return shopName.includes(searchQuery.toLowerCase());
     });
+    console.log("check searched", searchResults);
   }
-  console.log(
-    "check image",
-    typeof shopItem === "string" ? "" : shopItem[0].images
-  );
+  console.log("check sortstate", sortState);
+
+  useEffect(() => {
+    setSortState(shopItem);
+    setSearchQuery("");
+  }, [shopItem]);
+
+  function clearSearchHandler() {
+    setSortState(shopItem);
+    setSearchQuery("");
+  }
 
   return (
     <div className="relative bg-white m-5 mt-2">
@@ -116,9 +124,16 @@ export default function ShopSelection() {
       </div>
       <hr />
       <div className="flex justify-center w-5/6 mx-auto m-4">
+        <button
+          className="rounded-2xl	 w-10"
+          onClick={() => clearSearchHandler()}
+        >
+          <ArrowPathIcon className="text-green-800" />
+        </button>
         <input
           type="text"
           placeholder="咖啡店名稱"
+          value={searchQuery}
           className="input input-bordered w-full max-w-xs m-3 rounded-2xl	drop-shadow-lg"
           onChange={(event) => setSearchQuery(event.target.value)}
         />
@@ -131,13 +146,13 @@ export default function ShopSelection() {
         </button>
       </div>
 
-      <div id="map" style={{ height: "15rem" }}></div>
+      <div id="map" style={{ height: "12rem" }}></div>
 
       <div>
         <ul className="space-y-4">
-          {Array.isArray(shopItem) ? (
-            shopItem.length > 0 ? (
-              shopItem.map((shop) => (
+          {Array.isArray(sortState) ? (
+            sortState.length > 0 ? (
+              sortState.map((shop) => (
                 <li key={shop.id} className="">
                   <button
                     className="btn btn-circle text-red-500 relative top-8 right-3"
@@ -151,11 +166,12 @@ export default function ShopSelection() {
                         display: "flex",
                         flexDirection: "row",
                         justifyContent: "flex-start",
-                        border: "1px solid green",
+                        // border: "1px solid green",
                         margin: "2px",
                         borderRadius: "10px",
                         width: "auto",
                         height: "11rem",
+                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)",
                         // justifyContent: "space-between",
                         // backgroundColor: "green",
                       }}
@@ -200,22 +216,22 @@ export default function ShopSelection() {
                           {shop.shop_name}
                         </div>
                         <div className=" text-xs	m-2">{shop.address}</div>
-                        <div className="text-xs	m-2 flex justify-end">900m</div>
+                        {/* <div className="text-xs	m-2 flex justify-end">900m</div> */}
                       </div>
                     </div>
                   </Link>
                 </li>
               ))
             ) : (
-              "No todo Items"
+              ""
             )
-          ) : shopItem === "Data is coming" ? (
+          ) : sortState === "Data is coming" ? (
             <>
               <img alt="loading" />
               <h3>Loading</h3>
             </>
           ) : (
-            <h3>{shopItem}</h3>
+            <h3>{sortState}</h3>
           )}
         </ul>
       </div>

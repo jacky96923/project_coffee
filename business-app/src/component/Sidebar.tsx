@@ -24,7 +24,7 @@ export default function Sidebar() {
         {/* Sidebar content */}
         <div className="flex flex-col items-center justify-between p-4">
           <span className="text-2xl font-bold text-center mt-3">
-            Project Coffee
+            Project Coffee Business
           </span>
         </div>
         <ul className="flex flex-col items-center justify-center py-4 ">

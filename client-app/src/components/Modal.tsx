@@ -126,18 +126,20 @@ export function NoShoppingCartModal(props: NoShoppingCartModalProps) {
         <div className="modal-box w-11/12 max-w-xs">
           <h6>你的購物車還沒有商品</h6>
           <p>請先選擇店舖及將商品加入購物車</p>
-          <button
-            className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost"
-            onClick={props.onBackward}
-          >
-            返回上一頁
-          </button>
-          <button
-            className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost"
-            onClick={props.onMain}
-          >
-            返回主頁
-          </button>
+          <div className="flex justify-around">
+            <button
+              className="btn btn-sm border rounded-2xl w-20 btn-circle btn-ghost"
+              onClick={props.onBackward}
+            >
+              返回上一頁
+            </button>
+            <button
+              className="btn btn-sm border rounded-2xl w-16 btn-circle btn-ghost"
+              onClick={props.onMain}
+            >
+              返回主頁
+            </button>
+          </div>
         </div>
       </dialog>
     </>

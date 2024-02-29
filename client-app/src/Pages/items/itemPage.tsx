@@ -268,7 +268,7 @@ export default function ItemPage() {
                         // Pass the selected option at the same index
                       />
                     ))
-                  : "No Option data"}
+                  : "沒有自訂選項"}
               </div>
               <div className={styles.addItemWrap}>
                 <div className={styles.quantityWrap}>
