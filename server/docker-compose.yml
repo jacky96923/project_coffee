@@ -20,6 +20,12 @@ services:
       POSTGRES_HOST: postgres
       NODE_ENV: production
       JWT_SECRET: asdkjf
+      STRIPE_SECRET: fatboyeatallday
+      STRIPE_ENDPOINT: https://api.stripe.com/v1/charges
+      S3_REGION: ap-southeast-2
+      S3_BUCKET_NAME: project-coffee-api
+      AWS_ACCESS_KEY_ID: AKIAUCPWNLQCMHF73GO2
+      AWS_SECRET_ACCESS_KEY: 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
     depends_on:
       - postgres
     build:

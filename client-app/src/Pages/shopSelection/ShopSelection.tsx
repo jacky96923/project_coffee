@@ -8,9 +8,9 @@ import { GetShopDisplaying } from "../../hooks/dataAPI";
 import { Loader } from "@googlemaps/js-api-loader";
 // import dotenv from "dotenv";
 import { MapPinIcon } from "@heroicons/react/24/solid";
+// dotenv.config();
 
 export default function ShopSelection() {
-  // dotenv.config();
   type SelectedShop = {
     id: number;
     shop_name: string;
@@ -25,6 +25,7 @@ export default function ShopSelection() {
 
   const [selectedShopMap, setSelectedShopMap] = useState({} as SelectedShop);
   const loader = new Loader({
+    // apiKey: process.env.GOOGLE_MAP_API_KEY!,
     apiKey: "AIzaSyDUqlnlOl0M1egVOjsY84Dhzp9Cm4Ax6Gw",
     version: "weekly",
     // ...additionalOptions,
@@ -95,6 +96,10 @@ export default function ShopSelection() {
   //     ),
   //   }));
   // }
+  console.log(
+    "check image",
+    typeof shopItem === "string" ? "" : shopItem[0].images
+  );
 
   return (
     <div className="relative bg-white m-5 mt-2">
@@ -144,45 +149,48 @@ export default function ShopSelection() {
                     <div
                       style={{
                         display: "flex",
-                        flex: "start",
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
                         border: "1px solid green",
                         margin: "2px",
                         gridTemplateColumns: "50% 50%",
                         borderRadius: "10px",
                         width: "21rem",
                         height: "11rem",
-                        // backgroundColor: "green",
                       }}
                     >
                       {Array.isArray(shop.images)
                         ? shop.images.length > 0
-                          ? shop.images.map((entry) => (
-                              <img
-                                src={entry.isCover ? entry.shopPhoto : ""}
-                                className="w-25 h-40 rounded"
-                                style={{
-                                  width: "100%",
-                                  height: "auto",
-                                  maxWidth: "100%",
-                                  maxHeight: "100%",
-                                }}
-                              />
-                            ))
+                          ? shop.images.map((entry) =>
+                              entry.isCover ? (
+                                <img
+                                  src={entry.shopPhoto}
+                                  className="w-25 h-40 rounded"
+                                  style={{
+                                    height: "auto",
+                                    maxWidth: "100%",
+                                    maxHeight: "100%",
+                                  }}
+                                />
+                              ) : (
+                                ""
+                              )
+                            )
                           : ""
                         : ""}
                       <div className="flex flex-col ml-5 mt-5">
                         <div className="text-base	m-2 font-bold">
                           {Array.isArray(shop.images)
                             ? shop.images.length > 0
-                              ? shop.images.map((entry) => (
-                                  <div className="w-8 rounded-xl">
-                                    <img
-                                      src={
-                                        entry.isCover ? " " : entry.shopPhoto
-                                      }
-                                    />
-                                  </div>
-                                ))
+                              ? shop.images.map((entry) =>
+                                  entry.isCover ? (
+                                    " "
+                                  ) : (
+                                    <div className="w-8 rounded-xl">
+                                      <img src={entry.shopPhoto} />
+                                    </div>
+                                  )
+                                )
                               : ""
                             : ""}
 

@@ -66,6 +66,8 @@ import { OrderService } from "./services/business/OrderService";
 import { OrderController } from "./controller/business/OrderController";
 import { MainService } from "./services/business/mainService";
 import { MainController } from "./controller/business/mainController";
+import { EditShopInfoController } from "./controller/business/EditShopInfoController";
+import { EditShopInfoService } from "./services/business/EditShopInfoService";
 
 // Controller and Service Instantiation (Client)
 const userAuthService = new UserAuthService(knex);
@@ -113,6 +115,10 @@ const allItemController = new AllItemController(allItemService);
 const addItemService = new AddItemService(knex);
 const addItemController = new AddItemController(addItemService);
 
+//For EditShopInfo
+const editShopInfoService = new EditShopInfoService(knex);
+const editShopInfoController = new EditShopInfoController(editShopInfoService);
+
 // Route Setup (Client & Business)
 app.use("/auth", userAuthController.router);
 app.use("/comments", commentsController.router);
@@ -136,6 +142,7 @@ app.use("/menuPreviews", menuPreviewController.router);
 app.use("/orders", orderController.router);
 app.use("/shopopentime", businessAuthController.router);
 app.use("/mainPage", mainController.router);
+app.use("/EditShopInfo", editShopInfoController.router);
 
 app.get("/hi", (req, res) => res.send("hi"));
 

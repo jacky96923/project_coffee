@@ -2,11 +2,11 @@
   background-color: white;
   border-radius: 33px;
   position: fixed;
+  left: 0px;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .optionsContainer {

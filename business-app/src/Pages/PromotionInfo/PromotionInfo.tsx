@@ -14,8 +14,8 @@ export default function PromotionInfo() {
 
   const shopId: any = useSelector<RootState>((state) => state.auth.shop_id);
   console.log("check shopID", shopId);
-
   const promotionInfo = GetPromotionInfo(shopId);
+  console.log("promotionInfo,", promotionInfo);
 
   const [logoSelectedFile, setLogoSelectedFile] = useState<File | null>(null);
   const [logoPreviewURL, setLogoPreviewURL] = useState<string | null>(null);
@@ -68,7 +68,7 @@ export default function PromotionInfo() {
       formData.append("description", description);
       mutation.mutate(formData);
     } else {
-      alert("please upload all the files");
+      alert("請填寫所有資料");
     }
   }
 

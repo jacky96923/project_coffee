@@ -17,6 +17,8 @@ import DialogDelCategory from "../../component/DialogDelCategory";
 import DialogDelItem from "../../component/DialogDelItem";
 import DialogAddItemToCat from "../../component/DialogAddItemToCat";
 import item from "../../slices/itemSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 // Header component
 const Header = () => {
@@ -32,6 +34,7 @@ const Header = () => {
 
 // Main content component
 const MainContent = () => {
+  let shopId = useSelector((state: RootState) => state.auth.shop_id);
   const menuCategoryItem: {
     category: {
       categoryId: number;
@@ -47,7 +50,7 @@ const MainContent = () => {
       shop_id: number;
       size?: string;
     }[];
-  } = GetMenuPreview(1);
+  } = GetMenuPreview(shopId!);
   // parseInt(url.charAt(url.length - 1))
 
   // const menuPreview = useMutation({
@@ -300,7 +303,7 @@ const MainContent = () => {
                 </div>
               ))
             ) : (
-              "No todo Items"
+              "請新增產品然後新增餐單"
             )
           ) : typeof menuCategoryItem === "string" &&
             menuCategoryItem === "Data is coming" ? (

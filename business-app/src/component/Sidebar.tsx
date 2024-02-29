@@ -8,11 +8,15 @@ import {
   FaDumpsterFire,
 } from "react-icons/fa";
 import { BiSolidFoodMenu } from "react-icons/bi";
-import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+
+  function logOutHandler() {
+    localStorage.clear();
+    navigate("/businessLogin", { replace: true });
+  }
 
   return (
     <>
@@ -58,9 +62,12 @@ export default function Sidebar() {
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
-            <div className="flex cursor-pointer">
+            <div
+              className="flex cursor-pointer"
+              onClick={() => navigate("/EditShopInfo")}
+            >
               <FaUser className="size-6" />
-              <h3 className="ml-3">商店資料</h3>
+              <h3 className="ml-3">修改商店資料</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">
@@ -82,13 +89,18 @@ export default function Sidebar() {
             </div>
           </li>
           <br />
-          <br />
-          <br />
+
           <button
             onClick={() => navigate("/receivedOrders")}
             className="block mx-auto w-40 h-14  bg-gradient-to-r from-blue-900 to-blue-700 rounded-2xl font-bold text-white"
           >
             查看訂單
+          </button>
+          <button
+            onClick={logOutHandler}
+            className="block mx-auto w-40 h-14 bg-red-500 rounded-2xl font-bold text-white"
+          >
+            登出
           </button>
         </ul>
       </div>

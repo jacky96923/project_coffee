@@ -44,6 +44,9 @@ export default function AllItem() {
         }>;
       }> = GetAllItem();
 
+  useEffect(() => {
+    setSortState(items);
+  }, [items]);
   //     let itemListForRedux: {
   //   itemName: string;
   //   itemId: number;

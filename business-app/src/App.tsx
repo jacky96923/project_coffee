@@ -14,6 +14,7 @@ import MainAddItem from "./Pages/AddItem/MainAddItem";
 import AddItem from "./Pages/AddItem/AddItem";
 import { AuthGuard } from "./AuthGuard";
 import ReceivedOrders from "./Pages/ReceivedOrders/ReceivedOrders";
+import EditShopInfo from "./Pages/EditShopInfo/EditShopInfo";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/AllItem" element={<AllItem />} />
             <Route path="/MainAddItem" element={<MainAddItem />} />
             <Route path="/PromotionInfo" element={<PromotionInfo />} />
+            <Route path="/EditShopInfo" element={<EditShopInfo />} />
           </Route>
         </Routes>
       </div>

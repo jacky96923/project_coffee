@@ -62,7 +62,11 @@ export class MenuIdService {
         .where(function () {
           this.where("item.size", "小杯").orWhereNull("item.size");
         })
-        .where("category.id", categoryId);
+        .where("category.id", categoryId)
+        .andWhereRaw(
+          "NOT EXISTS (SELECT 1 FROM item i2 WHERE i2.name = item.name AND i2.is_enabled = false AND i2.id != item.id)"
+        )
+        .where("is_enabled", true);
       // console.log("itemsInformation", itemsInformation);
 
       return [categoryName, itemsInformation];

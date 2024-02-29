@@ -15,14 +15,14 @@ export function GetAllItem() {
     },
   });
 
-  if (isLoading || isFetching) return "AllItem comming";
+  if (isLoading || isFetching) return "data coming";
 
   if (error) {
-    return "Cannot get AllItem so fuck";
+    return "error";
   }
 
   if (!data) {
-    return "Where has AllItem gone?";
+    return "no data";
   }
 
   return data;
