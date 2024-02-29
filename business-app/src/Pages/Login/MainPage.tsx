@@ -17,9 +17,10 @@ function MainPage() {
     area: string;
     district: string;
     address: string;
-    description: string;
-    filename: string;
+    description: string | null;
+    filename?: string;
   }[] = GetShopInformation(shopId as number);
+  console.log("shopInfo", shopInfo)
 
   return (
     <div className="flex">
@@ -36,17 +37,19 @@ function MainPage() {
                 <div className="hero-content flex-row lg:flex-col">
                   <div>
                     <div className="flex">
-                      <img
+                      {info.filename? <img
                         src={info.filename}
                         className="rounded-lg  mr-5 w-auto h-32 mt-20"
-                      />{" "}
+                      />: <h1 className="w-80">請上傳圖片</h1>
+                      }
+                      
                       <div>
                         <h1 className="text-3xl font-bold m-3">
                           {info.shop_name}
                         </h1>
 
                         <hr />
-                        <p className="m-3 text-sm	">{info.description}</p>
+                        <p className="m-3 text-sm	">{info.description??""}</p>
                         <p className="m-3 text-sm">
                           {info.area}
                           {info.district}

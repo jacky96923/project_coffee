@@ -140,7 +140,7 @@ export function CommentPage() {
             onChange={handleCommentChange}
           />
 
-          <div className="flex flex-col items-center py-1.5  fixed z-0 mx-auto inset-x-0">
+          <div className="flex flex-col items-center py-1.5">
             <button
               className="btn btn-wide  bg-green-600 text-white"
               onClick={handleSubmit}
