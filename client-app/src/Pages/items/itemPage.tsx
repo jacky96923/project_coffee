@@ -184,7 +184,7 @@ export default function ItemPage() {
 
   return (
     <>
-      <div className="-mt-8">
+      <div className="-mt-10">
         <div className={styles.imageContainer}>
           <img
             className={styles.itemImg}

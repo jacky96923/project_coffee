@@ -53,7 +53,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       name: "湯力咖啡",
       item_photo:
-        "https://www.thespruceeats.com/thmb/mouqNJc2-paHkBuRRuPU7ht_L4o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/SES-mocha-4797918-hero-01-1-f8fb7ebd74914895b61366f6fc1d4b05.jpg",
+        "http://www.coffeeiseverywhere.com/wp-content/uploads/2022/05/3CCA8C96-DA11-4FAC-B313-CFC86BB1BB6E-scaled-e1651484438778-1024x1024.jpeg",
       size: "小杯",
       price: 25,
       description: "口味較清新,除咖啡外,亦能夠品嘗到Tonic本身的味道",
@@ -63,7 +63,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       name: "湯力咖啡",
       item_photo:
-        "https://www.thespruceeats.com/thmb/mouqNJc2-paHkBuRRuPU7ht_L4o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/SES-mocha-4797918-hero-01-1-f8fb7ebd74914895b61366f6fc1d4b05.jpg",
+        "http://www.coffeeiseverywhere.com/wp-content/uploads/2022/05/3CCA8C96-DA11-4FAC-B313-CFC86BB1BB6E-scaled-e1651484438778-1024x1024.jpeg",
       size: "中杯",
       price: 35,
       description: "口味較清新,除咖啡外,亦能夠品嘗到Tonic本身的味道",
@@ -73,7 +73,7 @@ export async function seed(knex: Knex): Promise<void> {
     {
       name: "湯力咖啡",
       item_photo:
-        "https://www.thespruceeats.com/thmb/mouqNJc2-paHkBuRRuPU7ht_L4o=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/SES-mocha-4797918-hero-01-1-f8fb7ebd74914895b61366f6fc1d4b05.jpg",
+        "http://www.coffeeiseverywhere.com/wp-content/uploads/2022/05/3CCA8C96-DA11-4FAC-B313-CFC86BB1BB6E-scaled-e1651484438778-1024x1024.jpeg",
       size: "大杯",
       price: 50,
       description: "口味較清新,除咖啡外,亦能夠品嘗到Tonic本身的味道",
@@ -116,11 +116,11 @@ export async function seed(knex: Knex): Promise<void> {
     {
       name: "牛角酥",
       item_photo:
-        "https://static5.orstatic.com/useritem_photo2/item_photo/1W/1I3L/0AOPIODC6B2447BD84ECD9px.jpg",
+        "https://shoplineimg.com/60ace1b2fdff280069b32992/6204da4ab66e8a002ff5c8e8/800x.webp?source_format=jpg",
       size: null,
       price: 20,
       description:
-        "正宗的羊角麵包就像您在法國的傳統麵包店中一樣。由布列塔尼（法國西北部）製成，採用純正的黃油和脫脂牛奶製成，內部質感豐富而濕潤。",
+        "正宗的牛角酥就像您在法國的傳統麵包店中一樣。由布列塔尼（法國西北部）製成，採用純正的黃油和脫脂牛奶製成，內部質感豐富而濕潤。",
       is_enabled: true,
       shop_id: 1,
     }, //11
