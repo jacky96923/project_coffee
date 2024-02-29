@@ -43,12 +43,16 @@ export default function BusinessLocation() {
     // Update selectedAreaOption and selectedDistrictOption based on Redux state
     setSelectedAreaOption(area || "請選擇地域");
     setSelectedDistrictOption(district || "請選擇分區");
-    
+
     // Update selectedOptionId based on the Redux state for area
-    const areaToIdMap: { [key: string]: number } = { "香港": 1, "九龍": 2, "新界": 3 };
+    const areaToIdMap: { [key: string]: number } = {
+      香港: 1,
+      九龍: 2,
+      新界: 3,
+    };
     const id = areaToIdMap[area] || 0;
     setSelectedOptionId(id);
-  
+
     // Validate form if address is present
     setFormValid(address.trim() !== "");
   }, [area, district, address]);
@@ -294,20 +298,10 @@ export default function BusinessLocation() {
               <div>
                 <button
                   type="button"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+                  className="w-full rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #CB8A58, #562B1A)",
                     borderColor: "transparent",
                   }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundImage =
-                      "linear-gradient(to right, #B07A4E, #4A2416)")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundImage =
-                      "linear-gradient(to right, #CB8A58, #562B1A)")
-                  }
                   onClick={handleNextButtonClick}
                 >
                   下一步
@@ -315,21 +309,11 @@ export default function BusinessLocation() {
 
                 <button
                   type="button"
-                  className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+                  className="w-full rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
                   style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #CB8A58, #562B1A)",
                     borderColor: "transparent",
                   }}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.backgroundImage =
-                      "linear-gradient(to right, #B07A4E, #4A2416)")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.backgroundImage =
-                      "linear-gradient(to right, #CB8A58, #562B1A)")
-                  }
-                  onClick={() => navigate(-1)}
+                  onClick={handleNextButtonClick}
                 >
                   上一步
                 </button>

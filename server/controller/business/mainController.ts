@@ -1,11 +1,12 @@
 import express from "express";
 import { Request, Response } from "express";
 import { MainService } from "../../services/business/mainService";
+import { isLoggedIn } from "../../utils/guard";
 
 export class MainController {
   router = express.Router();
   constructor(private mainService: MainService) {
-    this.router.post("/getMainInfo", this.getMainInfo);
+    this.router.post("/getMainInfo", isLoggedIn, this.getMainInfo);
   }
 
   getMainInfo = async (req: Request, res: Response) => {

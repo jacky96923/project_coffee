@@ -9,6 +9,7 @@ export function GetShopInformation(shopId: number) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
           shopId: shopId,
