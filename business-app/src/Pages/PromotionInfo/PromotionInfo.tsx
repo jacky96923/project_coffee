@@ -77,9 +77,14 @@ export default function PromotionInfo() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className={styles.content}>
-          <div className={styles.pageTitle}>推廣資料</div>
-          <form onSubmit={submit}>
+        <div className="flex flex-col flex-1 w-full h-screen">
+          <header className="bg-white shadow p-4">
+            {/* Header content */}
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl font-bold m-4">推廣資料</h1>
+            </div>
+          </header>
+          <form onSubmit={submit} className="overflow-auto">
             {/* Logo upload */}
             <div className={styles.logoUpload}>
               <section className="container w-full mx-auto items-center py-8">
@@ -126,14 +131,18 @@ export default function PromotionInfo() {
                               <div>現存圖片</div>
                               <div className="flex justify-center">
                                 {promotionInfo &&
-                                promotionInfo !== "Incoming ..." ? (promotionInfo.images.length>0?
-                                  <img
-                                    src={
-                                      promotionInfo.images.find(
-                                        (entry: any) => entry.isLogo == true
-                                      ).filename
-                                    }
-                                  ></img>:""
+                                promotionInfo !== "Incoming ..." ? (
+                                  promotionInfo.images.length > 0 ? (
+                                    <img
+                                      src={
+                                        promotionInfo.images.find(
+                                          (entry: any) => entry.isLogo == true
+                                        ).filename
+                                      }
+                                    ></img>
+                                  ) : (
+                                    ""
+                                  )
                                 ) : (
                                   "上傳圖片"
                                 )}
@@ -205,14 +214,18 @@ export default function PromotionInfo() {
                             <div>現存圖片</div>
                             {promotionInfo &&
                             promotionInfo !== "Incoming ..." ? (
-                              <div className="flex justify-center">{promotionInfo.images.length>0?
-                                <img
-                                  src={
-                                    promotionInfo.images.find(
-                                      (entry: any) => entry.isCover == true
-                                    ).filename
-                                  }
-                                ></img>:""}
+                              <div className="flex justify-center">
+                                {promotionInfo.images.length > 0 ? (
+                                  <img
+                                    src={
+                                      promotionInfo.images.find(
+                                        (entry: any) => entry.isCover == true
+                                      ).filename
+                                    }
+                                  ></img>
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             ) : (
                               ""
@@ -256,9 +269,11 @@ export default function PromotionInfo() {
                   ></textarea>
                 </div>
               </div>
-              <button className="btn btn-primary" type="submit">
-                提交資料
-              </button>
+              <div className="max-w-sm mx-auto m-10 mr-8">
+                <button className="btn  btn-primary" type="submit">
+                  提交資料
+                </button>
+              </div>
             </section>
           </form>
         </div>

@@ -92,7 +92,7 @@ const MenuPreview = () => {
       <Sidebar />
 
       {/* Main content */}
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col flex-1 w-screen h-screen">
         {/* Header */}
         <header className="bg-white shadow p-4">
           <div className="flex items-center justify-between">
@@ -102,8 +102,8 @@ const MenuPreview = () => {
 
         {/* Textarea */}
         <div
-          className="relative"
-          style={{ marginTop: "1rem", marginLeft: "4rem", width: "80%" }}
+          className="relative overflow-auto"
+          style={{ marginTop: "1rem", marginLeft: "4rem", width: "85%" }}
         >
           {/* Render Textareas for descriptions */}
 

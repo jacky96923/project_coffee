@@ -125,10 +125,10 @@ export default function AllItem() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className="flex flex-col flex-1 w-full h-full">
-          <div>
+        <div className="flex flex-col flex-1 w-full h-screen">
+          <div className="flex flex-col flex-1 w-full h-screen">
             <div className="search">
-              <div className={styles.pageTitle}>
+              {/* <div className={styles.pageTitle}>
                 所有商品{" "}
                 <button
                   className="btn bg-gradient-to-r from-light-brown to-dark-brown text-white"
@@ -138,7 +138,26 @@ export default function AllItem() {
                 >
                   添加商品
                 </button>
-              </div>
+              </div> */}
+
+              <header className="bg-white shadow p-4">
+                {/* Header content */}
+                <div className="flex items-center justify-between">
+                  <h1 className="text-3xl font-bold m-4">所有商品</h1>
+                  <div>
+                    {" "}
+                    <button
+                      className="btn bg-gradient-to-r from-light-brown to-dark-brown text-white"
+                      onClick={() => {
+                        navigate("/AddItem");
+                      }}
+                    >
+                      添加商品
+                    </button>
+                  </div>
+                </div>
+              </header>
+
               <div className={styles.searchBar}>
                 <div className="navbar bg-base-100 border-2 rounded-lg ">
                   <div className="flex-1">
@@ -182,7 +201,7 @@ export default function AllItem() {
                 </div>
               </div>
             </div>
-            <div>
+            <div className="overflow-auto">
               <div className="overflow-x-auto">
                 <table className=" w-full ">
                   {/* head */}

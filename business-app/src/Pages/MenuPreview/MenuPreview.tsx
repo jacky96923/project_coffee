@@ -132,7 +132,7 @@ const MainContent = () => {
   };
 
   return (
-    <div className="main-content m-2 ">
+    <div className="main-content m-2 overflow-auto	h-screen">
       {/* Main content */}
       <div className="flex justify-between m-5">
         <div className="Topic">
@@ -323,11 +323,9 @@ const MainContent = () => {
 // App component
 const MenuPreview = () => {
   return (
-    <div className="flex">
-      <div className="bg-fixed">
-        <Sidebar />
-      </div>
-      <div className="flex flex-col flex-1 w-full h-full">
+    <div className="flex h-full">
+      <Sidebar />
+      <div className="flex flex-col flex-1 w-full h-screen">
         <Header />
         <MainContent />
       </div>
