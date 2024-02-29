@@ -94,19 +94,12 @@ const BusinessWelcome: React.FC = () => {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             type="submit"
-            className="flex  w-64  justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+            className="  w-64 rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
             style={{
-              backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
+   
               borderColor: "transparent",
             }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundImage =
-                "linear-gradient(to right, #B07A4E, #4A2416)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundImage =
-                "linear-gradient(to right, #CB8A58, #562B1A)")
-            }
+
             onClick={handleClick}
           >
             註冊
@@ -115,19 +108,12 @@ const BusinessWelcome: React.FC = () => {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <button
             type="button"
-            className="flex w-64  justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
+            className="  w-64 rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
             style={{
-              backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
+
               borderColor: "transparent",
             }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundImage =
-                "linear-gradient(to right, #B07A4E, #4A2416)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundImage =
-                "linear-gradient(to right, #CB8A58, #562B1A)")
-            }
+
             onClick={() => navigate(-1)}
           >
             上一步
