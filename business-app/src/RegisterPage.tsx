@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AppDispatch, RootState } from "./store";
@@ -14,7 +14,9 @@ export default function BusinessLoginPage() {
 
   const [loginName, setLoginName] = useState(login_name);
   const [shopName, setShopName] = useState(shop_name);
-  const [Telnum, setTelnum] = useState<string>(contact_no ? contact_no.toString() : "");
+  const [Telnum, setTelnum] = useState<string>(
+    contact_no ? contact_no.toString() : ""
+  );
   const [password, setPassword] = useState(login_password);
   const [confirmPassword, setConfirmPassword] = useState(login_password);
 
@@ -193,27 +195,28 @@ export default function BusinessLoginPage() {
               </div>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                className="w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #CB8A58, #562B1A)",
-                  borderColor: "transparent",
-                }}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.backgroundImage =
-                    "linear-gradient(to right, #B07A4E, #4A2416)")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.backgroundImage =
-                    "linear-gradient(to right, #CB8A58, #562B1A)")
-                }
-              >
-                下一步
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="w-full rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              style={{
+                borderColor: "transparent",
+              }}
+            >
+              下一步
+            </button>
+            <button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/businessLogin");
+              }}
+              className="w-full rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              style={{
+                borderColor: "transparent",
+              }}
+            >
+              返回登入
+            </button>
           </form>
         </div>
       </div>

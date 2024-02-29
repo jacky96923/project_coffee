@@ -134,13 +134,12 @@ export default function BusinessLoginPage() {
               </div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center mt-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                 className="w-full rounded-md bg-green-800 mt-4 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 style={{ 
-                  backgroundImage: "linear-gradient(to right, #CB8A58, #562B1A)",
+               
                   borderColor: "transparent"
                 }}
-                onMouseOver={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #B07A4E, #4A2416)")}
-                onMouseOut={(e) => (e.currentTarget.style.backgroundImage = "linear-gradient(to right, #CB8A58, #562B1A)")}
+
               
               >
                 Sign in
