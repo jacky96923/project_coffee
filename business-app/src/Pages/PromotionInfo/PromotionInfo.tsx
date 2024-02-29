@@ -126,14 +126,14 @@ export default function PromotionInfo() {
                               <div>現存圖片</div>
                               <div className="flex justify-center">
                                 {promotionInfo &&
-                                promotionInfo !== "Incoming ..." ? (
+                                promotionInfo !== "Incoming ..." ? (promotionInfo.images.length>0?
                                   <img
                                     src={
                                       promotionInfo.images.find(
                                         (entry: any) => entry.isLogo == true
                                       ).filename
                                     }
-                                  ></img>
+                                  ></img>:""
                                 ) : (
                                   "上傳圖片"
                                 )}
@@ -205,14 +205,14 @@ export default function PromotionInfo() {
                             <div>現存圖片</div>
                             {promotionInfo &&
                             promotionInfo !== "Incoming ..." ? (
-                              <div className="flex justify-center">
+                              <div className="flex justify-center">{promotionInfo.images.length>0?
                                 <img
                                   src={
                                     promotionInfo.images.find(
                                       (entry: any) => entry.isCover == true
                                     ).filename
                                   }
-                                ></img>
+                                ></img>:""}
                               </div>
                             ) : (
                               ""
