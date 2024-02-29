@@ -39,8 +39,8 @@ export default function ShopSelection() {
       )) as google.maps.MapsLibrary;
       map = new Map(document.getElementById("map") as HTMLElement, {
         center: {
-          lat: selectedShopMap.latitude,
-          lng: selectedShopMap.longitude,
+          lat: 22.32173,
+          lng: 114.20946,
         },
         zoom: 15,
       });
@@ -88,14 +88,14 @@ export default function ShopSelection() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortState, setSortState] = useState(shopItem);
 
-  // let searchResults: typeof shopItem = [];
-  // if (Array.isArray(shopItem)) {
-  //   searchResults = shopItem.map((entry) => ({
-  //     shop_name: entry.shop_name.filter((subEntry) =>
-  //       subEntry.shop_name.toLowerCase().includes(searchQuery.toLowerCase())
-  //     ),
-  //   }));
-  // }
+  let searchResults: typeof shopItem = [];
+  if (Array.isArray(shopItem)) {
+    const filteredItems = shopItem.filter((item) => {
+      const shopName = item.shop_name.toLowerCase();
+      // const address = item.address.toLowerCase();
+      return shopName.includes(searchQuery.toLowerCase());
+    });
+  }
   console.log(
     "check image",
     typeof shopItem === "string" ? "" : shopItem[0].images
@@ -125,7 +125,7 @@ export default function ShopSelection() {
 
         <button
           className="rounded-2xl	 w-10"
-          // onClick={() => setSortState(searchResults)}
+          onClick={() => setSortState(searchResults)}
         >
           <MagnifyingGlassIcon className="text-green-800" />
         </button>
@@ -168,6 +168,8 @@ export default function ShopSelection() {
                                   src={entry.shopPhoto}
                                   className="w-25 h-40 rounded"
                                   style={{
+                                    objectFit: "contain",
+                                    width: "50%",
                                     height: "auto",
                                     maxWidth: "100%",
                                     maxHeight: "100%",

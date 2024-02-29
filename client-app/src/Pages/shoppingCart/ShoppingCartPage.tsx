@@ -198,7 +198,7 @@ export default function ShoppingCartPage() {
         {/* header */}
         <div className="flex ">
           <button
-            onClick={() => navigate(`/coloum/${shopId}`)}
+            onClick={() => navigate(`/menu/${shopId}`)}
             className={`self-center btn btn-circle btn-sm`}
           >
             <ChevronLeftIcon className="h-5 w-5 text-green-800 " />
