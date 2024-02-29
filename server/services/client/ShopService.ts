@@ -22,7 +22,8 @@ export class ShopService {
         )
         .from("shops")
         .join("shop_photos", "shop_photos.shop_id", "shops.id")
-        .groupBy("shops.id");
+        .groupBy("shops.id")
+        .orderBy("shops.id", "asc");
 
       console.log("result", result);
       return result;

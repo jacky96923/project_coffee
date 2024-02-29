@@ -17,13 +17,26 @@ export class MainService {
           "area",
           "district",
           "address",
-          "description",
-          "filename"
         )
         .from("shops")
-        .join("shop_photos", "shop_id", "shops.id")
         .where("shops.id", shopId)
-        .where("shop_photos.cover_photo", true);
+
+      let description = await this.knex("shops")
+      .select("description")
+      .where("id", shopId)
+      console.log("description", description[0].description)
+
+      let coverPhoto = await this.knex("shop_photos")
+      .select("filename")
+      .where("shop_id", shopId)
+      .where("shop_photos.cover_photo", true);
+      console.log("coverPhoto", coverPhoto)
+
+      result[0].description = description[0].description;
+      if (coverPhoto.length > 0) {
+        result[0].filename = coverPhoto[0].filename;
+      }
+      console.log("result", result);
       return result;
     } catch (error) {
       console.log(error);

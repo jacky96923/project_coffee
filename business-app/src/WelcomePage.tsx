@@ -38,11 +38,11 @@ const BusinessWelcome: React.FC = () => {
       );
 
       if (!response.ok) {
-        navigate("/");
+        navigate("/businessRegister");
         // Alert the error message
       } else {
         // Handle successful response
-        navigate("/main"); // Redirect to '/mainpage'
+        navigate("/businessLogin"); // Redirect to '/mainpage'
         alert("註冊成功，重新登入！");
       }
 

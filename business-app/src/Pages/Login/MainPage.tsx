@@ -17,9 +17,10 @@ function MainPage() {
     area: string;
     district: string;
     address: string;
-    description: string;
-    filename: string;
+    description: string | null;
+    filename?: string;
   }[] = GetShopInformation(shopId as number);
+  console.log("shopInfo", shopInfo);
 
   return (
     <div className="flex">
