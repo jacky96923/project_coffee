@@ -5,13 +5,13 @@ import { logout } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const MySetting = () => {
-  const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
-  const onLogoutHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    dispatch(logout())
-    navigate("/")
-  }
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const onLogoutHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <div>
       <div className="flex flex-col">
@@ -61,7 +61,10 @@ const MySetting = () => {
         >
           回饋{" "}
         </a>
-        <button onClick={onLogoutHandler} className=" p-4 mt-8 block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-brown to-dark-brown rounded-2xl font-bold text-white">
+        <button
+          onClick={onLogoutHandler}
+          className=" p-4 mt-8 block mx-auto w-72 my-1.5 bg-gradient-to-r from-light-green to-dark-green rounded-2xl font-bold text-white"
+        >
           登出
         </button>
       </div>

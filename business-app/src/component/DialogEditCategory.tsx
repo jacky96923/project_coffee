@@ -46,21 +46,21 @@ const DialogEditCategory: React.FC<EditDialogProps> = ({
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
         <div className="bg-white rounded-lg p-6 max-w-md">
-          <h2 className="text-2xl font-bold m-4 text-black	underline underline-offset-8">
+          <h2 className="text-2xl font-bold m-4 text-black	underline underline-offset-8 ">
             編輯種類
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="m-4">
               <label
                 htmlFor="name"
-                className="block text-base	 mb-1  text-black"
+                className="block text-base	 mb-1  text-black align-middle items-center text-center font-bold "
               >
                 {categoryName}
               </label>
               <input
                 type="text"
                 id="text"
-                className="w-full rounded border-gray-300 px-3 py-2 text-black mt-7"
+                className="w-full rounded border-gray-300 px-3 py-2 text-black mt-4"
                 name="updateCatName"
                 value={editCatInput}
                 onChange={(e) => {

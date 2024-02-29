@@ -153,10 +153,11 @@ export default function ShopSelection() {
                         justifyContent: "flex-start",
                         border: "1px solid green",
                         margin: "2px",
-                        gridTemplateColumns: "50% 50%",
                         borderRadius: "10px",
-                        width: "21rem",
+                        width: "auto",
                         height: "11rem",
+                        // justifyContent: "space-between",
+                        // backgroundColor: "green",
                       }}
                     >
                       {Array.isArray(shop.images)
