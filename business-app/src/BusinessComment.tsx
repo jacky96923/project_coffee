@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "./component/Sidebar";
 import { Textarea } from "@material-tailwind/react";
 
+const source = process.env.REACT_APP_API_SERVER;
+
 const MenuPreview = () => {
   const [comments, setComments] = useState<any[]>([]);
   const [groupedDescriptions, setGroupedDescriptions] = useState<string[]>([]);
@@ -28,7 +30,7 @@ const MenuPreview = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8100/comments/all?shop_id=${shopId}`
+          `${source}/comments/all?shop_id=${shopId}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

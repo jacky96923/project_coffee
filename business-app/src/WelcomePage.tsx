@@ -5,6 +5,8 @@ import type { AppDispatch, RootState } from "./store"; // Adjust the import path
 import { useNavigate } from "react-router-dom";
 import { error } from "console";
 
+const source = process.env.REACT_APP_API_SERVER;
+
 const BusinessWelcome: React.FC = () => {
   const area = useSelector((state: RootState) => state.reg.area);
   const district = useSelector((state: RootState) => state.reg.district);
@@ -18,24 +20,21 @@ const BusinessWelcome: React.FC = () => {
 
   const handleClick = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:8100/businessRegister/info",
-        {
-          method: "POST", // Specify the method
-          headers: {
-            "Content-Type": "application/json", // Specify content type header
-          },
-          body: JSON.stringify({
-            login_name: login_name,
-            shop_name: shop_name,
-            login_password: password,
-            contact_no: contact_no,
-            area: area,
-            district: district,
-            address: address,
-          }),
-        }
-      );
+      const response = await fetch(`${source}/businessRegister/info`, {
+        method: "POST", // Specify the method
+        headers: {
+          "Content-Type": "application/json", // Specify content type header
+        },
+        body: JSON.stringify({
+          login_name: login_name,
+          shop_name: shop_name,
+          login_password: password,
+          contact_no: contact_no,
+          area: area,
+          district: district,
+          address: address,
+        }),
+      });
 
       if (!response.ok) {
         navigate("/businessRegister");
@@ -96,10 +95,8 @@ const BusinessWelcome: React.FC = () => {
             type="submit"
             className="  w-64 rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
             style={{
-   
               borderColor: "transparent",
             }}
-
             onClick={handleClick}
           >
             註冊
@@ -110,10 +107,8 @@ const BusinessWelcome: React.FC = () => {
             type="button"
             className="  w-64 rounded-md bg-green-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-8"
             style={{
-
               borderColor: "transparent",
             }}
-
             onClick={() => navigate(-1)}
           >
             上一步

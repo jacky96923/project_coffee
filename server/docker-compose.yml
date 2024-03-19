@@ -4,9 +4,9 @@ services:
   postgres:
     image: "postgres:16"
     environment:
-      POSTGRES_USER: kaheilai
-      POSTGRES_PASSWORD: s2008079
-      POSTGRES_DB: project_coffee
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_PORT: 5432
     ports:
       - "5432:5432"
@@ -14,18 +14,18 @@ services:
       - ./pgdata:/var/lib/postgresql/data
   coffee_server:
     environment:
-      POSTGRES_USER: kaheilai
-      POSTGRES_PASSWORD: s2008079
-      POSTGRES_DB: project_coffee
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_HOST: postgres
       NODE_ENV: production
-      JWT_SECRET: asdkjf
-      STRIPE_SECRET: fatboyeatallday
-      STRIPE_ENDPOINT: https://api.stripe.com/v1/charges
-      S3_REGION: ap-southeast-2
-      S3_BUCKET_NAME: project-coffee-api
-      AWS_ACCESS_KEY_ID: AKIAUCPWNLQCMHF73GO2
-      AWS_SECRET_ACCESS_KEY: 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
+      JWT_SECRET: ${JWT_SECRET}
+      STRIPE_SECRET: ${STRIPE_SECRET}
+      STRIPE_ENDPOINT: ${STRIPE_ENDPOINT}
+      S3_REGION: ${S3_REGION}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
     depends_on:
       - postgres
     build:

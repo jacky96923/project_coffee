@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Inputs } from "../Pages/AddItem/AddItem";
+// const source = process.env.REACT_APP_API_SERVER;
 const source = "http://localhost:8100";
 
 export function GetItemInfo(itemId: number) {
@@ -72,9 +73,9 @@ export async function AddItemInfo(newItemData: FormData) {
   if (resp.message === "success") {
     return true;
   } else {
-    console.log(resp.message)
-    return false
-  };
+    console.log(resp.message);
+    return false;
+  }
 }
 
 export function GetAllOptionListWithOptions() {

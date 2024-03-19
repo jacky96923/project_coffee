@@ -49,7 +49,7 @@ export default function Sidebar() {
               onClick={() => navigate("/MainAddItem/0")}
             >
               <FaDumpsterFire className="size-6" />
-              <h3 className="ml-3">添加/更改產品</h3>
+              <h3 className="ml-3">添加產品</h3>
             </div>
           </li>
           <li className="p-4 hover:bg-gray-700">

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./BusinessLoginPage.module.css";
 import { jwtDecode } from "jwt-decode";
 
+// const source = process.env.REACT_APP_API_SERVER;
 const source = "http://localhost:8100";
 
 export async function postLogin(username: string, password: string) {
@@ -53,15 +54,21 @@ export default function BusinessLoginPage() {
       //   );
       //   dispatch(login({user: decoded.username, user_id: decoded.id, type: decoded.type}));
       //   navigate("/main")
-      // } 
+      // }
       const data = await postLogin(usernameInput, passwordInput);
-      if (data){
+      if (data) {
         console.log("Login successful:", data);
-        let decoded: { id: number; username: string, type: string } = jwtDecode(
+        let decoded: { id: number; username: string; type: string } = jwtDecode(
           localStorage.getItem("token")!
         );
-        dispatch(login({shop: decoded.username, shop_id: decoded.id, type: decoded.type}));
-      //   navigate("/main")
+        dispatch(
+          login({
+            shop: decoded.username,
+            shop_id: decoded.id,
+            type: decoded.type,
+          })
+        );
+        //   navigate("/main")
       }
 
       // Redirect the user to the profile page using useNavigate
@@ -125,22 +132,16 @@ export default function BusinessLoginPage() {
 
             <div>
               <div className="mt-6">
-                <Link
-                  to="/BusinessRegister"
-                  className="font-medium "
-                >
+                <Link to="/BusinessRegister" className="font-medium ">
                   新商戶登記
                 </Link>
               </div>
               <button
                 type="submit"
-                 className="w-full rounded-md bg-green-800 mt-4 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                style={{ 
-               
-                  borderColor: "transparent"
+                className="w-full rounded-md bg-green-800 mt-4 px-4 py-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                style={{
+                  borderColor: "transparent",
                 }}
-
-              
               >
                 Sign in
               </button>

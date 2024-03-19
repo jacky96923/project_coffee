@@ -134,6 +134,10 @@ app.use("/PromotionInfo", promotionInfoController.router);
 app.use("/category", dialogAddCategoryController.router);
 app.use("/AllItem", allItemController.router);
 app.use("/AddItem", addItemController.router);
+app.get("/getmapAPI", async (req, res) => {
+  const key = process.env.GOOGLE_MAP_API_KEY;
+  return res.status(200).json({ key: key });
+});
 
 // Route Setup (Business)
 app.use("/business/auth", businessAuthController.router);

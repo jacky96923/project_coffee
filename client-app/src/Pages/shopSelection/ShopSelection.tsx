@@ -23,24 +23,47 @@ export default function ShopSelection() {
     }>;
   };
 
-  const [selectedShopMap, setSelectedShopMap] = useState({} as SelectedShop);
-  const loader = new Loader({
-    // apiKey: process.env.GOOGLE_MAP_API_KEY!,
-    apiKey: "AIzaSyDUqlnlOl0M1egVOjsY84Dhzp9Cm4Ax6Gw",
-    version: "weekly",
-    // ...additionalOptions,
-  });
+  // const [googleKey, setGoogleKey] = useState("");
+  // useEffect(() => {
+  //   let googleKey = async () => {
+  //     let resp = await fetch("/getmapAPI");
+  //     let respData = await resp.json();
+  //     setGoogleKey(respData.key);
+  //   };
+  //   googleKey();
+  // }, []);
+
   let map;
   let marker;
+
+  const [selectedShopMap, setSelectedShopMap] = useState({} as SelectedShop);
+
   useEffect(() => {
+    setSelectedShopMap({
+      id: NaN,
+      shop_name: "",
+      address: "",
+      latitude: 22.38671,
+      longitude: 114.19396,
+      images: [],
+    });
+  }, []);
+
+  useEffect(() => {
+    const loader = new Loader({
+      // apiKey: process.env.GOOGLE_MAP_API_KEY!,
+      apiKey: "AIzaSyDUqlnlOl0M1egVOjsY84Dhzp9Cm4Ax6Gw",
+      version: "weekly",
+      // ...additionalOptions,
+    });
     loader.load().then(async () => {
       const { Map } = (await google.maps.importLibrary(
         "maps"
       )) as google.maps.MapsLibrary;
       map = new Map(document.getElementById("map") as HTMLElement, {
         center: {
-          lat: 22.32173,
-          lng: 114.20946,
+          lat: selectedShopMap.latitude,
+          lng: selectedShopMap.longitude,
         },
         zoom: 15,
       });
@@ -178,9 +201,10 @@ export default function ShopSelection() {
                     >
                       {Array.isArray(shop.images)
                         ? shop.images.length > 0
-                          ? shop.images.map((entry) =>
+                          ? shop.images.map((entry, idx) =>
                               entry.isCover ? (
                                 <img
+                                  key={idx}
                                   src={entry.shopPhoto}
                                   className="w-25 h-40 rounded"
                                   style={{
@@ -201,11 +225,11 @@ export default function ShopSelection() {
                         <div className="text-base	m-2 font-bold">
                           {Array.isArray(shop.images)
                             ? shop.images.length > 0
-                              ? shop.images.map((entry) =>
+                              ? shop.images.map((entry, idx) =>
                                   entry.isCover ? (
                                     " "
                                   ) : (
-                                    <div className="w-8 rounded-xl">
+                                    <div key={idx} className="w-8 rounded-xl">
                                       <img src={entry.shopPhoto} />
                                     </div>
                                   )

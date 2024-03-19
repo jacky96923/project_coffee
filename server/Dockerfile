@@ -1,5 +1,5 @@
 FROM node:20
 WORKDIR /app
-copy . .
+copy ./build/. .
 RUN npm install
-CMD npx knex migrate:latest && npx knex seed:run && npm start
+CMD npx knex migrate:latest && npx knex seed:run && npm run dstart

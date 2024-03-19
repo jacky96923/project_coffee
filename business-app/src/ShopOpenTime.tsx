@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { Checkbox, Input, Button } from "@material-tailwind/react";
 import styles from "./ShopOpenTime.module.css";
 import { useMutation } from "@tanstack/react-query";
+
+// const source = process.env.REACT_APP_API_SERVER;
+const source = "http://localhost:8100";
+
 export function BusinessChooseShopOpenTime() {
   const WeekdaysPH = [
     "星期一",
@@ -29,17 +33,12 @@ export function BusinessChooseShopOpenTime() {
     "聖誕節",
   ];
 
-
-
   const [weekdayCheckboxStates, setWeekdayCheckboxStates] = useState(
     Array(WeekdaysPH.length).fill(false)
   );
 
-
   const [openingTimes, setOpeningTimes] = useState(
     WeekdaysPH.map((weekday) => ({ weekday, start_time: "", close_time: "" }))
-
-    
   );
 
   const handleWeekdayCheckboxClick = (index: number) => {
@@ -48,60 +47,54 @@ export function BusinessChooseShopOpenTime() {
     setWeekdayCheckboxStates(newCheckboxStates);
   };
 
-
-
   const handleNextStepClick = async () => {
-  const checkedWeekdays: string[] = [];
-  const checkedOpenTimes: string[] = [];
-  const checkedCloseTimes: string[] = [];
-  const checkedPHs: string[] = [];
+    const checkedWeekdays: string[] = [];
+    const checkedOpenTimes: string[] = [];
+    const checkedCloseTimes: string[] = [];
+    const checkedPHs: string[] = [];
 
-  // Iterate through the openingTimes to find checked WeekdaysPH and corresponding open/close_time_time times
-  openingTimes.forEach((time, index) => {
-    if (weekdayCheckboxStates[index]) {
-      checkedWeekdays.push(time.weekday);
-      checkedOpenTimes.push(time.start_time);
-      checkedCloseTimes.push(time.close_time);
-    }
-  });
+    // Iterate through the openingTimes to find checked WeekdaysPH and corresponding open/close_time_time times
+    openingTimes.forEach((time, index) => {
+      if (weekdayCheckboxStates[index]) {
+        checkedWeekdays.push(time.weekday);
+        checkedOpenTimes.push(time.start_time);
+        checkedCloseTimes.push(time.close_time);
+      }
+    });
 
-  // Log the selected days and the corresponding open and close_time_time times
-  // console.log("Selected Days:", checkedWeekdays);
-  // console.log("Open Times:", checkedOpenTimes);
-  // console.log("Close Times:", checkedCloseTimes);
+    // Log the selected days and the corresponding open and close_time_time times
+    // console.log("Selected Days:", checkedWeekdays);
+    // console.log("Open Times:", checkedOpenTimes);
+    // console.log("Close Times:", checkedCloseTimes);
 
+    // Log the selected public holidays
 
-  // Log the selected public holidays
-  
+    // Stringify the selected days and the corresponding open time inputs
+    const selectedDaysWithOpenTime = checkedWeekdays.map((day, index) => ({
+      day,
+      start_time: checkedOpenTimes[index],
+      close_time: checkedCloseTimes[index],
+    }));
 
-  // Stringify the selected days and the corresponding open time inputs
-  const selectedDaysWithOpenTime = checkedWeekdays.map((day, index) => ({
-    day,
-    start_time: checkedOpenTimes[index],
-    close_time: checkedCloseTimes[index]
-  }));
+    // Log the selected days and the corresponding open time inputs
 
-  // Log the selected days and the corresponding open time inputs
+    // Stringify the data before sclose_timeing it in the POST request
+    const requestBody = JSON.stringify({
+      openingTimes: selectedDaysWithOpenTime,
+    });
+    console.log("Selected Days with Open Time:", selectedDaysWithOpenTime);
+    // Log the JSON stringified data
+    // console.log("Request Body:", requestBody);
 
-
-  // Stringify the data before sclose_timeing it in the POST request
-  const requestBody = JSON.stringify({
-    openingTimes: selectedDaysWithOpenTime,
-    
-  });
-  console.log("Selected Days with Open Time:", selectedDaysWithOpenTime);
-  // Log the JSON stringified data
-  // console.log("Request Body:", requestBody);
-
-  // Sclose_time the JSON stringified data in the POST request
-  await fetch("http://localhost:8100/shopopentime/api", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: requestBody,
-  });
-};
+    // Sclose_time the JSON stringified data in the POST request
+    await fetch(`${source}/shopopentime/api`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
+  };
 
   const handleInputChange = (weekday: string, type: string, value: string) => {
     const newOpeningTimes = openingTimes.map((time) =>
@@ -199,7 +192,11 @@ export function BusinessChooseShopOpenTime() {
                     type="text"
                     placeholder={`${WeekdaysPH[index]}...關門時間`} // Use WeekdaysPH array to label input placeholders
                     onChange={(e) =>
-                      handleInputChange(index.toString(), "close_time", e.target.value)
+                      handleInputChange(
+                        index.toString(),
+                        "close_time",
+                        e.target.value
+                      )
                     }
                     style={{
                       marginTop: "8px",
@@ -213,51 +210,57 @@ export function BusinessChooseShopOpenTime() {
             </div>
           ))}
         </div>
-     
-<div className="flex-1">
-  <h1>公眾假期</h1>
-  {Array.from({ length: 16 }, (_, index) => index + 7).map((index) => (
-    <div key={index} className="my-2">
-      <Checkbox
-        id={`weekclose_time-checkbox-${index}`}
-        label={WeekdaysPH[index]}
-        ripple={true}
-        checked={weekdayCheckboxStates[index]}
-        onChange={() => handleWeekdayCheckboxClick(index)}
-        crossOrigin={undefined}
-        style={{ marginRight: "8px" }}
-      />
-      {weekdayCheckboxStates[index] && (
-        <div style={{ marginTop: "8px" }}>
-          <Input
-            type="text"
-            placeholder={`${WeekdaysPH[index]}...開店時間`}
-            style={{ marginLeft: "10px", width: "80%" }}
-            onChange={(e) =>
-              handleInputChange(index.toString(), "start_time", e.target.value)
-            }
-            crossOrigin={undefined}
-          />
-          <Input
-            type="text"
-            placeholder={`${WeekdaysPH[index]}...關門時間`}
-            onChange={(e) =>
-              handleInputChange(index.toString(), "close_time", e.target.value)
-            }
-            style={{
-              marginTop: "8px",
-              marginLeft: "10px",
-              width: "80%",
-            }}
-            crossOrigin={undefined}
-          />
+
+        <div className="flex-1">
+          <h1>公眾假期</h1>
+          {Array.from({ length: 16 }, (_, index) => index + 7).map((index) => (
+            <div key={index} className="my-2">
+              <Checkbox
+                id={`weekclose_time-checkbox-${index}`}
+                label={WeekdaysPH[index]}
+                ripple={true}
+                checked={weekdayCheckboxStates[index]}
+                onChange={() => handleWeekdayCheckboxClick(index)}
+                crossOrigin={undefined}
+                style={{ marginRight: "8px" }}
+              />
+              {weekdayCheckboxStates[index] && (
+                <div style={{ marginTop: "8px" }}>
+                  <Input
+                    type="text"
+                    placeholder={`${WeekdaysPH[index]}...開店時間`}
+                    style={{ marginLeft: "10px", width: "80%" }}
+                    onChange={(e) =>
+                      handleInputChange(
+                        index.toString(),
+                        "start_time",
+                        e.target.value
+                      )
+                    }
+                    crossOrigin={undefined}
+                  />
+                  <Input
+                    type="text"
+                    placeholder={`${WeekdaysPH[index]}...關門時間`}
+                    onChange={(e) =>
+                      handleInputChange(
+                        index.toString(),
+                        "close_time",
+                        e.target.value
+                      )
+                    }
+                    style={{
+                      marginTop: "8px",
+                      marginLeft: "10px",
+                      width: "80%",
+                    }}
+                    crossOrigin={undefined}
+                  />
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-      )}
-    </div>
-  ))}
-</div>
-
-
       </div>
       <div className={styles.buttonContainer}>
         <Button

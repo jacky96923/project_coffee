@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+// const source = process.env.REACT_APP_API_SERVER;
 const source = "http://localhost:8100";
 
 export function GetMenuPreview(id: number) {
@@ -100,7 +101,7 @@ export async function AddItemToCat(categoryId: number, itemId: number[]) {
 
   const result = await resAddItem.json();
   console.log("result", result);
-  if (result.error){
-    throw Error(result.error)
-  } 
+  if (result.error) {
+    throw Error(result.error);
+  }
 }

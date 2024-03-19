@@ -6,6 +6,9 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
+// const source = process.env.REACT_APP_API_SERVER;
+const source = "http://localhost:8100";
+
 export function CommentPage() {
   const { transactionId } = useParams();
   const userName = useSelector((state: RootState) => state.auth.user);
@@ -48,7 +51,7 @@ export function CommentPage() {
 
     try {
       // Perform your fetch operation here
-      const response = await fetch("http://localhost:8100/comments/rating", {
+      const response = await fetch(`${source}/comments/rating`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

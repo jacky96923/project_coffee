@@ -14,6 +14,9 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { IoLocationSharp } from "react-icons/io5";
 
+// const source = process.env.REACT_APP_API_SERVER;
+const source = "http://localhost:8100";
+
 export default function ShoppingCartPage() {
   const navigate = useNavigate();
 
@@ -156,17 +159,14 @@ export default function ShoppingCartPage() {
       console.log("checkoutData", checkoutData);
       console.log("cart in checkout", checkoutData.cart);
       // 3. fetch to get the url for checkout
-      let result = await fetch(
-        "http://localhost:8100/stripe/create-checkout-session",
-        {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(checkoutData),
-        }
-      );
+      let result = await fetch(`${source}/stripe/create-checkout-session`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(checkoutData),
+      });
       // 4. direct to the url in question
       if (result.ok) {
         console.log("Request sent successfully");

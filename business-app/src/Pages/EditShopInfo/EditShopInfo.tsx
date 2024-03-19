@@ -3,8 +3,9 @@ import Sidebar from "../../component/Sidebar";
 import styles from "../EditShopInfo/EditShopInfo.module.css";
 import React, { Fragment, useState, useEffect, FormEvent } from "react";
 
+const source = process.env.REACT_APP_API_SERVER;
+
 export default function EditShopInfo() {
-  const source = "http://localhost:8100";
   const HKIDistrict = ["中西區", "灣仔區", "東區", "南區"];
   const KWDistrict = ["深水埗區", "油尖旺區", "九龍城區", "黃大仙區", "觀塘區"];
   const NTDistrict = [
