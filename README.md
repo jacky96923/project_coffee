@@ -17,6 +17,10 @@ Run the website in localhost:
    cd to business-app, run yarn start
 5. Start the client app FIRST, than start the business app
    client app should be running at loclhost:3000 and business app should be running at loclhost:3001
+6. To see the result:
+   Login in the client side, user name is Jacky and password is 1234
+   Login in the business side, user name is shop1 and password is shop1
+7. shop1 is ’木果咖啡‘，so order from ’木果咖啡‘ and login in as shop1 in the business side to see the ordering system in action!
 
 Run the deployed version:
 
