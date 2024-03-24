@@ -1,5 +1,7 @@
 # project_coffee
 
+![alt text](<project coffee figma.jpg>)
+
 IMPORTANT!!
 
 PLEASE DISABLE DARK MODE in browser before use
