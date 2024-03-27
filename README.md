@@ -1,6 +1,6 @@
 # project_coffee
 
-![alt text](<project coffee figma.jpg>)
+[text](../../Downloads/project_coffee.pdf)
 
 IMPORTANT!!
 
