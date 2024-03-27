@@ -1,6 +1,6 @@
 # project_coffee
 
-[text](../../Downloads/project_coffee.pdf)
+![alt text](project_coffee.jpg)
 
 IMPORTANT!!
 
